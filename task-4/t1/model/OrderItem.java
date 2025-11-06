@@ -10,4 +10,8 @@ public class OrderItem {
         this.id = id;
         this.book = book;
     }
+
+    public Book getBook() {
+        return book;
+    }
 }

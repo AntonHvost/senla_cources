@@ -27,6 +27,7 @@ public class BookCatalog {
         findBookById(bookId).ifPresent(book -> {book.setStatus(BookStatus.AVAILABLE);});
     }
 
-
-
+    public List<Book> getBooks() {
+        return books;
+    }
 }

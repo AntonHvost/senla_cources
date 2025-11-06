@@ -2,27 +2,32 @@ package t1.facade;
 
 import t1.enums.OrderStatus;
 
-import t1.model.Book;
-import t1.model.BookCatalog;
-import t1.model.BookRequest;
-import t1.model.Order;
+import t1.enums.SortByBook;
+import t1.enums.SortByOrder;
+import t1.model.*;
 
 import t1.service.OrderService;
+import t1.service.ReportService;
 import t1.service.RequestService;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 public class BookstoreFacade {
     private OrderService orderService;
     private RequestService requestService;
+    private ReportService reportService;
     private BookCatalog catalog;
 
-    public BookstoreFacade(OrderService orderService, RequestService requestService, BookCatalog catalog) {
+    public BookstoreFacade(OrderService orderService, RequestService requestService, ReportService reportService, BookCatalog catalog) {
         this.orderService = orderService;
         this.requestService = requestService;
+        this.reportService = reportService;
         this.catalog = catalog;
     }
 
-    public Order createOrder(long[] bookIds) {
-        return orderService.createOrder(bookIds);
+    public Order createOrder(long[] bookIds, Consumer consumer) {
+        return orderService.createOrder(bookIds, consumer);
     }
 
     public void cancelOrder(long orderId) {
@@ -64,5 +69,33 @@ public class BookstoreFacade {
     public void restockBook(long bookId){
         catalog.restockBook(bookId);
         requestService.fulfillRequests();
+    }
+
+    public List<Order> getCompletedOrders(String startDate, String endDate) {
+        return reportService.getCompletedOrders(startDate, endDate);
+    }
+
+    public int getCountCompletedOrders(String startDate, String endDate) {
+        return reportService.getCompletedOrdersCount(startDate, endDate);
+    }
+
+    public String viewBookDescription(long bookId) {
+        return reportService.viewDescriptionBook(bookId);
+    }
+
+    public String getBooks(SortByBook sortParam){
+        return reportService.viewBookCatalog(sortParam);
+    }
+
+    public String getOrderDetails(long orderId) {
+        return reportService.getOrderDetails(orderId);
+    }
+
+    public String getOrderList(SortByOrder sortParam) {
+        return reportService.viewOrderList(sortParam);
+    }
+
+    public BigDecimal getProfitToPeriod(String startDate, String endDate) {
+        return reportService.getProfitToPeriod(startDate, endDate);
     }
 }

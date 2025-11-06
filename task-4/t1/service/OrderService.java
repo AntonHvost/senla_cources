@@ -8,10 +8,7 @@ import t1.enums.BookStatus;
 import t1.enums.OrderStatus;
 import t1.enums.RequestStatus;
 
-import t1.model.Book;
-import t1.model.BookCatalog;
-import t1.model.Order;
-import t1.model.OrderItem;
+import t1.model.*;
 
 public class OrderService {
     private BookCatalog catalog;
@@ -25,8 +22,8 @@ public class OrderService {
         this.catalog = catalog;
     }
 
-    public Order createOrder(long[] bookIds) {
-        Order order = new Order(nextOrderId++);
+    public Order createOrder(long[] bookIds, Consumer consumer) {
+        Order order = new Order(nextOrderId++, consumer);
 
         for (int i = 0; i < bookIds.length; i++) {
             Book book = catalog.findBookById(bookIds[i])
@@ -39,6 +36,7 @@ public class OrderService {
             }
         }
 
+        order.calculateTotalPrice();
         ordersList.add(order);
         order.setOrderStatus(OrderStatus.NEW);
         return order;
@@ -65,5 +63,9 @@ public class OrderService {
 
     public Optional<Order> findOrderById(Long orderId) {
         return ordersList.stream().filter(o -> o.getId() == orderId).findAny();
+    }
+
+    public List<Order> getOrderList() {
+        return ordersList;
     }
 }
