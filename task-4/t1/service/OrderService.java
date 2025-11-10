@@ -1,8 +1,10 @@
 package t1.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import t1.enums.BookStatus;
 import t1.enums.OrderStatus;
@@ -22,18 +24,17 @@ public class OrderService {
         this.catalog = catalog;
     }
 
-    public Order createOrder(long[] bookIds, Consumer consumer) {
+    public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
         Order order = new Order(nextOrderId++, consumer);
 
         for (int i = 0; i < bookIds.length; i++) {
             Book book = catalog.findBookById(bookIds[i])
                     .orElseThrow(() -> new IllegalArgumentException("Ошибка создания заказа! Книга не найдена в каталоге!"));
 
-            if (book.getStatus() == BookStatus.AVAILABLE) {
-                order.addItem(new OrderItem(i + 1, book));
-            } else {
+            if (book.getStatus() != BookStatus.AVAILABLE) {
                 requestService.createRequest(book, order);
             }
+            order.addItem(new OrderItem(i + 1, book, quantities[i]));
         }
 
         order.calculateTotalPrice();
@@ -49,16 +50,17 @@ public class OrderService {
                 .map(order ->
                 {
                     order.setOrderStatus(OrderStatus.COMPLETED);
+                    order.setCompletedAtDate(LocalDateTime.now());
                     return true;
                 })
                 .orElse(false);
     }
 
     public void cancelOrder(Long orderId) {
-        findOrderById(orderId).ifPresent(order->{order.setOrderStatus(OrderStatus.CANCELLED);});
-    }
-    public void updateOrderStatus(long id, OrderStatus status) {
-        findOrderById(id).ifPresent(order -> {order.setOrderStatus(status);});
+        findOrderById(orderId).ifPresent(order->{
+            order.setOrderStatus(OrderStatus.CANCELLED);
+            order.setCompletedAtDate(LocalDateTime.now());
+        });
     }
 
     public Optional<Order> findOrderById(Long orderId) {
@@ -68,4 +70,14 @@ public class OrderService {
     public List<Order> getOrderList() {
         return ordersList;
     }
+
+    public void updateOrderStatus(long id, OrderStatus status) {
+        findOrderById(id).ifPresent(order -> {
+            order.setOrderStatus(status);
+            if (order.getOrderStatus() == OrderStatus.COMPLETED || order.getOrderStatus() == OrderStatus.CANCELLED) {
+                order.setCompletedAtDate(LocalDateTime.now());
+            }
+        });
+    }
+
 }

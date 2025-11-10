@@ -15,8 +15,8 @@ public class BookRequest {
     public BookRequest(long id, Book book, Order order) {
         this.id = id;
         this.reqBook = book;
-        this.relatedOrder = order;
         this.requestDate = LocalDateTime.now();
+        this.relatedOrder = order;
         this.status = RequestStatus.PENDING;
     }
 
@@ -24,8 +24,12 @@ public class BookRequest {
         return id;
     }
 
-    public Book getReqBook() {
+    public Book getReqBook () {
         return reqBook;
+    }
+
+    public LocalDateTime getRequestDate () {
+        return requestDate;
     }
 
     public RequestStatus getStatus() {
@@ -41,7 +45,7 @@ public class BookRequest {
     }
 
     public void fulFilled(){
-        status = RequestStatus.FULFILLED;
+        this.status = RequestStatus.FULFILLED;
     }
 
     public void cancel(){

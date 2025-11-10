@@ -1,5 +1,6 @@
 package t1.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,23 +30,35 @@ public class RequestService {
         return  requestsList.stream().filter(r -> r.getId() == id).findAny();
     }
 
-    public void fulfillRequests(){
+    public void fulfillRequests(long id){
         requestsList.stream()
+                .filter(r -> r.getReqBook().getId() == id)
                 .filter(r -> r.getStatus() == RequestStatus.PENDING)
-                .forEach(BookRequest::fulFilled);
+                .findAny()
+                .map(r -> {
+                    r.getReqBook().setDeliveryDate(LocalDateTime.now());
+                            r.fulFilled();
+                            return null;
+                });
+
     }
 
     public RequestStatus getRequestStatusByOrderId(long id){
-        return requestsList.stream().filter(r -> r.getRelatedOrder().getId() == id).findAny().get().getStatus();
+        return requestsList.stream().filter(request -> request.getRelatedOrder().getId() == id).findAny().get().getStatus();
     }
 
-    public RequestStatus getStatusRequest(long requestId) {
-        return findRequestById(requestId).map(BookRequest::getStatus).orElseThrow(() -> new IllegalStateException("Запрос с ID " + requestId + " не найден!"));
+
+
+    public RequestStatus getStatusRequest(long id) {
+        return findRequestById(id).map(BookRequest::getStatus).orElseThrow(() -> new IllegalStateException("Запрос с ID " + id + " не найден!"));
     }
 
     public void cancelRequest(long requestId){
         findRequestById(requestId).ifPresent(BookRequest::cancel);
     }
 
+    public List<BookRequest> getRequestsList() {
+        return requestsList;
+    }
 
 }

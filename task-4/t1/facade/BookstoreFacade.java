@@ -1,9 +1,7 @@
 package t1.facade;
 
-import t1.enums.OrderStatus;
+import t1.enums.*;
 
-import t1.enums.SortByBook;
-import t1.enums.SortByOrder;
 import t1.model.*;
 
 import t1.service.OrderService;
@@ -26,8 +24,8 @@ public class BookstoreFacade {
         this.catalog = catalog;
     }
 
-    public Order createOrder(long[] bookIds, Consumer consumer) {
-        return orderService.createOrder(bookIds, consumer);
+    public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
+        return orderService.createOrder(bookIds, quantities, consumer);
     }
 
     public void cancelOrder(long orderId) {
@@ -68,34 +66,42 @@ public class BookstoreFacade {
 
     public void restockBook(long bookId){
         catalog.restockBook(bookId);
-        requestService.fulfillRequests();
+        requestService.fulfillRequests(bookId);
     }
 
-    public List<Order> getCompletedOrders(String startDate, String endDate) {
-        return reportService.getCompletedOrders(startDate, endDate);
+    public String getCompletedOrdersAtPeriod(String startDate, String endDate, SortByOrder sortParam) {
+        return reportService.viewCompletedOrdersToPeriod(startDate, endDate, sortParam);
     }
 
-    public int getCountCompletedOrders(String startDate, String endDate) {
-        return reportService.getCompletedOrdersCount(startDate, endDate);
+    public int getCountCompletedOrdersAtPeriod(String startDate, String endDate) {
+        return reportService.viewCompletedOrdersCount(startDate, endDate);
     }
 
     public String viewBookDescription(long bookId) {
         return reportService.viewDescriptionBook(bookId);
     }
 
-    public String getBooks(SortByBook sortParam){
+    public String viewBookCatalog(SortByBook sortParam){
         return reportService.viewBookCatalog(sortParam);
     }
 
-    public String getOrderDetails(long orderId) {
-        return reportService.getOrderDetails(orderId);
+    public String viewOrderDetails(long orderId) {
+        return reportService.viewOrderDetails(orderId);
     }
 
-    public String getOrderList(SortByOrder sortParam) {
+    public String viewOrderList(SortByOrder sortParam) {
         return reportService.viewOrderList(sortParam);
     }
 
-    public BigDecimal getProfitToPeriod(String startDate, String endDate) {
-        return reportService.getProfitToPeriod(startDate, endDate);
+    public BigDecimal getProfitAtPeriod(String startDate, String endDate) {
+        return reportService.viewProfitToPeriod(startDate, endDate);
+    }
+
+    public String getRequestList(SortByRequestBook sortParam) {
+        return reportService.viewBookRequestList(sortParam);
+    }
+
+    public String getUnsoldBooks(SortByUnsoldBook sortParam) {
+        return reportService.viewUnsoldBooksMoreThanSixMonth(sortParam);
     }
 }

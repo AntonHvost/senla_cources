@@ -1,10 +1,7 @@
 package t1;
 
-import t1.enums.BookStatus;
-import t1.enums.OrderStatus;
+import t1.enums.*;
 
-import t1.enums.SortByBook;
-import t1.enums.SortByOrder;
 import t1.model.*;
 
 import t1.service.OrderService;
@@ -29,43 +26,43 @@ public class Main {
             facade.addBookToCatalog(books[i]);
         }
 
-        Consumer consumer1 = new Consumer(1L, "Новикова Ангелина", "+79536101186", "novik.angel@mail.ru");
+        Consumer consumer1 = new Consumer(1L, "Новикова Анастасия Александровна", "+7(987)654 32-10", "novik.angel@mail.ru");
+        Consumer consumer2 = new Consumer(2L, "Петров Пётр Петрович", "+7(987)654 32-10", "novik.angel@mail.ru");
 
-        Order order = facade.createOrder(new long[]{1L, 3L, 6L}, consumer1);
-        System.out.println("Заказ создан под номером " + order.getId() + ". Статус заказа " + order.getOrderStatus());
-        System.out.println(facade.isBookAvailable(2));
+        System.out.println("==Тестирование программы==\n");
 
-        BookRequest request = facade.requestBook(1);
-        System.out.println("Создан запрос на книгу " + request.getReqBook().getTitle() + ".");
+        System.out.println("==Вывод списка книг по алфавиту==\n" + facade.viewBookCatalog(SortByBook.ALPHABET));
+        System.out.println("==Вывод списка книг по дате издания==\n" + facade.viewBookCatalog(SortByBook.PUBLICATION_DATE));
 
-        if(facade.completeOrder(1)){
-            System.out.println("Заказ успешно завершён!");
-        }
-        else System.out.println("Ошибка! Заказ либо отсутствует в истории заказов, либо отсутствует в каталоге!");
+        System.out.println("==Тестирования работы функций заказов==\n\n");
+        System.out.println("Создание заказа: ");
+        Order order = facade.createOrder(new long[] {1,2,3}, new int[] {1,2,1},consumer1);
+        System.out.println("Заказ под номером: " + order.getId() + " создан! Статус заказа " + order.getOrderStatus());
+        Order order2 = facade.createOrder(new long[] {4,5,6}, new int[] {5,2,7}, consumer2);
+        System.out.println("Заказ под номером: " + order2.getId() + " создан! Статус заказа " + order2.getOrderStatus());
 
-        facade.restockBook(1L);
-        facade.updStatusOrder(1L, OrderStatus.COMPLETED);
+        System.out.println("Обновление статуса заказа...");
+        facade.updStatusOrder(1, OrderStatus.IN_PROCESS);
+        System.out.println("Добавление запрошенной книги на склад...");
+        facade.restockBook(3);
+        System.out.println("Завершение заказа под номером 1...");
+        System.out.println("Заказ завершился со статусом " + facade.completeOrder(1));
 
-        if(facade.completeOrder(1L)){
-            System.out.println("Заказ успешно завершён!");
-        }
-        else System.out.println("Ошибка! Заказ либо отсутствует в истории заказов, либо отсутствует в каталоге!");
+        System.out.println("Полученная прибыль за период составляет: " + facade.getProfitAtPeriod("2025-11-07T00:00:00", "2025-11-12T00:00:00"));
 
-        order = facade.createOrder(new long[]{2, 4}, consumer1);
-        System.out.println("Заказ создан под номером " + order.getId() + ". Статус заказа " + order.getOrderStatus());
+        facade.requestBook(10);
+        facade.requestBook(10);
+        facade.restockBook(10);
+        System.out.println("\n==Список запросов==\n");
+        System.out.println(facade.getRequestList(SortByRequestBook.ALPHABET));
 
-        facade.cancelOrder(2L);
-        System.out.println("Статус заказа: " + order.getOrderStatus());
+        System.out.println("Вывод списка 'залежавшихся' книг более чем на 6 месяцев...\n");
+        System.out.println(facade.getUnsoldBooks(SortByUnsoldBook.PRICE));
 
-        facade.updStatusOrder(2L, OrderStatus.IN_PROCESS);
-        System.out.println("Статус заказа успешно изменён на " + order.getOrderStatus());
+        System.out.println("Вывод завершённых заказов...\n");
+        System.out.println(facade.getCompletedOrdersAtPeriod("2025-11-07T00:00:00", "2025-11-12T00:00:00", SortByOrder.COMPLETE_DATE));
 
-        System.out.println(facade.getBooks(SortByBook.ALPHABET));
+        System.out.println("\nКоличество завершенных заказов: " + facade.getCountCompletedOrdersAtPeriod("2025-11-07T00:00:00", "2025-11-12T00:00:00"));
 
-        System.out.println(facade.getOrderDetails(2L));
-
-        System.out.println(facade.getOrderList(SortByOrder.COMPLETE_DATE));
-
-        System.out.println(facade.getProfitToPeriod("2025-11-07T00:00:00", "2025-11-10T00:00:00"));
     }
 }

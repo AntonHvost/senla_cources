@@ -5,19 +5,21 @@ import t1.enums.OrderStatus;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Order {
     private long id;
     private List<OrderItem> orderItemsList;
     private Consumer consumer;
-    private LocalDateTime orderDate;
+    private LocalDateTime createdAt;
+    private LocalDateTime completedAt;
     private BigDecimal totalPrice;
     private OrderStatus orderStatus;
 
-    public Order(long id, Consumer consumer){
+    public Order(long id, Consumer consumer) {
         this.id = id;
-        this.orderDate = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
         this.orderStatus = OrderStatus.NEW;
         this.consumer = consumer;
         this.orderItemsList = new ArrayList<>();
@@ -32,8 +34,16 @@ public class Order {
         return orderStatus;
     }
 
-    public LocalDateTime getOrderDate() {
-        return orderDate;
+    public LocalDateTime getCreatedOrderDate() {
+        return createdAt;
+    }
+
+    public LocalDateTime getCompletedOrderDate() {
+        return completedAt;
+    }
+
+    public void setCompletedAtDate(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
     }
 
     public Consumer getConsumer() {
@@ -52,7 +62,7 @@ public class Order {
         return orderItemsList;
     }
 
-    public void addItem(OrderItem item){
+    public void addItem(OrderItem item) {
         orderItemsList.add(item);
     }
 
@@ -61,8 +71,11 @@ public class Order {
     }
 
     public void calculateTotalPrice() {
-        for (OrderItem i : orderItemsList){
-            totalPrice = totalPrice.add(i.getBook().getPrice());
-        }
+        this.totalPrice = getOrderItemsList().stream()
+                .map(orderItem -> {
+                    BigDecimal bookPrice = orderItem.getBook().getPrice();
+                    return bookPrice.multiply(BigDecimal.valueOf(orderItem.getQuantity()));
+                })
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

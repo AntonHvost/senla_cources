@@ -4,6 +4,7 @@ import t1.enums.BookStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Book {
     private long id;
@@ -11,6 +12,7 @@ public class Book {
     private String author;
     private String description;
     private LocalDate publishDate;
+    private LocalDateTime deliveryDate;
     private BigDecimal price;
     private BookStatus status;
 
@@ -20,6 +22,7 @@ public class Book {
         this.author = author;
         this.description = description;
         this.publishDate = publishDate;
+        this.deliveryDate = LocalDateTime.now();
         this.price = price;
         this.status = status;
     }
@@ -42,6 +45,14 @@ public class Book {
 
     public LocalDate getPublishDate() {
         return publishDate;
+    }
+
+    public LocalDateTime getDeliveryDate() {
+        return deliveryDate;
+    }
+
+    public void setDeliveryDate(LocalDateTime deliveryDate) {
+        this.deliveryDate = deliveryDate;
     }
 
     public BigDecimal getPrice() {
