@@ -1,6 +1,7 @@
 package bookstore_system.facade;
 
 import bookstore_system.domain.BookCatalog;
+import bookstore_system.domain.Consumer;
 import bookstore_system.dto.BookRequestSummary;
 import bookstore_system.dto.BookSummary;
 import bookstore_system.dto.OrderSummary;

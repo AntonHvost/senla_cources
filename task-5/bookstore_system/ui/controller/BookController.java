@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class BookMenuController {
+public class BookController {
     private final BookFacade bookFacade;
     private final ReportFacade reportFacade;
     private final Scanner scanner = new Scanner(System.in);
 
-    public BookMenuController(BookFacade bookFacade, ReportFacade reportFacade) {
+    public BookController(BookFacade bookFacade, ReportFacade reportFacade) {
         this.bookFacade = bookFacade;
         this.reportFacade = reportFacade;
     }

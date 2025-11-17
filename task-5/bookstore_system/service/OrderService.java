@@ -13,9 +13,9 @@ import bookstore_system.enums.RequestStatus;
 import bookstore_system.domain.*;
 
 public class OrderService {
-    private BookCatalog catalog;
-    private RequestService requestService;
-    private List<Order> ordersList;
+    private final BookCatalog catalog;
+    private final RequestService requestService;
+    private final List<Order> ordersList;
     private long nextOrderId = 1;
 
     public OrderService(RequestService requestService, BookCatalog catalog){

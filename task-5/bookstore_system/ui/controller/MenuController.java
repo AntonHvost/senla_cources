@@ -17,11 +17,10 @@ public class MenuController {
     }
 
     public void run() {
+        System.out.println("Система электронного магазина книг\n\n");
         while (true) {
             Menu current = navigator.getCurrentMenu();
             if (current == null) break;
-
-            System.out.println("Система электронного магазина книг\n\n");
 
             System.out.println("== " + current.getName() + " ==");
             List<MenuItem> items = current.getItems();
@@ -31,7 +30,7 @@ public class MenuController {
             System.out.println("0. Выход");
             System.out.println("Выберите пункт: ");
 
-            int choice = readChoise(items.size());
+            int choice = readChoice(items.size());
 
             if (choice == 0) {
                 System.out.println("Хорошего дня!");
@@ -48,7 +47,7 @@ public class MenuController {
         }
     }
 
-    private int readChoise(int max) {
+    private int readChoice(int max) {
         try {
             return Integer.parseInt(scanner.nextLine().trim());
         } catch (NumberFormatException e) {

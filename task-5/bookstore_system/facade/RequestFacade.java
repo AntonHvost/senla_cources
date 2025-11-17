@@ -10,6 +10,11 @@ public class RequestFacade {
     private RequestService requestService;
     private BookCatalog bookCatalog;
 
+    public RequestFacade(RequestService requestService, BookCatalog bookCatalog) {
+        this.requestService = requestService;
+        this.bookCatalog = bookCatalog;
+    }
+
     public BookRequest requestBook(long bookId) {
         Book book = bookCatalog.findBookById(bookId)
                 .orElseThrow(() -> new IllegalArgumentException("Книга с ID " + bookId + " не найдена"));

@@ -71,6 +71,7 @@ public class ReportService {
             case COMPLETE_DATE -> Comparator.comparing(OrderSummary::getCompletedOrderDate, Comparator.naturalOrder());
             case PRICE -> Comparator.comparing(OrderSummary::getPrice);
             case STATUS -> Comparator.comparing(OrderSummary::getStatus);
+            default -> Comparator.comparing(OrderSummary::getId);
         };
 
         return orderService.getOrderList().stream()

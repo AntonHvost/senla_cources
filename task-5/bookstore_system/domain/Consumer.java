@@ -6,8 +6,8 @@ public class Consumer {
     private String phone;
     private String email;
 
-    public Consumer(long id, String name, String phone, String email) {
-        this.id = id;
+    public Consumer(String name, String phone, String email) {
+        this.id++;
         this.name = name;
         this.phone = phone;
         this.email = email;
