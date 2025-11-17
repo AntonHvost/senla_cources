@@ -46,7 +46,8 @@ public class RequestService {
     }
 
     public RequestStatus getRequestStatusByOrderId(long id){
-        return requestsList.stream().filter(request -> request.getRelatedOrder().getId() == id).findAny().get().getStatus();
+        BookRequest request = requestsList.stream().filter(r -> r.getId() == id).findAny().orElse(null);
+        return request != null ? request.getStatus() : null;
     }
 
 

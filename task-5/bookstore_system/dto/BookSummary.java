@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class BookSummary {
+    private long id;
     private String title;
     private String author;
     private String description;
@@ -17,6 +18,7 @@ public class BookSummary {
     private BookStatus status;
 
     public BookSummary (Book book) {
+        this.id = book.getId();
         this.title = book.getTitle();
         this.author = book.getAuthor();
         this.description = book.getDescription();
@@ -24,6 +26,10 @@ public class BookSummary {
         this.deliveryDate = book.getDeliveryDate();
         this.price = book.getPrice();
         this.status = book.getStatus();
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getTitle() {

@@ -22,7 +22,7 @@ public class MenuController {
             Menu current = navigator.getCurrentMenu();
             if (current == null) break;
 
-            System.out.println("== " + current.getName() + " ==");
+            System.out.println("== " + current.getName() + " ==\n");
             List<MenuItem> items = current.getItems();
                 for (int i = 0; i < items.size(); i++) {
                     System.out.println((i + 1 ) + ". " + items.get(i).getTitle());

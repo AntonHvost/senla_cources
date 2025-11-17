@@ -12,10 +12,7 @@ import bookstore_system.service.OrderService;
 import bookstore_system.service.ReportService;
 import bookstore_system.service.RequestService;
 
-import bookstore_system.ui.controller.BookController;
-import bookstore_system.ui.controller.BookRequestController;
-import bookstore_system.ui.controller.MenuController;
-import bookstore_system.ui.controller.OrderController;
+import bookstore_system.ui.controller.*;
 import bookstore_system.ui.domain.Menu;
 import bookstore_system.ui.factory.MainMenuFactory;
 import bookstore_system.ui.navigator.Navigator;
@@ -42,11 +39,12 @@ public class Main {
         BookController bookController = new BookController(bookFacade, reportFacade);
         OrderController orderController = new OrderController(orderFacade, reportFacade);
         BookRequestController bookRequestController = new BookRequestController(requestFacade, reportFacade);
+        ReportController reportController = new ReportController(reportFacade);
 
 
         Navigator navigator = new Navigator();
 
-        MainMenuFactory factory = new MainMenuFactory(navigator, bookController, orderController, bookRequestController);
+        MainMenuFactory factory = new MainMenuFactory(navigator, bookController, orderController, bookRequestController, reportController);
         Menu roofMenu = factory.createRoofMenu();
         navigator.setCurrentMenu(roofMenu);
 

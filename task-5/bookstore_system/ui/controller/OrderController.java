@@ -4,6 +4,7 @@ import bookstore_system.domain.Consumer;
 import bookstore_system.domain.Order;
 import bookstore_system.domain.OrderItem;
 import bookstore_system.dto.OrderSummary;
+import bookstore_system.enums.OrderStatus;
 import bookstore_system.enums.SortByOrder;
 import bookstore_system.facade.OrderFacade;
 import bookstore_system.facade.ReportFacade;
@@ -83,6 +84,29 @@ public class OrderController {
         System.out.println("Заказ успешно отменён!");
     }
 
+    public void changeOrderStatus() {
+        System.out.println("Введите номер заказа:");
+
+        long orderId = Long.parseLong(scanner.nextLine().trim());
+
+        System.out.println("Выберите новый статус из предложенного списка:");
+
+        int i = 1;
+
+        for(OrderStatus status : OrderStatus.values()) {
+            System.out.println((i++) + ". " + status);
+        }
+
+        switch (scanner.nextLine().trim()) {
+            case "1" -> orderFacade.updStatusOrder(orderId, OrderStatus.NEW);
+            case "2" -> orderFacade.updStatusOrder(orderId, OrderStatus.IN_PROCESS);
+            case "3" -> orderFacade.updStatusOrder(orderId, OrderStatus.COMPLETED);
+            case "4" -> orderFacade.updStatusOrder(orderId, OrderStatus.CANCELLED);
+        }
+
+        System.out.println("Статус успешно изменен!");
+    }
+
     public void completeOrder() {
         System.out.println("Введите номер заказа:");
         if(orderFacade.completeOrder(Long.parseLong(scanner.nextLine().trim()))) System.out.println("Заказ успешно завершен!");
@@ -94,9 +118,9 @@ public class OrderController {
         reportFacade.getOrderList(SortByOrder.PRICE).stream().forEach(order -> System.out.println(
                 "ID заказа: " + order.getId() + "\n"
                 + "Дата создания: " + order.getCreatedOrderDate() + "\n"
-                + "Дата завершения заказа: " + (order.getCompletedOrderDate() != null ? "Не завершён" : order.getCompletedOrderDate()) + "\n"
+                + "Дата завершения заказа: " + (order.getCompletedOrderDate() != null ? order.getCompletedOrderDate() : "Не завершён") + "\n"
                 + "Цена заказа: " +  order.getPrice() + "\n"
-                + "Статус: " + order.getStatus()
+                + "Статус: " + order.getStatus() + "\n"
         ));
     }
 
@@ -126,57 +150,6 @@ public class OrderController {
             System.out.println("Итоговая цена: " + order.getPrice());
             System.out.println("Статус заказа: " + order.getStatus() + "\n");
         });
-    }
-
-    public void showCompletedOrderAtPeriod() {
-        System.out.println("Введите начальную дату формата 'год-месяц-число':");
-        String startDate = scanner.nextLine().trim();
-        System.out.println("Введите конечную дату формата 'год-месяц-число':");
-        String endDate = scanner.nextLine().trim();
-
-        System.out.println("Выберите желаемую сортировку: ");
-        System.out.println(
-                "1. Сортировка по дате завершения;" +
-                        "2. Сортировка по цене."
-        );
-
-        List<OrderSummary> orderList = new ArrayList<>();
-
-        switch (scanner.nextLine()) {
-            case "1" -> {
-                orderList = reportFacade.getCompletedOrdersAtPeriod(startDate, endDate, SortByOrder.COMPLETE_DATE);
-                break;
-            }
-            case "2" -> {
-                orderList = reportFacade.getCompletedOrdersAtPeriod(startDate, endDate, SortByOrder.PRICE);
-                break;
-            }
-        }
-
-        orderList.stream().forEach(order -> System.out.println(
-                    "ID заказа: " + order.getId() + "\n"
-                            + "Дата создания: " + order.getCreatedOrderDate() + "\n"
-                            + "Дата завершения заказа: " + order.getCompletedOrderDate() + "\n"
-                            + "Цена заказа: " +  order.getPrice() + "\n"
-                            + "Статус: " + order.getStatus()
-        ));
-
-    }
-
-    public void showCompletedOrderCountAtPeriod() {
-        System.out.println("Введите начальную дату формата 'год-месяц-число':");
-        String startDate = scanner.nextLine().trim();
-        System.out.println("Введите конечную дату формата 'год-месяц-число':");
-        String endDate = scanner.nextLine().trim();
-        System.out.println("Количество завершённых заказов за выбранный период: " + reportFacade.getCountCompletedOrdersAtPeriod(startDate, endDate));
-    }
-
-    public void showProfitAtPeriod() {
-        System.out.println("Введите начальную дату формата 'год-месяц-число': ");
-        String startDate = scanner.nextLine().trim();
-        System.out.println("Введите конечную дату формата 'год-месяц-число': ");
-        String endDate = scanner.nextLine().trim();
-        System.out.println("Количество заработанной суммы за данный период: " + reportFacade.getProfitAtPeriod(startDate, endDate));
     }
 
 }

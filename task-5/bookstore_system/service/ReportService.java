@@ -75,6 +75,7 @@ public class ReportService {
             case PUBLICATION_DATE -> Comparator.comparing(BookSummary::getPublishDate);
             case PRICE -> Comparator.comparing(BookSummary::getPrice);
             case IN_STOCK -> Comparator.comparing(BookSummary::getStatus);
+            default -> Comparator.comparing(BookSummary::getId);
         };
 
         return catalog.getBooks().stream()
@@ -123,6 +124,7 @@ public class ReportService {
         Comparator<BookRequestSummary> comparator = switch (sortParam) {
             case ALPHABET -> Comparator.comparing(summary -> summary.getBook().getTitle());
             case COUNT_REQUEST -> Comparator.<BookRequestSummary>comparingLong(BookRequestSummary::getRequestCount).reversed();
+            default -> Comparator.comparing(summary -> summary.getBook().getId());
         };
 
         return groupedByBook.entrySet().stream()
@@ -152,6 +154,7 @@ public class ReportService {
         Comparator<BookSummary> comparator = switch (sortParam) {
             case DELIVERY_DATE -> Comparator.comparing(BookSummary::getDeliveryDate);
             case PRICE ->  Comparator.comparing(BookSummary::getPrice).reversed();
+            default -> Comparator.comparing(BookSummary::getId);
         };
 
         return catalog.getBooks().stream()
