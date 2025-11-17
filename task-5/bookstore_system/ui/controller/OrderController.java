@@ -114,42 +114,71 @@ public class OrderController {
     }
 
     public void showOrder() {
-        System.out.println("Список заказов:\n");
-        reportFacade.getOrderList(SortByOrder.PRICE).stream().forEach(order -> System.out.println(
-                "ID заказа: " + order.getId() + "\n"
-                + "Дата создания: " + order.getCreatedOrderDate() + "\n"
-                + "Дата завершения заказа: " + (order.getCompletedOrderDate() != null ? order.getCompletedOrderDate() : "Не завершён") + "\n"
-                + "Цена заказа: " +  order.getPrice() + "\n"
-                + "Статус: " + order.getStatus() + "\n"
-        ));
+        List<OrderSummary> orderSummaryList = new ArrayList<>();
+
+        System.out.println("Введите предпочитаемую сортировку: ");
+        System.out.println(
+                "1. Сортировка по дате завершения;\n" +
+                "2. Сортировка по цене;\n" +
+                "3. Сортировка по статусу."
+        );
+
+        switch (scanner.nextLine().trim()) {
+            case "1" -> reportFacade.getOrderList(SortByOrder.COMPLETE_DATE);
+            case "2" -> reportFacade.getOrderList(SortByOrder.PRICE);
+            case "3" -> reportFacade.getOrderList(SortByOrder.STATUS);
+            default -> reportFacade.getOrderList(SortByOrder.ID);
+        }
+
+        if(orderSummaryList.isEmpty()) {
+            System.out.println("Список заказов пуст.\n");
+        } else {
+            System.out.println("Список заказов:\n");
+
+            orderSummaryList.stream().forEach(order -> System.out.println(
+                    "ID заказа: " + order.getId() + "\n"
+                            + "Дата создания: " + order.getCreatedOrderDate() + "\n"
+                            + "Дата завершения заказа: " + (order.getCompletedOrderDate() != null ? order.getCompletedOrderDate() : "Не завершён") + "\n"
+                            + "Цена заказа: " +  order.getPrice() + "\n"
+                            + "Статус: " + order.getStatus() + "\n"
+            ));
+        }
+
+
     }
 
     public void showOrderDetails() {
         System.out.println("Введите номер заказа:");
         Optional<OrderSummary> currentOrder = reportFacade.getOrderDetails(Long.parseLong(scanner.nextLine().trim()));
-        System.out.println("Детали заказа №" + currentOrder.get().getId());
-        currentOrder.ifPresent(order -> {
-            Consumer consumer = order.getConsumer();
-            List<OrderItem> items = order.getOrderItemList();
-            System.out.println("" +
-                "Дата создания заказа: " + order.getCreatedOrderDate() + "\n"
-        + "Дата завершения заказа: " + (order.getCompletedOrderDate() == null ? "Отсутствует \n" : (order.getCompletedOrderDate() + "\n")
-        ));
-            System.out.println("=Информация о заказчике=\n");
-            System.out.println(
-                    "Имя: " + consumer.getName() + "\n"
-                    + "Контактный телефон: " + consumer.getEmail() + "\n"
-                    + "Почта: " + consumer.getEmail() + "\n"
-            );
-            System.out.println("=Детали заказа=\n");
-            items.stream().forEach(orderItem -> System.out.println(
-                    "- Название книги: " + orderItem.getBook().getTitle() + "\n"
-                    + "- Цена: " + orderItem.getBook().getPrice() + "\n"
-                    + "- Количество: " + orderItem.getQuantity() +"\n"
-            ));
-            System.out.println("Итоговая цена: " + order.getPrice());
-            System.out.println("Статус заказа: " + order.getStatus() + "\n");
-        });
+        System.out.println(currentOrder);
+
+        if (currentOrder.isEmpty()) {
+            System.out.println("Данный заказ отсутствует!\n");
+        } else {
+            System.out.println("Детали заказа №" + currentOrder.get().getId());
+            currentOrder.ifPresent(order -> {
+                Consumer consumer = order.getConsumer();
+                List<OrderItem> items = order.getOrderItemList();
+                System.out.println("" +
+                        "Дата создания заказа: " + order.getCreatedOrderDate() + "\n"
+                        + "Дата завершения заказа: " + (order.getCompletedOrderDate() == null ? "Отсутствует \n" : (order.getCompletedOrderDate() + "\n")
+                ));
+                System.out.println("=Информация о заказчике=\n");
+                System.out.println(
+                        "Имя: " + consumer.getName() + "\n"
+                                + "Контактный телефон: " + consumer.getEmail() + "\n"
+                                + "Почта: " + consumer.getEmail() + "\n"
+                );
+                System.out.println("=Детали заказа=\n");
+                items.stream().forEach(orderItem -> System.out.println(
+                        "- Название книги: " + orderItem.getBook().getTitle() + "\n"
+                                + "- Цена: " + orderItem.getBook().getPrice() + "\n"
+                                + "- Количество: " + orderItem.getQuantity() +"\n"
+                ));
+                System.out.println("Итоговая цена: " + order.getPrice());
+                System.out.println("Статус заказа: " + order.getStatus() + "\n");
+            });
+        }
     }
 
 }
