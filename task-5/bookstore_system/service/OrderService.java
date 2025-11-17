@@ -45,7 +45,7 @@ public class OrderService {
 
     public boolean completeOrder(Long orderId) {
         return findOrderById(orderId)
-                .filter(order -> requestService.getRequestStatusByOrderId(orderId) == RequestStatus.FULFILLED)
+                .filter(order -> requestService.getRequestStatusByOrderId(orderId) == RequestStatus.FULFILLED || requestService.getRequestStatusByOrderId(orderId) == null)
                 .filter(Order::canBeCompleted)
                 .map(order ->
                 {

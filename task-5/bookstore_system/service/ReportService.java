@@ -1,8 +1,11 @@
 package bookstore_system.service;
 
 import java.math.BigDecimal;
+import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -16,15 +19,25 @@ public class ReportService {
     private RequestService requestService;
     private BookCatalog catalog;
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
     public ReportService(OrderService orderService, RequestService requestService, BookCatalog catalog) {
         this.orderService = orderService;
         this.requestService = requestService;
         this.catalog = catalog;
     }
 
+    private LocalDateTime parseToDateTime(String dateStr) {
+        try {
+            return LocalDate.parse(dateStr).atStartOfDay();
+        } catch (DateTimeParseException e) {
+            throw new IllegalArgumentException("Неверный формат даты: " + dateStr);
+        }
+    }
+
     public List<OrderSummary> getCompletedOrdersToPeriod(String startDate, String endDate, SortByOrder sortParam) {
+
+        LocalDateTime startDateTime = parseToDateTime(startDate);
+        LocalDateTime endDateTime = parseToDateTime(endDate);
+
         Comparator<OrderSummary> comparator = switch (sortParam) {
             case PRICE -> Comparator.comparing(OrderSummary::getPrice);
             case COMPLETE_DATE -> Comparator.comparing(OrderSummary::getCompletedOrderDate);
@@ -33,18 +46,22 @@ public class ReportService {
 
         return orderService.getOrderList().stream()
                 .filter(o -> o.getOrderStatus() == OrderStatus.COMPLETED)
-                .filter(o -> !o.getCompletedOrderDate().isBefore(LocalDateTime.parse(startDate)))
-                .filter(o -> !o.getCompletedOrderDate().isAfter(LocalDateTime.parse(endDate)))
+                .filter(o -> !o.getCompletedOrderDate().isBefore(startDateTime))
+                .filter(o -> !o.getCompletedOrderDate().isAfter(endDateTime))
                 .map(OrderSummary::new)
                 .sorted(comparator)
                 .collect(Collectors.toList());
     }
 
     public int getCompletedOrdersCount(String startDate, String endDate) {
+
+        LocalDateTime startDateTime = parseToDateTime(startDate);
+        LocalDateTime endDateTime = parseToDateTime(endDate);
+
         return (int) orderService.getOrderList().stream()
                 .filter(o -> o.getOrderStatus() == OrderStatus.COMPLETED)
-                .filter(o -> !o.getCompletedOrderDate().isBefore(LocalDateTime.parse(startDate)))
-                .filter(o -> !o.getCompletedOrderDate().isAfter(LocalDateTime.parse(endDate)))
+                .filter(o -> !o.getCompletedOrderDate().isBefore(startDateTime))
+                .filter(o -> !o.getCompletedOrderDate().isAfter(endDateTime))
                 .count();
     }
 
@@ -81,10 +98,14 @@ public class ReportService {
     }
 
     public BigDecimal getProfitToPeriod(String startDate, String endDate) {
+
+        LocalDateTime startDateTime = parseToDateTime(startDate);
+        LocalDateTime endDateTime = parseToDateTime(endDate);
+
         return orderService.getOrderList().stream()
                 .filter(order -> order.getOrderStatus() == OrderStatus.COMPLETED)
-                .filter(order -> !order.getCompletedOrderDate().isBefore(LocalDateTime.parse(startDate)))
-                .filter(order -> !order.getCompletedOrderDate().isAfter(LocalDateTime.parse(endDate)))
+                .filter(order -> !order.getCompletedOrderDate().isBefore(startDateTime))
+                .filter(order -> !order.getCompletedOrderDate().isAfter(endDateTime))
                 .map(Order::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 

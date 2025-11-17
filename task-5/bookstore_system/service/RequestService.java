@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import bookstore_system.enums.OrderStatus;
 import bookstore_system.enums.RequestStatus;
 
 import bookstore_system.domain.Book;
@@ -37,8 +38,9 @@ public class RequestService {
                 .findAny()
                 .map(r -> {
                     r.getReqBook().setDeliveryDate(LocalDateTime.now());
-                            r.fulFilled();
-                            return null;
+                    r.getRelatedOrder().setOrderStatus(OrderStatus.IN_PROCESS);
+                    r.fulFilled();
+                    return null;
                 });
 
     }

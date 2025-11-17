@@ -85,8 +85,8 @@ public class OrderController {
 
     public void completeOrder() {
         System.out.println("Введите номер заказа:");
-        orderFacade.completeOrder(scanner.nextLong());
-        System.out.println("Заказ успешно завершен!");
+        if(orderFacade.completeOrder(Long.parseLong(scanner.nextLine().trim()))) System.out.println("Заказ успешно завершен!");
+        else System.out.println("Заказ не может быть завершён!");
     }
 
     public void showOrder() {
@@ -102,7 +102,7 @@ public class OrderController {
 
     public void showOrderDetails() {
         System.out.println("Введите номер заказа:");
-        Optional<OrderSummary> currentOrder = reportFacade.getOrderDetails(scanner.nextLong());
+        Optional<OrderSummary> currentOrder = reportFacade.getOrderDetails(Long.parseLong(scanner.nextLine().trim()));
         System.out.println("Детали заказа №" + currentOrder.get().getId());
         currentOrder.ifPresent(order -> {
             Consumer consumer = order.getConsumer();
