@@ -1,0 +1,179 @@
+package bookstore_system.ui.view;
+
+import bookstore_system.domain.Consumer;
+import bookstore_system.domain.Order;
+import bookstore_system.domain.OrderItem;
+import bookstore_system.dto.OrderSummary;
+import bookstore_system.enums.OrderStatus;
+import bookstore_system.enums.SortByOrder;
+import bookstore_system.service.OrderService;
+import bookstore_system.ui.controller.OrderController;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Scanner;
+
+public class OrderView {
+
+    private final OrderController orderController;
+
+    private final Scanner scanner = new Scanner(System.in);
+
+    public OrderView(OrderController orderController) {
+        this.orderController = orderController;
+    }
+
+    public void showCreateOrderMenu() {
+        System.out.println("Создание заказа");
+        System.out.println("Данные заказчика: ");
+        System.out.println("Имя: ");
+        String username = scanner.nextLine();
+        System.out.println("Контактный телефон: ");
+        String phoneNumber = scanner.nextLine();
+        System.out.println("Почта: ");
+        String email = scanner.nextLine();
+
+        Consumer consumer = new Consumer(username, phoneNumber, email);
+
+        System.out.println("Введите ID книг и их количество через пробел (например, '1 10, 3 5'). Введите 'end', чтобы закончить");
+        String input = scanner.nextLine().trim();
+
+        List<Long> bookIds = new ArrayList<>();
+        List<Integer> quantities = new ArrayList<>();
+
+        for (String pair : input.split(",")) {
+
+            pair = pair.trim();
+            String[] parts = pair.split("\\s+");
+            if (parts.length != 2) {
+                System.out.println("Неверный формат ввода!");
+                continue;
+            }
+
+            try {
+                bookIds.add(Long.parseLong(parts[0]));
+                quantities.add(Integer.parseInt(parts[1]));
+            }
+            catch (NumberFormatException e) {
+                System.out.println("Неверный формат числа. Попробуйте снова!");
+            }
+        }
+
+        if (bookIds.isEmpty()) {
+            System.out.println("Не указаны книги для заказа!");
+        }
+
+        long[] bookIdsArray = bookIds.stream().mapToLong(Long::longValue).toArray();
+        int[] quantitiesArray = quantities.stream().mapToInt(Integer::intValue).toArray();
+
+        try {
+            Order order = orderController.createOrder(bookIdsArray, quantitiesArray, consumer);
+            System.out.println("Заказ успешно создан под номером " + order.getId());
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void showCancelOrderMenu() {
+        System.out.println("Введите номер заказа:");
+        orderController.cancelOrder(scanner.nextLong());
+        System.out.println("Заказ успешно отменён!");
+    }
+
+    public void showChangeOrderStatusMenu() {
+        System.out.println("Введите номер заказа:");
+
+        long orderId = Long.parseLong(scanner.nextLine().trim());
+
+        System.out.println("Выберите новый статус из предложенного списка:");
+
+        int i = 1;
+
+        for(OrderStatus status : OrderStatus.values()) {
+            System.out.println((i++) + ". " + status);
+        }
+
+        switch (scanner.nextLine().trim()) {
+            case "1" -> orderController.changeOrderStatus(OrderStatus.NEW, orderId);
+            case "2" -> orderController.changeOrderStatus(OrderStatus.IN_PROCESS, orderId);
+            case "3" -> orderController.changeOrderStatus(OrderStatus.COMPLETED, orderId);
+            case "4" -> orderController.changeOrderStatus(OrderStatus.CANCELLED, orderId);
+        }
+
+        System.out.println("Статус успешно изменен!");
+    }
+
+    public void showCompleteOrderMenu() {
+        System.out.println("Введите номер заказа:");
+        if(orderController.completeOrder(Long.parseLong(scanner.nextLine().trim()))) System.out.println("Заказ успешно завершен!");
+        else System.out.println("Заказ не может быть завершён!");
+    }
+
+    public void showSortedOrdersMenu() {
+        List<OrderSummary> orderSummaryList = new ArrayList<>();
+
+        System.out.println("Введите предпочитаемую сортировку: ");
+        System.out.println(
+                "1. Сортировка по дате завершения;\n" +
+                        "2. Сортировка по цене;\n" +
+                        "3. Сортировка по статусу."
+        );
+
+        switch (scanner.nextLine().trim()) {
+            case "1" -> orderController.getSortedOrders(SortByOrder.COMPLETE_DATE);
+            case "2" -> orderController.getSortedOrders(SortByOrder.PRICE);
+            case "3" -> orderController.getSortedOrders(SortByOrder.STATUS);
+            default -> orderController.getSortedOrders(SortByOrder.ID);
+        }
+
+        if(orderSummaryList.isEmpty()) {
+            System.out.println("Список заказов пуст.\n");
+        } else {
+            System.out.println("Список заказов:\n");
+
+            orderSummaryList.stream().forEach(order -> System.out.println(
+                    "ID заказа: " + order.getId() + "\n"
+                            + "Дата создания: " + order.getCreatedOrderDate() + "\n"
+                            + "Дата завершения заказа: " + (order.getCompletedOrderDate() != null ? order.getCompletedOrderDate() : "Не завершён") + "\n"
+                            + "Цена заказа: " +  order.getPrice() + "\n"
+                            + "Статус: " + order.getStatus() + "\n"
+            ));
+        }
+    }
+
+    public void showOrderDetailsMenu() {
+        System.out.println("Введите номер заказа:");
+        Optional<OrderSummary> currentOrder = orderController.getOrder(Long.parseLong(scanner.nextLine().trim()));
+        System.out.println(currentOrder);
+
+        if (currentOrder.isEmpty()) {
+            System.out.println("Данный заказ отсутствует!\n");
+        } else {
+            System.out.println("Детали заказа №" + currentOrder.get().getId());
+            currentOrder.ifPresent(order -> {
+                Consumer consumer = order.getConsumer();
+                List<OrderItem> items = order.getOrderItemList();
+                System.out.println("" +
+                        "Дата создания заказа: " + order.getCreatedOrderDate() + "\n"
+                        + "Дата завершения заказа: " + (order.getCompletedOrderDate() == null ? "Отсутствует \n" : (order.getCompletedOrderDate() + "\n")
+                ));
+                System.out.println("=Информация о заказчике=\n");
+                System.out.println(
+                        "Имя: " + consumer.getName() + "\n"
+                                + "Контактный телефон: " + consumer.getEmail() + "\n"
+                                + "Почта: " + consumer.getEmail() + "\n"
+                );
+                System.out.println("=Детали заказа=\n");
+                items.stream().forEach(orderItem -> System.out.println(
+                        "- Название книги: " + orderItem.getBook().getTitle() + "\n"
+                                + "- Цена: " + orderItem.getBook().getPrice() + "\n"
+                                + "- Количество: " + orderItem.getQuantity() +"\n"
+                ));
+                System.out.println("Итоговая цена: " + order.getPrice());
+                System.out.println("Статус заказа: " + order.getStatus() + "\n");
+            });
+        }
+    }
+
+}

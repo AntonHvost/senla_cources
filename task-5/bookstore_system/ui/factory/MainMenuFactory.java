@@ -9,22 +9,28 @@ import bookstore_system.ui.domain.IAction;
 import bookstore_system.ui.domain.Menu;
 import bookstore_system.ui.domain.MenuItem;
 import bookstore_system.ui.navigator.Navigator;
+import bookstore_system.ui.view.BookRequestView;
+import bookstore_system.ui.view.BookView;
+import bookstore_system.ui.view.OrderView;
+import bookstore_system.ui.view.ReportView;
 
 public class MainMenuFactory extends MenuFactory {
 
     private final Navigator navigator;
-    private final BookController bookController;
-    private final OrderController orderController;
-    private final BookRequestController bookRequestController;
-    private final ReportController reportController;
+
+    private final BookView bookView;
+    private final BookRequestView bookRequestView;
+    private final OrderView orderView;
+    private final ReportView reportView;
+
     private Menu roofMenu;
 
-    public MainMenuFactory(Navigator navigator, BookController bookController, OrderController orderController,  BookRequestController bookRequestController, ReportController reportController) {
+    public MainMenuFactory(Navigator navigator, BookView bookView, BookRequestView bookRequestView, OrderView orderView, ReportView reportView) {
         this.navigator = navigator;
-        this.bookController = bookController;
-        this.orderController = orderController;
-        this.bookRequestController = bookRequestController;
-        this.reportController = reportController;
+        this.bookView = bookView;
+        this.bookRequestView = bookRequestView;
+        this.orderView = orderView;
+        this.reportView = reportView;
     }
 
     @Override
@@ -42,9 +48,9 @@ public class MainMenuFactory extends MenuFactory {
     public Menu createBookMenu() {
         Menu menu = new Menu("Меню каталога книг");
 
-        menu.addItem(createMenuItem("Показать книги", bookController::showBooks));
-        menu.addItem(createMenuItem("Показать книги, непроданные за срок не более шести месяцев", bookController::showUnsoldBooks));
-        menu.addItem(createMenuItem("Показать описание конкретной книги", bookController::showBookDescription));
+        menu.addItem(createMenuItem("Показать книги", bookView::showBooksMenu));
+        menu.addItem(createMenuItem("Показать книги, непроданные за срок не более шести месяцев", bookView::showUnsoldBooks));
+        menu.addItem(createMenuItem("Показать описание конкретной книги", bookView::showBookDescription));
         menu.addItem(createMenuItem("Вернуться в главное меню", new NavigateToMenuAction(navigator, roofMenu)));
 
         return menu;
@@ -53,12 +59,12 @@ public class MainMenuFactory extends MenuFactory {
     public Menu createOrderMenu() {
         Menu menu = new Menu("Меню заказов");
 
-        menu.addItem(createMenuItem("Создать заказ", orderController::createOrder));
-        menu.addItem(createMenuItem("Отменить заказ", orderController::cancelOrder));
-        menu.addItem(createMenuItem("Завершить зазаз", orderController::completeOrder));
-        menu.addItem(createMenuItem("Изменить статус заказа", orderController::changeOrderStatus));
-        menu.addItem(createMenuItem("Посмотреть список заказов", orderController::showOrder));
-        menu.addItem(createMenuItem("Посмотреть детали заказа", orderController::showOrderDetails));
+        menu.addItem(createMenuItem("Создать заказ", orderView::showCreateOrderMenu));
+        menu.addItem(createMenuItem("Отменить заказ", orderView::showCancelOrderMenu));
+        menu.addItem(createMenuItem("Завершить зазаз", orderView::showCompleteOrderMenu));
+        menu.addItem(createMenuItem("Изменить статус заказа", orderView::showChangeOrderStatusMenu));
+        menu.addItem(createMenuItem("Посмотреть список заказов", orderView::showSortedOrdersMenu));
+        menu.addItem(createMenuItem("Посмотреть детали заказа", orderView::showOrderDetailsMenu));
         menu.addItem(createMenuItem("Вернуться в главное меню", new NavigateToMenuAction(navigator, roofMenu)));
 
         return menu;
@@ -67,9 +73,9 @@ public class MainMenuFactory extends MenuFactory {
     public Menu createBookRequestMenu() {
         Menu menu = new Menu("Меню запросов книг");
 
-        menu.addItem(createMenuItem("Сформировать запрос на книгу", bookRequestController::requestBook));
-        menu.addItem(createMenuItem("Показать список запросов", bookRequestController::showRequestList));
-        menu.addItem(createMenuItem("Добавить книгу на склад", bookRequestController::restockBook));
+        menu.addItem(createMenuItem("Сформировать запрос на книгу", bookRequestView::showCreateRequestBookMenu));
+        menu.addItem(createMenuItem("Показать список запросов", bookRequestView::showRequestsMenu));
+        menu.addItem(createMenuItem("Добавить книгу на склад", bookRequestView::showRestockBookMenu));
         menu.addItem(createMenuItem("Вернуться в главное меню", new NavigateToMenuAction(navigator, roofMenu)));
 
         return menu;
@@ -78,9 +84,9 @@ public class MainMenuFactory extends MenuFactory {
     public Menu createReportInfoMenu() {
         Menu menu = new Menu("Меню дополнительной информации");
 
-        menu.addItem(createMenuItem("Посмотреть завершенных заказов за определенный период", reportController::showCompletedOrderAtPeriod));
-        menu.addItem(createMenuItem("Посмотреть количество завершенных заказов за определенный период", reportController::showCompletedOrderCountAtPeriod));
-        menu.addItem(createMenuItem("Посмотреть заработанную сумму за определенный период", reportController::showProfitAtPeriod));
+        menu.addItem(createMenuItem("Посмотреть завершенных заказов за определенный период", reportView::showCompletedOrderAtPeriodMenu));
+        menu.addItem(createMenuItem("Посмотреть количество завершенных заказов за определенный период", reportView::showCompletedOrderCountAtPeriodMenu));
+        menu.addItem(createMenuItem("Посмотреть заработанную сумму за определенный период", reportView::showProfitAtPeriodMenu));
         menu.addItem(createMenuItem("Вернуться в главное меню", new NavigateToMenuAction(navigator, roofMenu)));
 
         return menu;
