@@ -17,10 +17,7 @@ import bookstore_system.ui.controller.*;
 import bookstore_system.ui.domain.Menu;
 import bookstore_system.ui.factory.MainMenuFactory;
 import bookstore_system.ui.navigator.Navigator;
-import bookstore_system.ui.view.BookRequestView;
-import bookstore_system.ui.view.BookView;
-import bookstore_system.ui.view.OrderView;
-import bookstore_system.ui.view.ReportView;
+import bookstore_system.ui.view.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -55,9 +52,11 @@ public class Main {
 
         MainMenuFactory factory = new MainMenuFactory(navigator, bookView, bookRequestView, orderView, reportView);
         Menu roofMenu = factory.createRoofMenu();
+        MenuView menuView = new MenuView();
+
         navigator.setCurrentMenu(roofMenu);
 
-        MenuController controller = new MenuController(navigator);
+        MenuController controller = new MenuController(navigator,menuView);
 
         controller.run();
 
