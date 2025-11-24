@@ -1,7 +1,5 @@
 package bookstore_system.facade;
 
-import bookstore_system.domain.BookCatalog;
-import bookstore_system.domain.Consumer;
 import bookstore_system.dto.BookRequestSummary;
 import bookstore_system.dto.BookSummary;
 import bookstore_system.dto.OrderSummary;
@@ -10,7 +8,6 @@ import bookstore_system.enums.SortByOrder;
 import bookstore_system.enums.SortByRequestBook;
 import bookstore_system.enums.SortByUnsoldBook;
 import bookstore_system.service.ReportService;
-import bookstore_system.service.RequestService;
 
 import java.math.BigDecimal;
 import java.util.List;

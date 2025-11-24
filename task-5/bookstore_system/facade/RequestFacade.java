@@ -1,28 +1,29 @@
 package bookstore_system.facade;
 
 import bookstore_system.domain.Book;
-import bookstore_system.domain.BookCatalog;
+import bookstore_system.service.BookInventoryService;
 import bookstore_system.domain.BookRequest;
 import bookstore_system.service.RequestService;
 
+import java.util.Optional;
+
 public class RequestFacade {
 
-    private RequestService requestService;
-    private BookCatalog bookCatalog;
+    private final RequestService requestService;
+    private final BookInventoryService bookInventoryService;
 
-    public RequestFacade(RequestService requestService, BookCatalog bookCatalog) {
+    public RequestFacade(RequestService requestService, BookInventoryService bookInventoryService) {
         this.requestService = requestService;
-        this.bookCatalog = bookCatalog;
+        this.bookInventoryService = bookInventoryService;
     }
 
-    public BookRequest requestBook(long bookId) {
-        Book book = bookCatalog.findBookById(bookId)
-                .orElseThrow(() -> new IllegalArgumentException("Книга с ID " + bookId + " не найдена"));
-        return requestService.createRequest(book, null);
+    public Optional<BookRequest> requestBook(long bookId) {
+        return bookInventoryService.findBookById(bookId)
+                .map(book -> requestService.createRequest(book, null));
     }
 
     public void restockBook(long bookId){
-        bookCatalog.restockBook(bookId);
+        bookInventoryService.restockBook(bookId);
         requestService.fulfillRequests(bookId);
     }
 }

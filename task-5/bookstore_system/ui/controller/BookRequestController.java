@@ -8,6 +8,7 @@ import bookstore_system.facade.RequestFacade;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 
 public class BookRequestController {
@@ -19,8 +20,8 @@ public class BookRequestController {
         this.reportFacade = reportFacade;
     }
 
-    public void createRequestBook(long requestId) {
-        requestFacade.requestBook(requestId);
+    public Optional<BookRequest> createRequestBook(long requestId) {
+       return requestFacade.requestBook(requestId);
     }
 
     public void restockBook(long bookId) {

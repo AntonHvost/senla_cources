@@ -1,22 +1,22 @@
 package bookstore_system.facade;
 
 import bookstore_system.domain.Book;
-import bookstore_system.domain.BookCatalog;
+import bookstore_system.service.BookInventoryService;
 
 public class BookFacade {
 
-    private final BookCatalog bookCatalog;
+    private final BookInventoryService bookInventoryService;
 
-    public BookFacade(BookCatalog bookCatalog) {
-        this.bookCatalog = bookCatalog;
+    public BookFacade(BookInventoryService bookInventoryService) {
+        this.bookInventoryService = bookInventoryService;
     }
 
     public void addBookToCatalog(Book book) {
-        bookCatalog.addBookToCatalog(book);
+        bookInventoryService.addBookToCatalog(book);
     }
 
     public boolean isBookAvailable(long bookId) {
-        return bookCatalog.findBookById(bookId)
+        return bookInventoryService.findBookById(bookId)
                 .map(Book::isAvaible)
                 .orElse(false);
     }

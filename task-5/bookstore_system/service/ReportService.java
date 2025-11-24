@@ -1,10 +1,8 @@
 package bookstore_system.service;
 
 import java.math.BigDecimal;
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -17,9 +15,9 @@ import bookstore_system.domain.*;
 public class ReportService {
     private OrderService orderService;
     private RequestService requestService;
-    private BookCatalog catalog;
+    private BookInventoryService catalog;
 
-    public ReportService(OrderService orderService, RequestService requestService, BookCatalog catalog) {
+    public ReportService(OrderService orderService, RequestService requestService, BookInventoryService catalog) {
         this.orderService = orderService;
         this.requestService = requestService;
         this.catalog = catalog;

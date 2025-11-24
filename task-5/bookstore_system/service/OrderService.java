@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import bookstore_system.enums.BookStatus;
 import bookstore_system.enums.OrderStatus;
@@ -13,12 +12,12 @@ import bookstore_system.enums.RequestStatus;
 import bookstore_system.domain.*;
 
 public class OrderService {
-    private final BookCatalog catalog;
+    private final BookInventoryService catalog;
     private final RequestService requestService;
     private final List<Order> ordersList;
     private long nextOrderId = 1;
 
-    public OrderService(RequestService requestService, BookCatalog catalog){
+    public OrderService(RequestService requestService, BookInventoryService catalog){
         this.requestService = requestService;
         this.ordersList = new ArrayList<>();
         this.catalog = catalog;

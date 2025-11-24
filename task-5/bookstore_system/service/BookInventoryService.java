@@ -1,15 +1,16 @@
-package bookstore_system.domain;
+package bookstore_system.service;
 
+import bookstore_system.domain.Book;
 import bookstore_system.enums.BookStatus;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class BookCatalog {
+public class BookInventoryService {
     private List<Book> books;
 
-    public BookCatalog() {
+    public BookInventoryService() {
         this.books = new ArrayList<>();
     }
 

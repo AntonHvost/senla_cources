@@ -1,12 +1,11 @@
 package bookstore_system.ui.view;
 
+import bookstore_system.domain.BookRequest;
 import bookstore_system.dto.BookRequestSummary;
 import bookstore_system.enums.SortByRequestBook;
 import bookstore_system.ui.controller.BookRequestController;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class BookRequestView {
 
@@ -21,8 +20,25 @@ public class BookRequestView {
     public void showCreateRequestBookMenu() {
         System.out.println("=Создание запроса на книгу=\n");
         System.out.println("Введите ID книги: ");
-        bookRequestController.createRequestBook(scanner.nextLong());
-        System.out.println("Запрос успешно создан!");
+
+        long bookId;
+
+        try {
+            bookId = scanner.nextLong();
+            scanner.nextLine();
+        }
+        catch (InputMismatchException e) {
+            System.out.println("Должно быть целое число!");
+            scanner.nextLine();
+            return;
+        }
+
+        Optional<BookRequest> result = bookRequestController.createRequestBook(bookId);
+        if (result.isPresent()) {
+            System.out.println("Запрос успешно создан!");
+        } else {
+            System.out.println("Ошибка: Книга с ID " + bookId + " не найдена. Проверьте корректность ID.");
+        }
     }
 
     public void showRestockBookMenu() {
