@@ -13,6 +13,7 @@ public class GenericCSVService {
             CsvConverter<T> converter
             ) throws IOException {
         try (PrintWriter writer = new PrintWriter(new FileWriter(filename))) {
+            writer.println(converter.getHeader());
             for (T entity : entities) {
                 writer.println(converter.toCsvRow(entity));
             }

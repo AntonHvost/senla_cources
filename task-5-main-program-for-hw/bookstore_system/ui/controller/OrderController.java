@@ -21,8 +21,8 @@ public class OrderController {
         this.reportFacade = reportFacade;
     }
 
-    public Order createOrder(long[] bookIds, int[] quantities, Long consumerId) {
-        return  orderFacade.createOrder(bookIds, quantities, consumerId);
+    public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
+        return  orderFacade.createOrder(bookIds, quantities, consumer);
     }
 
     public void cancelOrder(Long orderId) {
@@ -43,6 +43,14 @@ public class OrderController {
 
     public Optional<OrderSummary> getOrder(Long orderId) {
         return reportFacade.getOrderDetails(orderId);
+    }
+
+    public void importOrder(String filename) {
+        orderFacade.importOrderFromCsv(filename);
+    }
+
+    public void exportOrder(String filename) {
+        orderFacade.exportOrderToCsv(filename);
     }
 
 }

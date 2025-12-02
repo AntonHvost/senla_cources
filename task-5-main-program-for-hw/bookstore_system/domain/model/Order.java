@@ -2,19 +2,22 @@ package bookstore_system.domain.model;
 
 import bookstore_system.enums.OrderStatus;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order {
+public class Order implements Indedifiable {
     private Long id;
-    private List<OrderItem> orderItemsList;
     private Long consumerId;
     private LocalDateTime createdAt;
     private LocalDateTime completedAt;
+    private List<OrderItem> orderItemsList;
     private BigDecimal totalPrice;
     private OrderStatus orderStatus;
+
+    public Order() {}
 
     public Order(Long id, Long consumerId) {
         this.id = id;
@@ -25,7 +28,8 @@ public class Order {
         this.totalPrice = BigDecimal.ZERO;
     }
 
-    public long getId() {
+    @Override
+    public Long getId() {
         return id;
     }
 
@@ -41,24 +45,46 @@ public class Order {
         return completedAt;
     }
 
-    public void setCompletedAtDate(LocalDateTime completedAt) {
-        this.completedAt = completedAt;
+
+    public BigDecimal getTotalPrice() {
+        return totalPrice;
+    }
+
+    public List<OrderItem> getOrderItemsList() {
+        return orderItemsList;
     }
 
     public Long getConsumerId() {
         return consumerId;
     }
 
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setOrderItemsList(List<OrderItem> orderItemsList) {
+        this.orderItemsList = orderItemsList;
+    }
+
+    public void setCreatedOrder(LocalDateTime createdOrderDate) {
+        this.createdAt = createdOrderDate;
+    }
+
+    public void setTotalPrice(BigDecimal totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public void setConsumerId(Long consumerId) {
+        this.consumerId = consumerId;
+    }
+
+    public void setCompletedAtDate(LocalDateTime completedAt) {
+        this.completedAt = completedAt;
     }
 
     public void setOrderStatus(OrderStatus orderStatus) {
         this.orderStatus = orderStatus;
-    }
-
-    public List<OrderItem> getOrderItemsList() {
-        return orderItemsList;
     }
 
     public void addItem(OrderItem item) {
@@ -69,12 +95,4 @@ public class Order {
         return orderStatus == OrderStatus.IN_PROCESS;
     }
 
-    public void calculateTotalPrice() {
-        this.totalPrice = getOrderItemsList().stream()
-                .map(orderItem -> {
-                    BigDecimal bookPrice = orderItem.getBook().getPrice();
-                    return bookPrice.multiply(BigDecimal.valueOf(orderItem.getQuantity()));
-                })
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
 }

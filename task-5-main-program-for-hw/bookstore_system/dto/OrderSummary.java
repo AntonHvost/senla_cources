@@ -15,18 +15,18 @@ public class OrderSummary {
     private Consumer consumer;
     private LocalDateTime createdOrderDate;
     private LocalDateTime completedOrderDate;
-    private List<OrderItem> orderItemList;
+    private List<OrderItemSummary> orderItemList;
     private BigDecimal price;
     private OrderStatus status;
 
-    public OrderSummary(Order order, Consumer consumer) {
+    public OrderSummary(Order order, Consumer consumer, List<OrderItemSummary> orderItem) {
         this.id = order.getId();
         this.consumer = consumer;
         this.createdOrderDate = order.getCreatedOrderDate();
         this.completedOrderDate = order.getCompletedOrderDate();
         this.price = order.getTotalPrice();
         this.status = order.getOrderStatus();
-        this.orderItemList = order.getOrderItemsList();
+        this.orderItemList = orderItem;
     }
 
     public long getId() {
@@ -45,7 +45,7 @@ public class OrderSummary {
         return completedOrderDate;
     }
 
-    public List<OrderItem> getOrderItemList() {
+    public List<OrderItemSummary> getOrderItemList() {
         return orderItemList;
     }
 

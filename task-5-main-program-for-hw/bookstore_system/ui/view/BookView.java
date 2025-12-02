@@ -59,7 +59,7 @@ public class BookView {
                 "Название: "  + bookSummary.getTitle() + "\n"
                         + "Автор: "  + bookSummary.getAuthor() + "\n"
                         + "Описание: " + bookSummary.getDescription() + "\n"
-                        + "Дата публикации: " + bookSummary.getPrice() + "\n"
+                        + "Дата публикации: " + bookSummary.getPublishDate() + "\n"
                         + "Цена: "  + bookSummary.getPrice() + "\n"
                         + "Статус: " + (bookSummary.getStatus() == BookStatus.AVAILABLE ? "В наличии" : "Отсутствует") + "\n"
         ));
@@ -105,6 +105,13 @@ public class BookView {
 
     public void showBookImportMenu () {
         System.out.println("Введите название файла: ");
+        System.out.println("Рабочая папка: " + System.getProperty("user.dir"));
         bookController.importBooks(scanner.nextLine().trim());
+    }
+
+    public void showBookExportMenu () {
+        System.out.println("Введите название экспортируемого файла: ");
+        bookController.exportBooks(scanner.nextLine().trim() + ".csv");
+        System.out.println("Книги успешно экспортированы!");
     }
 }

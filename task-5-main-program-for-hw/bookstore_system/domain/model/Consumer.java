@@ -1,7 +1,7 @@
 package bookstore_system.domain.model;
 
-public class Consumer {
-    private Long id;
+public class Consumer implements Indedifiable {
+    private Long id = 0L;
     private String name;
     private String phone;
     private String email;
@@ -13,8 +13,14 @@ public class Consumer {
         this.email = email;
     }
 
+    @Override
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

@@ -9,7 +9,15 @@ import java.util.Optional;
 public class ConsumerService {
     private final List<Consumer> consumers = new ArrayList<>();
 
-    public Optional<Consumer> findConsumerById(long consumerId) {
-        return consumers.stream().filter(c -> c.getId() == consumerId).findFirst();
+    public void addConsumer(Consumer consumer) {
+        consumers.add(consumer);
+    }
+
+    public Optional<Consumer> findConsumerById(Long consumerId) {
+        return consumers.stream().filter(c -> c.getId().equals(consumerId)).findAny();
+    }
+
+    public List<Consumer> findAllConsumers() {
+        return consumers;
     }
 }

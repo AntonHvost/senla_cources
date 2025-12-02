@@ -9,10 +9,7 @@ import bookstore_system.ui.domain.IAction;
 import bookstore_system.ui.domain.Menu;
 import bookstore_system.ui.domain.MenuItem;
 import bookstore_system.ui.navigator.Navigator;
-import bookstore_system.ui.view.BookRequestView;
-import bookstore_system.ui.view.BookView;
-import bookstore_system.ui.view.OrderView;
-import bookstore_system.ui.view.ReportView;
+import bookstore_system.ui.view.*;
 
 public class MainMenuFactory extends MenuFactory {
 
@@ -22,15 +19,17 @@ public class MainMenuFactory extends MenuFactory {
     private final BookRequestView bookRequestView;
     private final OrderView orderView;
     private final ReportView reportView;
+    private final ConsumerView consumerView;
 
     private Menu roofMenu;
 
-    public MainMenuFactory(Navigator navigator, BookView bookView, BookRequestView bookRequestView, OrderView orderView, ReportView reportView) {
+    public MainMenuFactory(Navigator navigator, BookView bookView, BookRequestView bookRequestView, OrderView orderView, ReportView reportView, ConsumerView consumerView) {
         this.navigator = navigator;
         this.bookView = bookView;
         this.bookRequestView = bookRequestView;
         this.orderView = orderView;
         this.reportView = reportView;
+        this.consumerView = consumerView;
     }
 
     @Override
@@ -41,6 +40,7 @@ public class MainMenuFactory extends MenuFactory {
         roofMenu.addItem(createMenuItem("Меню заказов", new NavigateToMenuAction(navigator, createOrderMenu())));
         roofMenu.addItem(createMenuItem("Меню запросов на книгу", new NavigateToMenuAction(navigator, createBookRequestMenu())));
         roofMenu.addItem(createMenuItem("Меню дополнительной информации", new NavigateToMenuAction(navigator, createReportInfoMenu())));
+        roofMenu.addItem(createMenuItem("Меню информации о заказчиках", new NavigateToMenuAction(navigator, createConsumerMenu())));
 
         return roofMenu;
     }
@@ -52,6 +52,7 @@ public class MainMenuFactory extends MenuFactory {
         menu.addItem(createMenuItem("Показать книги, непроданные за срок не более шести месяцев", bookView::showUnsoldBooks));
         menu.addItem(createMenuItem("Показать описание конкретной книги", bookView::showBookDescription));
         menu.addItem(createMenuItem("Импортировать книги из CSV", bookView::showBookImportMenu));
+        menu.addItem(createMenuItem("Экспортировать книги в CSV", bookView::showBookExportMenu));
         menu.addItem(createMenuItem("Вернуться в главное меню", new NavigateToMenuAction(navigator, roofMenu)));
 
         return menu;
@@ -66,6 +67,8 @@ public class MainMenuFactory extends MenuFactory {
         menu.addItem(createMenuItem("Изменить статус заказа", orderView::showChangeOrderStatusMenu));
         menu.addItem(createMenuItem("Посмотреть список заказов", orderView::showSortedOrdersMenu));
         menu.addItem(createMenuItem("Посмотреть детали заказа", orderView::showOrderDetailsMenu));
+        menu.addItem(createMenuItem("Импортировать список заказов из CSV", orderView::showOrderImportMenu));
+        menu.addItem(createMenuItem("Экспортировать список заказов из CSV", orderView::showOrderExportMenu));
         menu.addItem(createMenuItem("Вернуться в главное меню", new NavigateToMenuAction(navigator, roofMenu)));
 
         return menu;
@@ -92,6 +95,16 @@ public class MainMenuFactory extends MenuFactory {
 
         return menu;
     }
+
+    public Menu createConsumerMenu() {
+        Menu menu = new Menu("Меню дополнительной информации");
+
+        menu.addItem(createMenuItem("Показать всех заказчиков", consumerView::showConsumersMenu));
+        menu.addItem(createMenuItem("Вернуться в главное меню", new NavigateToMenuAction(navigator, roofMenu)));
+
+        return menu;
+    }
+
 
     @Override
     public MenuItem createMenuItem(String title, IAction action) {

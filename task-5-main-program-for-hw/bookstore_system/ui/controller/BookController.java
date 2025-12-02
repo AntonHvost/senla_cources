@@ -33,4 +33,8 @@ public class BookController {
         bookFacade.importBooksFromCSV(filename);
     }
 
+    public void exportBooks(String filename) {
+        bookFacade.exportBooksToCSV(filename);
+    }
+
 }

@@ -9,14 +9,14 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class BookCSVConverter implements CsvConverter<Book> {
+public class BookCsvConverter implements CsvConverter<Book> {
 
     private static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public String getHeader() {
-        return "id, title, author, description, publishDate, price, deliveryDate, status";
+        return "id,title,author,description,publishDate,deliveryDate,price,status\n";
     }
 
     @Override
@@ -37,7 +37,7 @@ public class BookCSVConverter implements CsvConverter<Book> {
     public Book fromCsvRow(String line) {
         String[] parts = line.split(",", -1);
 
-        if (parts.length != 7) throw new IllegalArgumentException("Неверный формат строки!");
+        if (parts.length != 8) throw new IllegalArgumentException("Неверный формат строки!");
 
         Book book = new Book();
 
@@ -45,8 +45,8 @@ public class BookCSVConverter implements CsvConverter<Book> {
         book.setTitle(unescape(parts[1]));
         book.setAuthor(unescape(parts[2]));
         book.setDescription(unescape(parts[3]));
-        book.setPublishDate(LocalDate.parse(parts[4], DATE_TIME_FORMATTER));
-        book.setDeliveryDate(parts[5] == null ? null : LocalDateTime.parse(parts[5], DATE_TIME_FORMATTER));
+        book.setPublishDate(LocalDate.parse(parts[4], DATE_FORMATTER));
+        book.setDeliveryDate(LocalDateTime.parse(parts[5], DATE_TIME_FORMATTER));
         book.setPrice(BigDecimal.valueOf(Double.parseDouble(parts[6])));
         book.setStatus(BookStatus.valueOf(parts[7]));
 

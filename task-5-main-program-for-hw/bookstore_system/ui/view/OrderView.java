@@ -3,6 +3,7 @@ package bookstore_system.ui.view;
 import bookstore_system.domain.model.Consumer;
 import bookstore_system.domain.model.Order;
 import bookstore_system.domain.model.OrderItem;
+import bookstore_system.dto.OrderItemSummary;
 import bookstore_system.dto.OrderSummary;
 import bookstore_system.enums.OrderStatus;
 import bookstore_system.enums.SortByOrder;
@@ -67,7 +68,7 @@ public class OrderView {
         int[] quantitiesArray = quantities.stream().mapToInt(Integer::intValue).toArray();
 
         try {
-            Order order = orderController.createOrder(bookIdsArray, quantitiesArray, consumer.getId());
+            Order order = orderController.createOrder(bookIdsArray, quantitiesArray, consumer);
             System.out.println("Заказ успешно создан под номером " + order.getId());
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
@@ -120,10 +121,10 @@ public class OrderView {
         );
 
         switch (scanner.nextLine().trim()) {
-            case "1" -> orderController.getSortedOrders(SortByOrder.COMPLETE_DATE);
-            case "2" -> orderController.getSortedOrders(SortByOrder.PRICE);
-            case "3" -> orderController.getSortedOrders(SortByOrder.STATUS);
-            default -> orderController.getSortedOrders(SortByOrder.ID);
+            case "1" -> orderSummaryList = orderController.getSortedOrders(SortByOrder.COMPLETE_DATE);
+            case "2" -> orderSummaryList = orderController.getSortedOrders(SortByOrder.PRICE);
+            case "3" -> orderSummaryList = orderController.getSortedOrders(SortByOrder.STATUS);
+            default -> orderSummaryList = orderController.getSortedOrders(SortByOrder.ID);
         }
 
         if(orderSummaryList.isEmpty()) {
@@ -144,7 +145,6 @@ public class OrderView {
     public void showOrderDetailsMenu() {
         System.out.println("Введите номер заказа:");
         Optional<OrderSummary> currentOrder = orderController.getOrder(Long.parseLong(scanner.nextLine().trim()));
-        System.out.println(currentOrder);
 
         if (currentOrder.isEmpty()) {
             System.out.println("Данный заказ отсутствует!\n");
@@ -152,7 +152,7 @@ public class OrderView {
             System.out.println("Детали заказа №" + currentOrder.get().getId());
             currentOrder.ifPresent(order -> {
                 Consumer consumer = order.getConsumer();
-                List<OrderItem> items = order.getOrderItemList();
+                List<OrderItemSummary> items = order.getOrderItemList();
                 System.out.println("" +
                         "Дата создания заказа: " + order.getCreatedOrderDate() + "\n"
                         + "Дата завершения заказа: " + (order.getCompletedOrderDate() == null ? "Отсутствует \n" : (order.getCompletedOrderDate() + "\n")
@@ -173,6 +173,18 @@ public class OrderView {
                 System.out.println("Статус заказа: " + order.getStatus() + "\n");
             });
         }
+    }
+
+    public void showOrderImportMenu () {
+        System.out.println("Введите название файла: ");
+        System.out.println("Рабочая папка: " + System.getProperty("user.dir"));
+        orderController.importOrder(scanner.nextLine().trim());
+    }
+
+    public void showOrderExportMenu () {
+        System.out.println("Введите название экспортируемого файла: ");
+        orderController.exportOrder(scanner.nextLine().trim() + ".csv");
+        System.out.println("Книги успешно экспортированы!");
     }
 
 }

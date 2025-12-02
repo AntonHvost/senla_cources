@@ -14,13 +14,14 @@ import bookstore_system.enums.*;
 public class ReportService {
     private final OrderService orderService;
     private final RequestService requestService;
-    private final ConsumerService consumerService = new ConsumerService();
+    private final ConsumerService consumerService;
     private final BookInventoryService catalog;
 
-    public ReportService(OrderService orderService, RequestService requestService, BookInventoryService catalog) {
+    public ReportService(OrderService orderService, RequestService requestService, BookInventoryService catalog, ConsumerService consumerService) {
         this.orderService = orderService;
         this.requestService = requestService;
         this.catalog = catalog;
+        this.consumerService = consumerService;
     }
 
     private LocalDateTime parseToDateTime(String dateStr) {
@@ -49,7 +50,11 @@ public class ReportService {
                 .map(order -> {
                             Consumer consumer = consumerService.findConsumerById(order.getConsumerId())
                                     .orElse(null);
-                            return new OrderSummary(order, consumer);
+                            List<OrderItemSummary> items = order.getOrderItemsList().stream()
+                                .map(orderItem -> new OrderItemSummary(orderItem, catalog.findBookById(orderItem.getBookId())
+                                    .orElse(null)))
+                                .toList();
+                            return new OrderSummary(order, consumer, items);
                         }
                 )
                 .sorted(comparator)
@@ -97,9 +102,15 @@ public class ReportService {
 
         return orderService.getOrderList().stream()
                 .map(order ->  {
-                    Consumer consumer = consumerService.findConsumerById(order.getConsumerId())
-                            .orElse(null);
-                    return new OrderSummary(order, consumer);
+                    Consumer consumer = consumerService.findConsumerById(order.getConsumerId()).orElse(null);
+                    System.out.println(order.getConsumerId());
+                    List<OrderItemSummary> items = new ArrayList<>();
+                    for (OrderItem orderItem : order.getOrderItemsList()) {
+                        OrderItemSummary orderItemSummary = new OrderItemSummary(orderItem, catalog.findBookById(orderItem.getBookId())
+                                .orElse(null));
+                        items.add(orderItemSummary);
+                    }
+                    return new OrderSummary(order, consumer, items);
                 })
                 .sorted(comparator)
                 .collect(Collectors.toList());
@@ -119,13 +130,17 @@ public class ReportService {
 
     }
 
-        public Optional<OrderSummary> getOrderDetails(long orderId) {
-        return orderService.findOrderById(orderId).map(order -> {
-                    Consumer consumer = consumerService.findConsumerById(order.getConsumerId())
-                            .orElse(null);
-                    return new OrderSummary(order, consumer);
-                }
-            );
+    public Optional<OrderSummary> getOrderDetails(Long orderId) {
+
+    return orderService.findOrderById(orderId).map(order -> {
+                Consumer consumer = consumerService.findConsumerById(order.getConsumerId()).orElse(null);
+                List<OrderItemSummary> items = order.getOrderItemsList().stream()
+                        .map(orderItem -> new OrderItemSummary(orderItem, catalog.findBookById(orderItem.getBookId())
+                                .orElse(null)))
+                        .toList();
+                return new OrderSummary(order, consumer, items);
+            }
+        );
     }
 
     public List<BookRequestSummary> getBookRequestList(SortByRequestBook sortParam) {
@@ -154,7 +169,7 @@ public class ReportService {
         for (Order order : orderService.getOrderList()) {
             if(order.getOrderStatus() != OrderStatus.COMPLETED) continue;
             for (OrderItem orderItem : order.getOrderItemsList()) {
-                Book book = orderItem.getBook();
+                Book book = catalog.findBookById(orderItem.getBookId()).orElse(new Book());
                 LocalDateTime orderDate = order.getCompletedOrderDate();
                 LocalDateTime lastSoldDate = lastSoldDateByBook.get(book);
                 if (lastSoldDate == null || orderDate.isAfter(lastSoldDate)) {

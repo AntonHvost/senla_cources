@@ -20,12 +20,13 @@ public class Main {
 
         BookInventoryService catalog = new BookInventoryService();
         RequestService requestService = new RequestService();
-        OrderService orderService = new OrderService(requestService, catalog);
-        ReportService reportService = new ReportService(orderService, requestService, catalog);
+        ConsumerService consumerService = new ConsumerService();
+        OrderService orderService = new OrderService(requestService, catalog, consumerService);
+        ReportService reportService = new ReportService(orderService, requestService, catalog, consumerService);
         IOService ioService = new IOService();
 
         BookFacade bookFacade = new BookFacade(catalog, ioService);
-        OrderFacade orderFacade = new OrderFacade(orderService);
+        OrderFacade orderFacade = new OrderFacade(orderService, ioService);
         ReportFacade reportFacade = new ReportFacade(reportService);
         RequestFacade requestFacade = new RequestFacade(requestService, catalog);
 
@@ -39,15 +40,17 @@ public class Main {
         OrderController orderController = new OrderController(orderFacade, reportFacade);
         BookRequestController bookRequestController = new BookRequestController(requestFacade, reportFacade);
         ReportController reportController = new ReportController(reportFacade);
+        ConsumerController consumerController = new ConsumerController(consumerService);
 
         BookView bookView = new BookView(bookController);
         BookRequestView bookRequestView = new BookRequestView(bookRequestController);
         OrderView orderView = new OrderView(orderController);
         ReportView reportView = new ReportView(reportController);
+        ConsumerView consumerView = new ConsumerView(consumerController);
 
         Navigator navigator = new Navigator();
 
-        MainMenuFactory factory = new MainMenuFactory(navigator, bookView, bookRequestView, orderView, reportView);
+        MainMenuFactory factory = new MainMenuFactory(navigator, bookView, bookRequestView, orderView, reportView, consumerView);
         Menu roofMenu = factory.createRoofMenu();
         MenuView menuView = new MenuView();
 

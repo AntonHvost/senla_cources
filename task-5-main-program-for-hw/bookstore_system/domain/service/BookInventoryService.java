@@ -29,6 +29,7 @@ public class BookInventoryService {
     }
 
     public void saveBook(Book book){
+        System.out.println(book.getTitle());
         books.add(book);
     }
 

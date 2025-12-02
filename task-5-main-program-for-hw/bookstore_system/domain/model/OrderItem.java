@@ -1,18 +1,23 @@
 package bookstore_system.domain.model;
 
+import java.util.Optional;
+
 public class OrderItem {
-    private Long id;
-    private Book book;
+    private Long orderId;
+    private Long bookId;
     private int quantity;
 
-    public OrderItem(long id, Book book, int quantity) {
-        this.id = id;
-        this.book = book;
+    public OrderItem(Long id, Long bookId, int quantity) {
+        this.orderId = id;
+        this.bookId = bookId;
         this.quantity = quantity;
     }
 
-    public Book getBook() {
-        return book;
+    public Long getOrderId() {
+        return orderId;
+    }
+    public Long getBookId() {
+        return bookId;
     }
 
     public int getQuantity() {

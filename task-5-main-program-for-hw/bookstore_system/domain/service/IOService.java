@@ -3,10 +3,8 @@ package bookstore_system.domain.service;
 import bookstore_system.domain.model.Indedifiable;
 import bookstore_system.io.csv.CsvConverter;
 import bookstore_system.io.csv.GenericCSVService;
-import bookstore_system.io.csv.converter.BookCSVConverter;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -39,7 +37,7 @@ public class IOService {
       try {
           List<T> entities = csvService.readToCsv(filename, converter);
           for (T entity : entities) {
-              if (findById.apply(entity.getId()).isEmpty()) {
+              if (findById.apply(entity.getId()).isPresent()) {
                   update.accept(entity);
               } else {
                   save.accept(entity);
