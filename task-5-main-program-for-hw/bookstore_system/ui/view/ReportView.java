@@ -4,6 +4,8 @@ import bookstore_system.dto.OrderSummary;
 import bookstore_system.enums.SortByOrder;
 import bookstore_system.ui.controller.ReportController;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -26,21 +28,25 @@ public class ReportView {
 
         System.out.println("Выберите желаемую сортировку: ");
         System.out.println(
-                "1. Сортировка по дате завершения;" +
+                "1. Сортировка по дате завершения;\n" +
                         "2. Сортировка по цене."
         );
 
         List<OrderSummary> orderList = new ArrayList<>();
-
-        switch (scanner.nextLine()) {
-            case "1" -> {
-                orderList = reportController.getCompletedOrderAtPeriod(startDate, endDate, SortByOrder.COMPLETE_DATE);
-                break;
+        try {
+            switch (scanner.nextLine()) {
+                case "1" -> {
+                    orderList = reportController.getCompletedOrderAtPeriod(startDate, endDate, SortByOrder.COMPLETE_DATE);
+                    break;
+                }
+                case "2" -> {
+                    orderList = reportController.getCompletedOrderAtPeriod(startDate, endDate, SortByOrder.PRICE);
+                    break;
+                }
             }
-            case "2" -> {
-                orderList = reportController.getCompletedOrderAtPeriod(startDate, endDate, SortByOrder.PRICE);
-                break;
-            }
+        } catch (IllegalArgumentException e) {
+            System.out.println("Неверный формат даты. Используйте формат: год-месяц-число.");
+            return;
         }
 
         if (orderList.isEmpty()) {
@@ -62,7 +68,11 @@ public class ReportView {
         String startDate = scanner.nextLine().trim();
         System.out.println("Введите конечную дату формата 'год-месяц-число':");
         String endDate = scanner.nextLine().trim();
-        System.out.println("Количество завершённых заказов за выбранный период: " + reportController.getCountCompletedOrdersAtPeriod(startDate, endDate));
+        try {
+            System.out.println("Количество завершённых заказов за выбранный период: " + reportController.getCountCompletedOrdersAtPeriod(startDate, endDate));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Неверный формат даты. Используйте формат: год-месяц-число.");
+        }
     }
 
     public void showProfitAtPeriodMenu() {
@@ -70,6 +80,11 @@ public class ReportView {
         String startDate = scanner.nextLine().trim();
         System.out.println("Введите конечную дату формата 'год-месяц-число': ");
         String endDate = scanner.nextLine().trim();
-        System.out.println("Количество заработанной суммы за данный период: " + reportController.getProfitAtPeriod(startDate, endDate));
+        try {
+            System.out.println("Количество заработанной суммы за данный период: " + reportController.getProfitAtPeriod(startDate, endDate));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Неверный формат даты. Используйте формат: год-месяц-число.");
+        }
+
     }
 }

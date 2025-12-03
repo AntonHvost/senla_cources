@@ -10,6 +10,7 @@ import bookstore_system.ui.controller.BookController;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -99,9 +100,17 @@ public class BookView {
 
     public void showBookDescription () {
         System.out.println("Выберите книгу из представленного списка: ");
-        bookController.getSortedBooks(SortByBook.ALPHABET).stream().forEach(book -> System.out.println(book.getTitle()));
-        String description = bookController.getBookDescription(scanner.nextInt());
-        System.out.println(description);
+
+        bookController.getSortedBooks(SortByBook.ID).stream().forEach(book -> System.out.println(book.getId() + ". " + book.getTitle()));
+
+        Long id = Long.parseLong(scanner.nextLine().trim());
+
+        try {
+            String description = bookController.getBookDescription(id);
+            System.out.println(description);
+        } catch (InputMismatchException e) {
+            System.out.println("Введён неверный формат числа.");
+        }
     }
 
     public void showBookImportMenu () {
@@ -109,7 +118,7 @@ public class BookView {
         System.out.println("Рабочая папка: " + System.getProperty("user.dir"));
         String fileName = scanner.nextLine().trim();
         try {
-            bookController.importBooks(fileName);
+            bookController.importBooks(fileName + ".csv");
             System.out.println("Импорт книг успешно завершён.");
         } catch (RuntimeException e) {
             System.out.println("Ошибка импорта из файла " + fileName + ". Проверьте экспортируемые данные или название файла на корректность.\n");

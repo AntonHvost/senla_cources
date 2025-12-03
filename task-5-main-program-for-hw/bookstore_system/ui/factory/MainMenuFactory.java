@@ -77,7 +77,6 @@ public class MainMenuFactory extends MenuFactory {
     public Menu createBookRequestMenu() {
         Menu menu = new Menu("Меню запросов книг");
 
-        menu.addItem(createMenuItem("Сформировать запрос на книгу", bookRequestView::showCreateRequestBookMenu));
         menu.addItem(createMenuItem("Показать список запросов", bookRequestView::showRequestsMenu));
         menu.addItem(createMenuItem("Добавить книгу на склад", bookRequestView::showRestockBookMenu));
         menu.addItem(createMenuItem("Импортировать список запросов из CSV", bookRequestView::showImportBookRequestMenu));

@@ -25,7 +25,7 @@ public class ConsumerView {
         System.out.println("Рабочая папка: " + System.getProperty("user.dir"));
         String fileName = scanner.nextLine().trim();
         try {
-            consumerController.importConsumer(fileName);
+            consumerController.importConsumer(fileName + ".csv");
             System.out.println("Импорт заказчиков успешно завершён.");
         } catch (RuntimeException e) {
             System.out.println("Ошибка импорта из файла " + fileName + ". Проверьте экспортируемые данные или название файла на корректность.\n");

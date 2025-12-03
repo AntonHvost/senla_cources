@@ -1,9 +1,7 @@
 package bookstore_system.ui.view;
 
-import bookstore_system.domain.exception.BusinessValidationException;
 import bookstore_system.domain.model.Consumer;
 import bookstore_system.domain.model.Order;
-import bookstore_system.domain.model.OrderItem;
 import bookstore_system.dto.OrderItemSummary;
 import bookstore_system.dto.OrderSummary;
 import bookstore_system.enums.OrderStatus;
@@ -14,8 +12,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 public class OrderView {
+
+    private static final Pattern EMAIL_PATTERN = Pattern.compile(
+            "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$"
+    );
+    private static final Pattern PHONE_PATTERN = Pattern.compile(
+            "^\\+?[0-9\\s\\-()]{7,15}$"
+    );
 
     private final OrderController orderController;
 
@@ -28,17 +35,20 @@ public class OrderView {
     public void showCreateOrderMenu() {
         System.out.println("Создание заказа");
         System.out.println("Данные заказчика: ");
-        System.out.println("Имя: ");
-        String username = scanner.nextLine();
-        System.out.println("Контактный телефон: ");
-        String phoneNumber = scanner.nextLine();
-        System.out.println("Почта: ");
-        String email = scanner.nextLine();
+
+        String username = readNonEmptyString("Имя: ");
+        String phoneNumber = readValidatedString("Контактный телефон: ", this::isValidPhone, "Неверный формат номера.");
+        String email = readValidatedString("Почта: ", this::isValidEmail, "Неверный формат почты.");
 
         Consumer consumer = new Consumer(username, phoneNumber, email);
 
         System.out.println("Введите ID книг и их количество через пробел (например, '1 10, 3 5'). Введите 'end', чтобы закончить");
         String input = scanner.nextLine().trim();
+
+        if ("end".equalsIgnoreCase(input)) {
+            System.out.println("Заказ отменён.");
+            return;
+        }
 
         List<Long> bookIds = new ArrayList<>();
         List<Integer> quantities = new ArrayList<>();
@@ -203,4 +213,33 @@ public class OrderView {
         }
     }
 
+    private String readNonEmptyString(String str) {
+        while (true) {
+            System.out.println(str);
+            String input = scanner.nextLine().trim();
+            if (!input.isEmpty()) {
+                return input;
+            }
+            System.out.println("Поле не может быть пустым. Введите имя заново.");
+        }
+    }
+
+    private String readValidatedString(String str, Predicate<String> validator, String errorMessage) {
+        while (true) {
+            System.out.println(str);
+            String input = scanner.nextLine().trim();
+            if (validator.test(input)) {
+                return input;
+            }
+            System.out.println(errorMessage);
+        }
+    }
+
+    private boolean isValidPhone(String phone) {
+        return PHONE_PATTERN.matcher(phone).matches();
+    }
+
+    private boolean isValidEmail(String email) {
+        return EMAIL_PATTERN.matcher(email).matches();
+    }
 }

@@ -28,7 +28,7 @@ public class ReportFacade {
         return reportService.getCompletedOrdersCount(startDate, endDate);
     }
 
-    public String getBookDescription(long bookId) {
+    public String getBookDescription(Long bookId) {
         return reportService.getDescriptionBook(bookId);
     }
 
@@ -36,7 +36,7 @@ public class ReportFacade {
         return reportService.getBookCatalog(sortParam);
     }
 
-    public Optional<OrderSummary> getOrderDetails(long orderId) {
+    public Optional<OrderSummary> getOrderDetails(Long orderId) {
         return reportService.getOrderDetails(orderId);
     }
 

@@ -77,7 +77,7 @@ public class ReportService {
     }
 
     public String getDescriptionBook(long bookId) {
-        return catalog.findBookById(bookId).map(Book::getDescription).orElse("");
+        return catalog.findBookById(bookId).map(Book::getDescription).orElse("Книга с ID " + bookId + " не существует.");
     }
 
     public List<BookSummary> getBookCatalog(SortByBook sortParam) {

@@ -25,7 +25,7 @@ public class BookController {
         return reportFacade.getUnsoldBooks(sortByUnsoldBook);
     }
 
-    public String getBookDescription(int bookId) {
+    public String getBookDescription(Long bookId) {
         return reportFacade.getBookDescription(bookId);
     }
 

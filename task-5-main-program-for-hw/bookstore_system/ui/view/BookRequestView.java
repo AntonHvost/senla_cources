@@ -17,30 +17,6 @@ public class BookRequestView {
         this.bookRequestController = bookRequestController;
     }
 
-    public void showCreateRequestBookMenu() {
-        System.out.println("=Создание запроса на книгу=\n");
-        System.out.println("Введите ID книги: ");
-
-        long bookId;
-
-        try {
-            bookId = scanner.nextLong();
-            scanner.nextLine();
-        }
-        catch (InputMismatchException e) {
-            System.out.println("Должно быть целое число!");
-            scanner.nextLine();
-            return;
-        }
-
-        Optional<BookRequest> result = bookRequestController.createRequestBook(bookId);
-        if (result.isPresent()) {
-            System.out.println("Запрос успешно создан!");
-        } else {
-            System.out.println("Ошибка: Книга с ID " + bookId + " не найдена. Проверьте корректность ID.");
-        }
-    }
-
     public void showRestockBookMenu() {
         System.out.println("Введите ID книги, которую необходимо добавить на склад: ");
         bookRequestController.restockBook(scanner.nextLong());
@@ -66,6 +42,11 @@ public class BookRequestView {
             }
         }
 
+        if (requestList.isEmpty()) {
+            System.out.println("Список запросов пуст.\n");
+            return;
+        }
+
         System.out.println("=Детали запроса=\n");
 
         requestList.stream().forEach(request -> {
@@ -87,7 +68,7 @@ public class BookRequestView {
         System.out.println("Рабочая папка: " + System.getProperty("user.dir"));
         String fileName = scanner.nextLine().trim();
         try {
-            bookRequestController.importBookRequest(fileName);
+            bookRequestController.importBookRequest(fileName + ".csv");
             System.out.println("Импорт запросов книг успешно завершён.");
         } catch (RuntimeException e) {
             System.out.println("Ошибка импорта из файла " + fileName + ". Проверьте экспортируемые данные или название файла на корректность.\n");
