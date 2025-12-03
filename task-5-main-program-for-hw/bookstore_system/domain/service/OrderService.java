@@ -104,7 +104,7 @@ public class OrderService {
 
     public void updateOrder(Order order){
         for (Order o : ordersList){
-            if(o.getId() == order.getId()){
+            if (o.getId().equals(order.getId())) {
                 ordersList.set(ordersList.indexOf(o), order);
                 return;
             }

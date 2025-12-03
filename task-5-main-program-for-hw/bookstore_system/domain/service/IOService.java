@@ -90,7 +90,6 @@ public class IOService {
             Map<Long, Order> orderMap = new LinkedHashMap<>();
 
             for (Order order : orderList) {
-                System.out.println(order.getConsumerId());
                 orderMap.put(order.getId(), order);
             }
 

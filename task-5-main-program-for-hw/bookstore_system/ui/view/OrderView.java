@@ -183,15 +183,24 @@ public class OrderView {
     public void showOrderImportMenu () {
         System.out.println("Введите название файла: ");
         System.out.println("Рабочая папка: " + System.getProperty("user.dir"));
-        String filename = scanner.nextLine().trim();
-        orderController.importOrderFromCsv(filename + ".csv", filename + "_item.csv");
+        String fileName = scanner.nextLine().trim();
+        try {
+            orderController.importOrderFromCsv(fileName + ".csv", fileName + "_item.csv");
+            System.out.println("Импорт заказов успешно завершён.");
+        } catch (RuntimeException e) {
+            System.out.println("Ошибка импорта из файла " + fileName + ". Проверьте экспортируемые данные или название файла на корректность.\n");
+        }
     }
 
     public void showOrderExportMenu () {
         System.out.println("Введите название экспортируемого файла: ");
-        String filename = scanner.nextLine().trim();
-        orderController.exportOrder(filename + ".csv", filename + "_item.csv");
-        System.out.println("Книги успешно экспортированы!");
+        String fileName = scanner.nextLine().trim();
+        try {
+            orderController.exportOrder(fileName + ".csv", fileName + "_item.csv");
+            System.out.println("Заказы успешно экспортированы!");
+        } catch (RuntimeException e) {
+            System.out.println("Ошибка экспорта в " + fileName + ". Проверьте название файла на корректность.\n");
+        }
     }
 
 }

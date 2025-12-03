@@ -23,12 +23,24 @@ public class ConsumerView {
     public void showImportConsumerMenu() {
         System.out.println("Введите название файла: ");
         System.out.println("Рабочая папка: " + System.getProperty("user.dir"));
-        consumerController.importConsumer(scanner.nextLine().trim());
+        String fileName = scanner.nextLine().trim();
+        try {
+            consumerController.importConsumer(fileName);
+            System.out.println("Импорт заказчиков успешно завершён.");
+        } catch (RuntimeException e) {
+            System.out.println("Ошибка импорта из файла " + fileName + ". Проверьте экспортируемые данные или название файла на корректность.\n");
+        }
     }
 
     public void showExportConsumerMenu() {
         System.out.println("Введите название экспортируемого файла: ");
-        consumerController.exportConsumer(scanner.nextLine().trim() + ".csv");
-        System.out.println("Книги успешно экспортированы!");
+        String fileName = scanner.nextLine().trim();
+
+        try {
+            consumerController.exportConsumer(scanner.nextLine().trim() + ".csv");
+            System.out.println("Заказчики успешно экспортированы!");
+        } catch (RuntimeException e) {
+            System.out.println("Ошибка экспорта в " + fileName + ". Проверьте название файла на корректность.\n");
+        }
     }
 }

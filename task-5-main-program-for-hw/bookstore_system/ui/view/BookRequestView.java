@@ -85,12 +85,24 @@ public class BookRequestView {
     public void showImportBookRequestMenu() {
         System.out.println("Введите название файла: ");
         System.out.println("Рабочая папка: " + System.getProperty("user.dir"));
-        bookRequestController.importBookRequest(scanner.nextLine().trim());
+        String fileName = scanner.nextLine().trim();
+        try {
+            bookRequestController.importBookRequest(fileName);
+            System.out.println("Импорт запросов книг успешно завершён.");
+        } catch (RuntimeException e) {
+            System.out.println("Ошибка импорта из файла " + fileName + ". Проверьте экспортируемые данные или название файла на корректность.\n");
+        }
     }
 
     public void showExportBookRequestMenu() {
         System.out.println("Введите название экспортируемого файла: ");
-        bookRequestController.exportBookRequest(scanner.nextLine().trim() + ".csv");
-        System.out.println("Книги успешно экспортированы!");
+        String fileName = scanner.nextLine().trim();
+        try {
+            bookRequestController.exportBookRequest(fileName + ".csv");
+            System.out.println("Запросы книг успешно экспортированы!");
+        } catch (RuntimeException e) {
+            System.out.println("Ошибка экспорта в " + fileName + ". Проверьте название файла на корректность.\n");
+        }
+
     }
 }

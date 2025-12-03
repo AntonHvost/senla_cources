@@ -8,6 +8,7 @@ import bookstore_system.facade.BookFacade;
 import bookstore_system.facade.ReportFacade;
 import bookstore_system.ui.controller.BookController;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -106,12 +107,24 @@ public class BookView {
     public void showBookImportMenu () {
         System.out.println("Введите название файла: ");
         System.out.println("Рабочая папка: " + System.getProperty("user.dir"));
-        bookController.importBooks(scanner.nextLine().trim());
+        String fileName = scanner.nextLine().trim();
+        try {
+            bookController.importBooks(fileName);
+            System.out.println("Импорт книг успешно завершён.");
+        } catch (RuntimeException e) {
+            System.out.println("Ошибка импорта из файла " + fileName + ". Проверьте экспортируемые данные или название файла на корректность.\n");
+        }
     }
 
     public void showBookExportMenu () {
         System.out.println("Введите название экспортируемого файла: ");
-        bookController.exportBooks(scanner.nextLine().trim() + ".csv");
-        System.out.println("Книги успешно экспортированы!");
+        String fileName = scanner.nextLine().trim();
+        try {
+            bookController.exportBooks(fileName + ".csv");
+            System.out.println("Книги успешно экспортированы!");
+        } catch (RuntimeException e) {
+            System.out.println("Ошибка экспорта в " + fileName + ". Проверьте название файла на корректность.\n");
+        }
+
     }
 }
