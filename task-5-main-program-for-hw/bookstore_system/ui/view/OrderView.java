@@ -1,5 +1,6 @@
 package bookstore_system.ui.view;
 
+import bookstore_system.domain.exception.BusinessValidationException;
 import bookstore_system.domain.model.Consumer;
 import bookstore_system.domain.model.Order;
 import bookstore_system.domain.model.OrderItem;
@@ -153,16 +154,20 @@ public class OrderView {
             currentOrder.ifPresent(order -> {
                 Consumer consumer = order.getConsumer();
                 List<OrderItemSummary> items = order.getOrderItemList();
+
                 System.out.println("" +
                         "Дата создания заказа: " + order.getCreatedOrderDate() + "\n"
                         + "Дата завершения заказа: " + (order.getCompletedOrderDate() == null ? "Отсутствует \n" : (order.getCompletedOrderDate() + "\n")
                 ));
                 System.out.println("=Информация о заказчике=\n");
-                System.out.println(
-                        "Имя: " + consumer.getName() + "\n"
-                                + "Контактный телефон: " + consumer.getEmail() + "\n"
-                                + "Почта: " + consumer.getEmail() + "\n"
-                );
+                if (consumer != null) {
+                    System.out.println(
+                            "Имя: " + consumer.getName() + "\n"
+                                    + "Контактный телефон: " + consumer.getPhone() + "\n"
+                                    + "Почта: " + consumer.getEmail() + "\n"
+                    );
+                } else System.out.println("Заказчик отсутствует или был удалён!\n");
+
                 System.out.println("=Детали заказа=\n");
                 items.stream().forEach(orderItem -> System.out.println(
                         "- Название книги: " + orderItem.getBook().getTitle() + "\n"
@@ -178,12 +183,14 @@ public class OrderView {
     public void showOrderImportMenu () {
         System.out.println("Введите название файла: ");
         System.out.println("Рабочая папка: " + System.getProperty("user.dir"));
-        orderController.importOrder(scanner.nextLine().trim());
+        String filename = scanner.nextLine().trim();
+        orderController.importOrderFromCsv(filename + ".csv", filename + "_item.csv");
     }
 
     public void showOrderExportMenu () {
         System.out.println("Введите название экспортируемого файла: ");
-        orderController.exportOrder(scanner.nextLine().trim() + ".csv");
+        String filename = scanner.nextLine().trim();
+        orderController.exportOrder(filename + ".csv", filename + "_item.csv");
         System.out.println("Книги успешно экспортированы!");
     }
 

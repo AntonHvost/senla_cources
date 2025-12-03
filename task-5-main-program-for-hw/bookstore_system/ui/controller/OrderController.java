@@ -45,12 +45,13 @@ public class OrderController {
         return reportFacade.getOrderDetails(orderId);
     }
 
-    public void importOrder(String filename) {
-        orderFacade.importOrderFromCsv(filename);
+
+    public void exportOrder(String orderFilename, String itemFilename) {
+        orderFacade.exportOrderToCsv(orderFilename, itemFilename);
     }
 
-    public void exportOrder(String filename) {
-        orderFacade.exportOrderToCsv(filename);
+    public void importOrderFromCsv(String orderFilename, String itemFilename) {
+        orderFacade.importOrderFromCsv(orderFilename, itemFilename);
     }
 
 }

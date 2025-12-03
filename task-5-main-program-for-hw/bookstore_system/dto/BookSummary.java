@@ -17,13 +17,13 @@ public class BookSummary {
     private BigDecimal price;
     private BookStatus status;
 
-    public BookSummary (Book book) {
+    public BookSummary (Book book, LocalDateTime deliveryDate) {
         this.id = book.getId();
         this.title = book.getTitle();
         this.author = book.getAuthor();
         this.description = book.getDescription();
         this.publishDate = book.getPublishDate();
-        this.deliveryDate = book.getDeliveryDate();
+        this.deliveryDate = deliveryDate;
         this.price = book.getPrice();
         this.status = book.getStatus();
     }

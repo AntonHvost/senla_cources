@@ -1,11 +1,10 @@
 package bookstore_system.domain.service;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
-import bookstore_system.enums.OrderStatus;
 import bookstore_system.enums.RequestStatus;
 
 import bookstore_system.domain.model.Book;
@@ -21,8 +20,8 @@ public class RequestService {
         this.nextRequestId = 0;
     }
 
-    public BookRequest createRequest(Book book, Order order){
-        BookRequest req = new BookRequest(nextRequestId++, book, order);
+    public BookRequest createRequest(Long bookId, Long orderId){
+        BookRequest req = new BookRequest(nextRequestId++, bookId, orderId);
         requestsList.add(req);
         return req;
     }
@@ -31,29 +30,16 @@ public class RequestService {
         return  requestsList.stream().filter(r -> r.getId() == id).findAny();
     }
 
-    public void fulfillRequests(long id){
-        requestsList.stream()
-                .filter(r -> r.getReqBook().getId() == id)
+    public List<BookRequest> findPendingRequestsByBookId(Long bookId) {
+        return requestsList.stream()
+                .filter(r -> r.getReqBookId().equals(bookId))
                 .filter(r -> r.getStatus() == RequestStatus.PENDING)
-                .findAny()
-                .map(r -> {
-                    r.getReqBook().setDeliveryDate(LocalDateTime.now());
-                    r.getRelatedOrder().setOrderStatus(OrderStatus.IN_PROCESS);
-                    r.fulFilled();
-                    return null;
-                });
-
+                .collect(Collectors.toList());
     }
 
     public RequestStatus getRequestStatusByOrderId(long id){
         BookRequest request = requestsList.stream().filter(r -> r.getId() == id).findAny().orElse(null);
         return request != null ? request.getStatus() : null;
-    }
-
-
-
-    public RequestStatus getStatusRequest(long id) {
-        return findRequestById(id).map(BookRequest::getStatus).orElseThrow(() -> new IllegalStateException("Запрос с ID " + id + " не найден!"));
     }
 
     public void cancelRequest(long requestId){
@@ -62,6 +48,15 @@ public class RequestService {
 
     public List<BookRequest> getRequestsList() {
         return requestsList;
+    }
+
+
+    public void save(BookRequest request){
+        requestsList.add(request);
+    }
+
+    public void update(BookRequest request) {
+        requestsList.set(requestsList.indexOf(request), request);
     }
 
 }

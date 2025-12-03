@@ -80,6 +80,8 @@ public class MainMenuFactory extends MenuFactory {
         menu.addItem(createMenuItem("Сформировать запрос на книгу", bookRequestView::showCreateRequestBookMenu));
         menu.addItem(createMenuItem("Показать список запросов", bookRequestView::showRequestsMenu));
         menu.addItem(createMenuItem("Добавить книгу на склад", bookRequestView::showRestockBookMenu));
+        menu.addItem(createMenuItem("Импортировать список запросов из CSV", bookRequestView::showImportBookRequestMenu));
+        menu.addItem(createMenuItem("Экспортировать список запросов из CSV", bookRequestView::showExportBookRequestMenu));
         menu.addItem(createMenuItem("Вернуться в главное меню", new NavigateToMenuAction(navigator, roofMenu)));
 
         return menu;
@@ -100,6 +102,8 @@ public class MainMenuFactory extends MenuFactory {
         Menu menu = new Menu("Меню дополнительной информации");
 
         menu.addItem(createMenuItem("Показать всех заказчиков", consumerView::showConsumersMenu));
+        menu.addItem(createMenuItem("Импортировать список заказчиков в CSV", consumerView::showImportConsumerMenu));
+        menu.addItem(createMenuItem("Экспортировать список заказчиков из CSV", consumerView::showExportConsumerMenu));
         menu.addItem(createMenuItem("Вернуться в главное меню", new NavigateToMenuAction(navigator, roofMenu)));
 
         return menu;

@@ -18,16 +18,24 @@ public class BookRequestController {
         this.reportFacade = reportFacade;
     }
 
-    public Optional<BookRequest> createRequestBook(long requestId) {
+    public Optional<BookRequest> createRequestBook(Long requestId) {
        return requestFacade.requestBook(requestId);
     }
 
-    public void restockBook(long bookId) {
+    public void restockBook(Long bookId) {
         requestFacade.restockBook(bookId);
     }
 
     public List<BookRequestSummary> getSortedRequests(SortByRequestBook sortByRequestBook) {
         return reportFacade.getRequestList(sortByRequestBook);
+    }
+
+    public void importBookRequest (String filename) {
+        requestFacade.importBookRequest(filename);
+    }
+
+    public void exportBookRequest (String filename) {
+        requestFacade.exportBookRequest(filename);
     }
 
 }

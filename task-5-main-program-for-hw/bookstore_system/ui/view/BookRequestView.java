@@ -43,7 +43,8 @@ public class BookRequestView {
 
     public void showRestockBookMenu() {
         System.out.println("Введите ID книги, которую необходимо добавить на склад: ");
-        bookRequestController.restockBook(scanner.nextInt());
+        bookRequestController.restockBook(scanner.nextLong());
+        scanner.nextLine();
         System.out.println("Книга успешно добавлена на склад!");
     }
 
@@ -74,9 +75,22 @@ public class BookRequestView {
             request.getRequests().stream().forEach(curRequest -> {
                 System.out.println("Номер запроса: " + curRequest.getId());
                 System.out.println("Дата создания запроса: " + curRequest.getRequestDate());
-                System.out.println("Номер прикреплённого заказа: " + (curRequest.getRelatedOrder() != null ? curRequest.getRelatedOrder().getId() : "Нет"));
+                System.out.println("Дата поступления книги: " + curRequest.getDeliveryDate());
+                System.out.println("Номер прикреплённого заказа: " + (curRequest.getRelatedOrder() != null ? curRequest.getRelatedOrder() : "Нет"));
                 System.out.println("Статус заказа: " + curRequest.getStatus());
             });
         });
+    }
+
+    public void showImportBookRequestMenu() {
+        System.out.println("Введите название файла: ");
+        System.out.println("Рабочая папка: " + System.getProperty("user.dir"));
+        bookRequestController.importBookRequest(scanner.nextLine().trim());
+    }
+
+    public void showExportBookRequestMenu() {
+        System.out.println("Введите название экспортируемого файла: ");
+        bookRequestController.exportBookRequest(scanner.nextLine().trim() + ".csv");
+        System.out.println("Книги успешно экспортированы!");
     }
 }

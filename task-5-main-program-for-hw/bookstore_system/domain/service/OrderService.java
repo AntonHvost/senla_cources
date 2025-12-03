@@ -30,7 +30,7 @@ public class OrderService {
     }
 
     public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
-        consumerService.addConsumer(consumer);
+        consumerService.save(consumer);
         System.out.println(consumer.getName());
         Order order = new Order(nextOrderId++, consumer.getId());
 
@@ -39,7 +39,7 @@ public class OrderService {
                     .orElseThrow(() -> new IllegalArgumentException("Ошибка создания заказа! Книга не найдена в каталоге!"));
 
             if (book.getStatus() != BookStatus.AVAILABLE) {
-                requestService.createRequest(book, order);
+                requestService.createRequest(book.getId(), order.getId());
             }
             order.addItem(new OrderItem(order.getId(), book.getId(), quantities[i]));
         }

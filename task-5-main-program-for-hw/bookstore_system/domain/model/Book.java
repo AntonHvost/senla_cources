@@ -12,7 +12,6 @@ public class Book implements Indedifiable {
     private String author;
     private String description;
     private LocalDate publishDate;
-    private LocalDateTime deliveryDate;
     private BigDecimal price;
     private BookStatus status;
 
@@ -23,7 +22,6 @@ public class Book implements Indedifiable {
         this.author = author;
         this.description = description;
         this.publishDate = publishDate;
-        this.deliveryDate = LocalDateTime.now();
         this.price = price;
         this.status = status;
     }
@@ -54,10 +52,6 @@ public class Book implements Indedifiable {
         return publishDate;
     }
 
-    public LocalDateTime getDeliveryDate() {
-        return deliveryDate;
-    }
-
     public BigDecimal getPrice() {
         return price;
     }
@@ -84,10 +78,6 @@ public class Book implements Indedifiable {
 
     public void setPublishDate(LocalDate publishDate) {
         this.publishDate = publishDate;
-    }
-
-    public void setDeliveryDate(LocalDateTime deliveryDate) {
-        this.deliveryDate = deliveryDate;
     }
 
     public void setPrice(BigDecimal price) {

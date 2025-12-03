@@ -17,7 +17,12 @@ public class Order implements Indedifiable {
     private BigDecimal totalPrice;
     private OrderStatus orderStatus;
 
-    public Order() {}
+    public Order() {
+        this.createdAt = LocalDateTime.now();
+        this.orderStatus = OrderStatus.NEW;
+        this.orderItemsList = new ArrayList<>();
+        this.totalPrice = BigDecimal.ZERO;
+    }
 
     public Order(Long id, Long consumerId) {
         this.id = id;

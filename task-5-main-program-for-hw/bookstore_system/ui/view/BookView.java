@@ -89,7 +89,7 @@ public class BookView {
         info.forEach(bookSummary -> System.out.println(
                 "Название: "  + bookSummary.getTitle() + "\n"
                         + "Автор: "  + bookSummary.getAuthor() + "\n"
-                        + "Последняя цена поставки: " + bookSummary.getDeliveryDate() + "\n"
+                        + "Последняя цена поставки: " + (bookSummary.getDeliveryDate() == null ? bookSummary.getDeliveryDate() : "отсутствует") + "\n"
                         + "Цена: "  + bookSummary.getPrice() + "\n"
                         + "Статус: " + (bookSummary.getStatus() == BookStatus.AVAILABLE ? "В наличии" : "Отсутствует") + "\n"
         ));

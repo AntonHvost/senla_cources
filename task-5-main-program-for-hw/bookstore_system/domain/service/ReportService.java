@@ -5,8 +5,11 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import bookstore_system.domain.exception.BusinessValidationException;
 import bookstore_system.domain.model.*;
 import bookstore_system.dto.*;
 import bookstore_system.enums.*;
@@ -87,7 +90,7 @@ public class ReportService {
         };
 
         return catalog.getBooks().stream()
-                .map(BookSummary::new)
+                .map(book -> new BookSummary(book, null))
                 .sorted(comparator)
                 .collect(Collectors.toList());
     }
@@ -134,6 +137,7 @@ public class ReportService {
 
     return orderService.findOrderById(orderId).map(order -> {
                 Consumer consumer = consumerService.findConsumerById(order.getConsumerId()).orElse(null);
+
                 List<OrderItemSummary> items = order.getOrderItemsList().stream()
                         .map(orderItem -> new OrderItemSummary(orderItem, catalog.findBookById(orderItem.getBookId())
                                 .orElse(null)))
@@ -145,8 +149,23 @@ public class ReportService {
 
     public List<BookRequestSummary> getBookRequestList(SortByRequestBook sortParam) {
 
-        Map<Book, List<BookRequest>> groupedByBook = requestService.getRequestsList().stream()
-                .collect(Collectors.groupingBy(BookRequest::getReqBook));
+        Map<Long, List<BookRequest>> groupedByBookId = requestService.getRequestsList().stream()
+                .collect(Collectors.groupingBy(BookRequest::getReqBookId));
+
+        List<BookRequestSummary> bookRequestSummaries = groupedByBookId.entrySet()
+                .stream()
+                .map(entry -> {
+                    Long reqBookId = entry.getKey();
+                    List<BookRequest> bookRequests = entry.getValue();
+
+                    Book book =  catalog.findBookById(reqBookId).orElse(null);
+                    if (book == null) {
+                        return null;
+                    }
+                    return new BookRequestSummary(book, bookRequests);
+                })
+                .filter(Objects::nonNull)
+                .toList();
 
         Comparator<BookRequestSummary> comparator = switch (sortParam) {
             case ALPHABET -> Comparator.comparing(summary -> summary.getBook().getTitle());
@@ -154,8 +173,7 @@ public class ReportService {
             default -> Comparator.comparing(summary -> summary.getBook().getId());
         };
 
-        return groupedByBook.entrySet().stream()
-                .map(entry -> new BookRequestSummary(entry.getKey(), entry.getValue()))
+        return bookRequestSummaries.stream()
                 .sorted(comparator)
                 .collect(Collectors.toList());
     }
@@ -164,32 +182,39 @@ public class ReportService {
 
         LocalDateTime sixMonthAgo = LocalDateTime.now().minusMonths(6);
 
-        Map<Book, LocalDateTime> lastSoldDateByBook = new HashMap<>();
-
+        Map<Long, LocalDateTime> lastSoldDateByBookId = new HashMap<>();
         for (Order order : orderService.getOrderList()) {
-            if(order.getOrderStatus() != OrderStatus.COMPLETED) continue;
-            for (OrderItem orderItem : order.getOrderItemsList()) {
-                Book book = catalog.findBookById(orderItem.getBookId()).orElse(new Book());
-                LocalDateTime orderDate = order.getCompletedOrderDate();
-                LocalDateTime lastSoldDate = lastSoldDateByBook.get(book);
-                if (lastSoldDate == null || orderDate.isAfter(lastSoldDate)) {
-                    lastSoldDateByBook.put(book, orderDate);
-                }
+            if (order.getOrderStatus() != OrderStatus.COMPLETED) continue;
+            for (OrderItem item : order.getOrderItemsList()) {
+                Long bookId = item.getBookId();
+                LocalDateTime completedDate = order.getCompletedOrderDate();
+                lastSoldDateByBookId.merge(bookId, completedDate, (old, newDate) ->
+                        newDate.isAfter(old) ? newDate : old);
+            }
+        }
+
+        Map<Long, LocalDateTime> lastDeliveryDateByBookId = new HashMap<>();
+        for (BookRequest request : requestService.getRequestsList()) {
+            if (request.getStatus() == RequestStatus.FULFILLED && request.getDeliveryDate() != null) {
+                Long bookId = request.getReqBookId();
+                LocalDateTime deliveryDate = request.getDeliveryDate();
+                lastDeliveryDateByBookId.merge(bookId, deliveryDate, (old, newDate) ->
+                        newDate.isAfter(old) ? newDate : old);
             }
         }
 
         Comparator<BookSummary> comparator = switch (sortParam) {
-            case DELIVERY_DATE -> Comparator.comparing(BookSummary::getDeliveryDate);
+            case DELIVERY_DATE -> Comparator.comparing(BookSummary::getDeliveryDate, Comparator.nullsLast(Comparator.naturalOrder()));
             case PRICE ->  Comparator.comparing(BookSummary::getPrice).reversed();
             default -> Comparator.comparing(BookSummary::getId);
         };
 
         return catalog.getBooks().stream()
                 .filter(book -> {
-                    LocalDateTime lastSoldDate = lastSoldDateByBook.get(book);
+                    LocalDateTime lastSoldDate = lastSoldDateByBookId.get(book.getId());
                     return lastSoldDate == null || lastSoldDate.isBefore(sixMonthAgo);
                 })
-                .map(BookSummary::new)
+                .map(book -> new BookSummary(book, lastDeliveryDateByBookId.get(book.getId())))
                 .sorted(comparator)
                 .collect(Collectors.toList());
     }
