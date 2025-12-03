@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Order implements Indedifiable {
+    private static long nextId = 1;
     private Long id;
     private Long consumerId;
     private LocalDateTime createdAt;
@@ -24,8 +25,8 @@ public class Order implements Indedifiable {
         this.totalPrice = BigDecimal.ZERO;
     }
 
-    public Order(Long id, Long consumerId) {
-        this.id = id;
+    public Order(Long consumerId) {
+        this.id = nextId++;
         this.createdAt = LocalDateTime.now();
         this.orderStatus = OrderStatus.NEW;
         this.consumerId = consumerId;
@@ -98,6 +99,12 @@ public class Order implements Indedifiable {
 
     public boolean canBeCompleted() {
         return orderStatus == OrderStatus.IN_PROCESS;
+    }
+
+    public static void ensureId(long id) {
+        if (id >= nextId) {
+            nextId = id + 1;
+        }
     }
 
 }

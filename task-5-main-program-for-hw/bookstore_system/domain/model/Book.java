@@ -4,9 +4,9 @@ import bookstore_system.enums.BookStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class Book implements Indedifiable {
+    private static long nextId = 1;
     private Long id;
     private String title;
     private String author;
@@ -16,8 +16,8 @@ public class Book implements Indedifiable {
     private BookStatus status;
 
     public Book() {}
-    public Book (Long id, String title, String author, String description, LocalDate publishDate, BigDecimal price, BookStatus status){
-        this.id = id;
+    public Book (String title, String author, String description, LocalDate publishDate, BigDecimal price, BookStatus status){
+        this.id = nextId++;
         this.title = title;
         this.author = author;
         this.description = description;
@@ -86,5 +86,11 @@ public class Book implements Indedifiable {
 
     public void setStatus(BookStatus status) {
         this.status = status;
+    }
+
+    public static void ensureId(long id) {
+        if (id >= nextId) {
+            nextId = id + 1;
+        }
     }
 }

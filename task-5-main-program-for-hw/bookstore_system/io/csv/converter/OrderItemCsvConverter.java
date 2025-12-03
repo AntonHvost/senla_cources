@@ -33,6 +33,8 @@ public class OrderItemCsvConverter implements CsvConverter<OrderItem> {
         item.setBookId(Long.parseLong(parts[2]));
         item.setQuantity(Integer.parseInt(parts[3]));
 
+        OrderItem.ensureId(item.getId());
+
         return item;
     }
 }

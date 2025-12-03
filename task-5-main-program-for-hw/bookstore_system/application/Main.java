@@ -29,11 +29,11 @@ public class Main {
         RequestFacade requestFacade = new RequestFacade(requestService, catalog, bookRequestFullfilmentService, ioService);
         ConsumerFacade consumerFacade = new ConsumerFacade(consumerService, ioService);
 
-        /*Book[] books = BookFactory.createSampleBooks();
+        Book[] books = BookFactory.createSampleBooks();
 
         for (Book book : books) {
             catalog.addBookToCatalog(book);
-        }*/
+        }
 
         BookController bookController = new BookController(reportFacade, bookFacade);
         OrderController orderController = new OrderController(orderFacade, reportFacade);

@@ -13,15 +13,13 @@ import bookstore_system.domain.model.Order;
 
 public class RequestService {
     private List<BookRequest> requestsList;
-    private long nextRequestId;
 
     public RequestService(){
         this.requestsList = new ArrayList<>();
-        this.nextRequestId = 0;
     }
 
     public BookRequest createRequest(Long bookId, Long orderId){
-        BookRequest req = new BookRequest(nextRequestId++, bookId, orderId);
+        BookRequest req = new BookRequest(bookId, orderId);
         requestsList.add(req);
         return req;
     }

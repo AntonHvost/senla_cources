@@ -20,7 +20,6 @@ public class OrderService {
     private final RequestService requestService;
     private final ConsumerService consumerService;
     private final List<Order> ordersList;
-    private long nextOrderId = 1;
 
     public OrderService(RequestService requestService, BookInventoryService catalog, ConsumerService consumerService) {
         this.requestService = requestService;
@@ -32,7 +31,7 @@ public class OrderService {
     public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
         consumerService.save(consumer);
         System.out.println(consumer.getName());
-        Order order = new Order(nextOrderId++, consumer.getId());
+        Order order = new Order(consumer.getId());
 
         for (int i = 0; i < bookIds.length; i++) {
             Book book = catalog.findBookById(bookIds[i])

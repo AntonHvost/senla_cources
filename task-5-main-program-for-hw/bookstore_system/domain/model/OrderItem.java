@@ -5,7 +5,8 @@ import bookstore_system.io.csv.CsvConverter;
 import java.util.Optional;
 
 public class OrderItem implements Indedifiable {
-    private Long id = 1L;
+    private static long nextId = 1;
+    private Long id;
     private Long orderId;
     private Long bookId;
     private int quantity;
@@ -15,9 +16,9 @@ public class OrderItem implements Indedifiable {
         this.id = 0L;
     }
 
-    public OrderItem(Long id, Long bookId, int quantity) {
-        this.id++;
-        this.orderId = id;
+    public OrderItem(Long orderId, Long bookId, int quantity) {
+        this.id = nextId++;
+        this.orderId = orderId;
         this.bookId = bookId;
         this.quantity = quantity;
     }
@@ -52,5 +53,11 @@ public class OrderItem implements Indedifiable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public static void ensureId(long id) {
+        if (id >= nextId) {
+            nextId = id + 1;
+        }
     }
 }

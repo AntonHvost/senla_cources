@@ -44,6 +44,8 @@ public class OrderCsvConverter implements CsvConverter<Order> {
         order.setTotalPrice(BigDecimal.valueOf(Double.parseDouble(parts[4])));
         order.setOrderStatus(OrderStatus.valueOf(parts[5]));
 
+        Order.ensureId(order.getId());
+
         return order;
     }
 

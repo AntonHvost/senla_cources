@@ -4,7 +4,8 @@ import bookstore_system.enums.RequestStatus;
 
 import java.time.LocalDateTime;
 
-public class BookRequest implements Indedifiable{
+public class BookRequest implements Indedifiable {
+    private static long nextId = 1;
     private Long id;
     private Long reqBookId;
     private Long relatedOrderId;
@@ -14,8 +15,8 @@ public class BookRequest implements Indedifiable{
 
     public  BookRequest() {}
 
-    public BookRequest(Long id, Long bookId, Long orderId) {
-        this.id = id;
+    public BookRequest(Long bookId, Long orderId) {
+        this.id = nextId++;
         this.reqBookId = bookId;
         this.relatedOrderId = orderId;
         this.requestDate = LocalDateTime.now();
@@ -78,5 +79,11 @@ public class BookRequest implements Indedifiable{
 
     public void cancel(){
         status = RequestStatus.CANCELLED;
+    }
+
+    public static void ensureId(long id) {
+        if (id >= nextId) {
+            nextId = id + 1;
+        }
     }
 }

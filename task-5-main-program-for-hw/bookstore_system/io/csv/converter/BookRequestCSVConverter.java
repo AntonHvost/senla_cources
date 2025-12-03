@@ -1,5 +1,6 @@
 package bookstore_system.io.csv.converter;
 
+import bookstore_system.domain.model.Book;
 import bookstore_system.domain.model.BookRequest;
 import bookstore_system.enums.RequestStatus;
 import bookstore_system.io.csv.CsvConverter;
@@ -42,6 +43,8 @@ public class BookRequestCSVConverter implements CsvConverter<BookRequest> {
         request.setRequestDate(LocalDateTime.parse(parts[3], DATE_TIME_FORMATTER));
         request.setDeliveryDate(parts[4].isEmpty() ? null : LocalDateTime.parse(parts[4], DATE_TIME_FORMATTER));
         request.setStatus(RequestStatus.valueOf(parts[5]));
+
+        Book.ensureId(request.getId());
 
         return request;
     }
