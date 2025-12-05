@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order implements Indedifiable {
+public class Order implements Identifiable,Serializable {
     private static long nextId = 1;
     private Long id;
     private Long consumerId;

@@ -5,11 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import bookstore_system.domain.model.BookRequest;
 import bookstore_system.enums.RequestStatus;
 
-import bookstore_system.domain.model.Book;
-import bookstore_system.domain.model.BookRequest;
-import bookstore_system.domain.model.Order;
 
 public class RequestService {
     private List<BookRequest> requestsList;
@@ -47,7 +45,6 @@ public class RequestService {
     public List<BookRequest> getRequestsList() {
         return requestsList;
     }
-
 
     public void save(BookRequest request){
         requestsList.add(request);

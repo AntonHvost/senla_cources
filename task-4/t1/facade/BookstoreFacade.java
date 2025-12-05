@@ -1,12 +1,12 @@
-package t1.facade;
+package bookstore_system.facade;
 
-import t1.enums.*;
+import bookstore_system.enums.*;
 
-import t1.model.*;
+import bookstore_system.model.*;
 
-import t1.service.OrderService;
-import t1.service.ReportService;
-import t1.service.RequestService;
+import bookstore_system.domain.service.OrderService;
+import bookstore_system.domain.service.ReportService;
+import bookstore_system.domain.service.RequestService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -69,8 +69,8 @@ public class BookstoreFacade {
         requestService.fulfillRequests(bookId);
     }
 
-    public String getCompletedOrdersAtPeriod(String startDate, String endDate, SortByOrder sortParam) {
-        return reportService.viewCompletedOrdersToPeriod(startDate, endDate, sortParam);
+    public List<Order> getCompletedOrdersAtPeriod(String startDate, String endDate, SortByOrder sortParam) {
+        return reportService.getCompletedOrdersToPeriod(startDate, endDate, sortParam);
     }
 
     public int getCountCompletedOrdersAtPeriod(String startDate, String endDate) {

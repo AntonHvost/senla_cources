@@ -2,10 +2,11 @@ package bookstore_system.domain.model;
 
 import bookstore_system.enums.BookStatus;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Book implements Indedifiable {
+public class Book implements Identifiable, Serializable {
     private static long nextId = 1;
     private Long id;
     private String title;

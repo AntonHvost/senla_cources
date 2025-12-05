@@ -1,10 +1,8 @@
 package bookstore_system.domain.model;
 
-import bookstore_system.io.csv.CsvConverter;
+import java.io.Serializable;
 
-import java.util.Optional;
-
-public class OrderItem implements Indedifiable {
+public class OrderItem implements Identifiable, Serializable {
     private static long nextId = 1;
     private Long id;
     private Long orderId;

@@ -1,5 +1,6 @@
 package bookstore_system.ui.view;
 
+import bookstore_system.config.BookstoreConfig;
 import bookstore_system.domain.model.Consumer;
 import bookstore_system.domain.model.Order;
 import bookstore_system.dto.OrderItemSummary;
@@ -131,11 +132,16 @@ public class OrderView {
                         "3. Сортировка по статусу."
         );
 
-        switch (scanner.nextLine().trim()) {
-            case "1" -> orderSummaryList = orderController.getSortedOrders(SortByOrder.COMPLETE_DATE);
-            case "2" -> orderSummaryList = orderController.getSortedOrders(SortByOrder.PRICE);
-            case "3" -> orderSummaryList = orderController.getSortedOrders(SortByOrder.STATUS);
-            default -> orderSummaryList = orderController.getSortedOrders(SortByOrder.ID);
+        try {
+
+            switch (scanner.nextLine().trim()) {
+                case "1" -> orderSummaryList = orderController.getSortedOrders(SortByOrder.COMPLETE_DATE);
+                case "2" -> orderSummaryList = orderController.getSortedOrders(SortByOrder.PRICE);
+                case "3" -> orderSummaryList = orderController.getSortedOrders(SortByOrder.STATUS);
+                default -> orderSummaryList = orderController.getSortedOrders(SortByOrder.ID);
+            }
+        } catch (NullPointerException e) {
+            System.out.println("Данная сортировка недоступна на данный момент!");
         }
 
         if(orderSummaryList.isEmpty()) {

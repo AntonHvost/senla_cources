@@ -16,15 +16,15 @@ import bookstore_system.enums.OrderStatus;
 import bookstore_system.enums.RequestStatus;
 
 public class OrderService {
-    private final BookInventoryService catalog;
+    private final BookInventoryService bookInventoryService;
     private final RequestService requestService;
     private final ConsumerService consumerService;
     private final List<Order> ordersList;
 
-    public OrderService(RequestService requestService, BookInventoryService catalog, ConsumerService consumerService) {
+    public OrderService(RequestService requestService, BookInventoryService bookInventoryService, ConsumerService consumerService) {
         this.requestService = requestService;
         this.ordersList = new ArrayList<>();
-        this.catalog = catalog;
+        this.bookInventoryService = bookInventoryService;
         this.consumerService = consumerService;
     }
 
@@ -34,7 +34,7 @@ public class OrderService {
         Order order = new Order(consumer.getId());
 
         for (int i = 0; i < bookIds.length; i++) {
-            Book book = catalog.findBookById(bookIds[i])
+            Book book = bookInventoryService.findBookById(bookIds[i])
                     .orElseThrow(() -> new IllegalArgumentException("Ошибка создания заказа! Книга не найдена в каталоге!"));
 
             if (book.getStatus() != BookStatus.AVAILABLE) {
@@ -90,7 +90,7 @@ public class OrderService {
         BigDecimal totalPrice;
         totalPrice = order.getOrderItemsList().stream()
                 .map(orderItem ->
-                    catalog.findBookById(orderItem.getBookId())
+                        bookInventoryService.findBookById(orderItem.getBookId())
                             .map(book -> book.getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())))
                             .orElse(BigDecimal.ZERO)
                 ).reduce(BigDecimal.ZERO, BigDecimal::add);

@@ -1,6 +1,8 @@
 package bookstore_system.domain.model;
 
-public class Consumer implements Indedifiable {
+import java.io.Serializable;
+
+public class Consumer implements Identifiable, Serializable {
     private static long nextId = 1;
     private Long id;
     private String name;

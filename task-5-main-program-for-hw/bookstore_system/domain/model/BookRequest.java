@@ -2,9 +2,10 @@ package bookstore_system.domain.model;
 
 import bookstore_system.enums.RequestStatus;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class BookRequest implements Indedifiable {
+public class BookRequest implements Identifiable, Serializable {
     private static long nextId = 1;
     private Long id;
     private Long reqBookId;
