@@ -2,8 +2,7 @@ package bookstore_system.domain.model;
 
 import java.io.Serializable;
 
-public class Consumer implements Identifiable, Serializable {
-    private static long nextId = 1;
+public class Consumer implements Identifiable {
     private Long id;
     private String name;
     private String phone;
@@ -12,7 +11,6 @@ public class Consumer implements Identifiable, Serializable {
     public Consumer(){}
 
     public Consumer(String name, String phone, String email) {
-        this.id = nextId++;
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -51,9 +49,4 @@ public class Consumer implements Identifiable, Serializable {
         this.email = email;
     }
 
-    public static void ensureId(long id) {
-        if (id >= nextId) {
-            nextId = id + 1;
-        }
-    }
 }

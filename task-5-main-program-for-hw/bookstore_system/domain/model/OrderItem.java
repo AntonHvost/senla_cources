@@ -1,21 +1,16 @@
 package bookstore_system.domain.model;
 
-import java.io.Serializable;
-
-public class OrderItem implements Identifiable, Serializable {
-    private static long nextId = 1;
+public class OrderItem implements Identifiable {
     private Long id;
     private Long orderId;
     private Long bookId;
     private int quantity;
 
 
-    public OrderItem() {
-        this.id = 0L;
-    }
+    public OrderItem() {}
 
-    public OrderItem(Long orderId, Long bookId, int quantity) {
-        this.id = nextId++;
+    public OrderItem(Long id,Long orderId, Long bookId, int quantity) {
+        this.id = id;
         this.orderId = orderId;
         this.bookId = bookId;
         this.quantity = quantity;
@@ -51,11 +46,5 @@ public class OrderItem implements Identifiable, Serializable {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
-    }
-
-    public static void ensureId(long id) {
-        if (id >= nextId) {
-            nextId = id + 1;
-        }
     }
 }

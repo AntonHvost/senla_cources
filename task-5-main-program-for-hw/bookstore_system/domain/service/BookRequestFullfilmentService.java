@@ -24,7 +24,7 @@ public class BookRequestFullfilmentService {
 
             bookRequest.setDeliveryDate(LocalDateTime.now());
 
-            Long orderId = bookRequest.getRelatedOrder();
+            Long orderId = bookRequest.getRelatedOrderId();
             if(orderService.findOrderById(orderId).isPresent()){
                 orderService.updateOrderStatus(orderId, OrderStatus.IN_PROCESS);
             } else {

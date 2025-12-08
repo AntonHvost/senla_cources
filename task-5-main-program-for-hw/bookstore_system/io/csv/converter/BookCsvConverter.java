@@ -47,8 +47,6 @@ public class BookCsvConverter implements CsvConverter<Book> {
         book.setPrice(BigDecimal.valueOf(Double.parseDouble(parts[5])));
         book.setStatus(BookStatus.valueOf(parts[6]));
 
-        Book.ensureId(book.getId());
-
         return book;
 
     }

@@ -22,8 +22,8 @@ public class OrderSummary {
     public OrderSummary(Order order, Consumer consumer, List<OrderItemSummary> orderItem) {
         this.id = order.getId();
         this.consumer = consumer;
-        this.createdOrderDate = order.getCreatedOrderDate();
-        this.completedOrderDate = order.getCompletedOrderDate();
+        this.createdOrderDate = order.getCreatedAtDate();
+        this.completedOrderDate = order.getCompletedAtDate();
         this.price = order.getTotalPrice();
         this.status = order.getOrderStatus();
         this.orderItemList = orderItem;

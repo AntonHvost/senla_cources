@@ -1,6 +1,5 @@
 package bookstore_system.domain.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,13 +10,16 @@ import bookstore_system.enums.RequestStatus;
 
 public class RequestService {
     private List<BookRequest> requestsList;
+    private Long nextRequestId;
 
-    public RequestService(){
-        this.requestsList = new ArrayList<>();
+    public RequestService(List<BookRequest> requestsList, Long nextRequestId) {
+        this.requestsList = requestsList;
+        this.nextRequestId = nextRequestId;
     }
 
     public BookRequest createRequest(Long bookId, Long orderId){
         BookRequest req = new BookRequest(bookId, orderId);
+        req.setId(nextRequestId++);
         requestsList.add(req);
         return req;
     }
@@ -44,6 +46,10 @@ public class RequestService {
 
     public List<BookRequest> getRequestsList() {
         return requestsList;
+    }
+
+    public Long getNextRequestId() {
+        return nextRequestId;
     }
 
     public void save(BookRequest request){

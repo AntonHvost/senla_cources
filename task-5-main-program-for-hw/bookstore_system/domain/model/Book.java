@@ -1,24 +1,26 @@
 package bookstore_system.domain.model;
 
 import bookstore_system.enums.BookStatus;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-public class Book implements Identifiable, Serializable {
-    private static long nextId = 1;
+@JsonAutoDetect
+public class Book implements Identifiable {
     private Long id;
     private String title;
     private String author;
     private String description;
+    @JsonFormat (pattern = "yyyy-MM-dd", shape =  JsonFormat.Shape.STRING)
     private LocalDate publishDate;
     private BigDecimal price;
     private BookStatus status;
 
     public Book() {}
     public Book (String title, String author, String description, LocalDate publishDate, BigDecimal price, BookStatus status){
-        this.id = nextId++;
         this.title = title;
         this.author = author;
         this.description = description;
@@ -61,7 +63,8 @@ public class Book implements Identifiable, Serializable {
         return status;
     }
 
-    public boolean isAvaible(){
+    @JsonIgnore
+    public boolean isAvailable(){
         return status == BookStatus.AVAILABLE;
     }
 
@@ -89,9 +92,4 @@ public class Book implements Identifiable, Serializable {
         this.status = status;
     }
 
-    public static void ensureId(long id) {
-        if (id >= nextId) {
-            nextId = id + 1;
-        }
-    }
 }

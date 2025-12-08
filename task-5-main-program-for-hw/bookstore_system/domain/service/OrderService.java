@@ -20,12 +20,21 @@ public class OrderService {
     private final RequestService requestService;
     private final ConsumerService consumerService;
     private final List<Order> ordersList;
+    private Long nextOrderId;
+    private Long nextOrderItemId;
 
-    public OrderService(RequestService requestService, BookInventoryService bookInventoryService, ConsumerService consumerService) {
+    public OrderService(List<Order> orders,
+                        Long nextOrderId,
+                        Long nextOrderItemId,
+                        RequestService requestService,
+                        BookInventoryService bookInventoryService,
+                        ConsumerService consumerService) {
         this.requestService = requestService;
-        this.ordersList = new ArrayList<>();
+        this.ordersList = orders;
         this.bookInventoryService = bookInventoryService;
         this.consumerService = consumerService;
+        this.nextOrderId = nextOrderId;
+        this.nextOrderItemId = nextOrderItemId;
     }
 
     public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
@@ -40,11 +49,12 @@ public class OrderService {
             if (book.getStatus() != BookStatus.AVAILABLE) {
                 requestService.createRequest(book.getId(), order.getId());
             }
-            order.addItem(new OrderItem(order.getId(), book.getId(), quantities[i]));
+            order.addItem(new OrderItem(nextOrderItemId++, order.getId(), book.getId(), quantities[i]));
         }
 
         order.setTotalPrice(calculateTotalPrice(order));
         ordersList.add(order);
+        order.setId(nextOrderId++);
         order.setOrderStatus(OrderStatus.NEW);
         return order;
     }
@@ -75,6 +85,14 @@ public class OrderService {
 
     public List<Order> getOrderList() {
         return ordersList;
+    }
+
+    public Long getNextOrderId() {
+        return nextOrderId;
+    }
+
+    public Long getNextOrderItemId() {
+        return nextOrderItemId;
     }
 
     public void updateOrderStatus(long id, OrderStatus status) {

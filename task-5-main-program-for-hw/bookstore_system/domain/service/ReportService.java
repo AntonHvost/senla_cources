@@ -46,8 +46,8 @@ public class ReportService {
 
         return orderService.getOrderList().stream()
                 .filter(o -> o.getOrderStatus() == OrderStatus.COMPLETED)
-                .filter(o -> !o.getCompletedOrderDate().isBefore(startDateTime))
-                .filter(o -> !o.getCompletedOrderDate().isAfter(endDateTime))
+                .filter(o -> !o.getCompletedAtDate().isBefore(startDateTime))
+                .filter(o -> !o.getCompletedAtDate().isAfter(endDateTime))
                 .map(order -> {
                             Consumer consumer = consumerService.findConsumerById(order.getConsumerId())
                                     .orElse(null);
@@ -69,8 +69,8 @@ public class ReportService {
 
         return (int) orderService.getOrderList().stream()
                 .filter(o -> o.getOrderStatus() == OrderStatus.COMPLETED)
-                .filter(o -> !o.getCompletedOrderDate().isBefore(startDateTime))
-                .filter(o -> !o.getCompletedOrderDate().isAfter(endDateTime))
+                .filter(o -> !o.getCompletedAtDate().isBefore(startDateTime))
+                .filter(o -> !o.getCompletedAtDate().isAfter(endDateTime))
                 .count();
     }
 
@@ -124,8 +124,8 @@ public class ReportService {
 
         return orderService.getOrderList().stream()
                 .filter(order -> order.getOrderStatus() == OrderStatus.COMPLETED)
-                .filter(order -> !order.getCompletedOrderDate().isBefore(startDateTime))
-                .filter(order -> !order.getCompletedOrderDate().isAfter(endDateTime))
+                .filter(order -> !order.getCompletedAtDate().isBefore(startDateTime))
+                .filter(order -> !order.getCompletedAtDate().isAfter(endDateTime))
                 .map(Order::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
@@ -187,7 +187,7 @@ public class ReportService {
             if (order.getOrderStatus() != OrderStatus.COMPLETED) continue;
             for (OrderItem item : order.getOrderItemsList()) {
                 Long bookId = item.getBookId();
-                LocalDateTime completedDate = order.getCompletedOrderDate();
+                LocalDateTime completedDate = order.getCompletedAtDate();
                 lastSoldDateByBookId.merge(bookId, completedDate, (old, newDate) ->
                         newDate.isAfter(old) ? newDate : old);
             }

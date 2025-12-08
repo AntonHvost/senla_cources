@@ -2,12 +2,17 @@ package bookstore_system.domain.service;
 
 import bookstore_system.domain.model.Consumer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 public class ConsumerService {
-    private final List<Consumer> consumers = new ArrayList<>();
+    private final List<Consumer> consumers;
+    private Long nextConsumerId;
+
+    public ConsumerService(List<Consumer> consumers, Long nextConsumerId) {
+        this.consumers = consumers;
+        this.nextConsumerId = nextConsumerId;
+    }
 
     public Optional<Consumer> findConsumerById(Long consumerId) {
         return consumers.stream().filter(c -> c.getId().equals(consumerId)).findAny();
@@ -17,7 +22,12 @@ public class ConsumerService {
         return consumers;
     }
 
+    public Long getNextConsumerId() {
+        return nextConsumerId;
+    }
+
     public void save(Consumer consumer) {
+        consumer.setId(nextConsumerId++);
         consumers.add(consumer);
     }
 

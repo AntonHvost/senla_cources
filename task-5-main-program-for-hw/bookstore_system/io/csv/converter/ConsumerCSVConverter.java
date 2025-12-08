@@ -33,8 +33,6 @@ public class ConsumerCSVConverter implements CsvConverter<Consumer> {
         consumer.setPhone(unescape(parts[2]));
         consumer.setEmail(unescape(parts[3]));
 
-        Consumer.ensureId(consumer.getId());
-
         return consumer;
     }
 

@@ -1,18 +1,20 @@
 package bookstore_system.domain.model;
 
 import bookstore_system.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order implements Identifiable,Serializable {
-    private static long nextId = 1;
+public class Order implements Identifiable {
     private Long id;
     private Long consumerId;
+    @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
+    @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime completedAt;
     private List<OrderItem> orderItemsList;
     private BigDecimal totalPrice;
@@ -26,7 +28,6 @@ public class Order implements Identifiable,Serializable {
     }
 
     public Order(Long consumerId) {
-        this.id = nextId++;
         this.createdAt = LocalDateTime.now();
         this.orderStatus = OrderStatus.NEW;
         this.consumerId = consumerId;
@@ -42,12 +43,12 @@ public class Order implements Identifiable,Serializable {
     public OrderStatus getOrderStatus() {
         return orderStatus;
     }
-
-    public LocalDateTime getCreatedOrderDate() {
+    @JsonIgnore
+    public LocalDateTime getCreatedAtDate() {
         return createdAt;
     }
-
-    public LocalDateTime getCompletedOrderDate() {
+    @JsonIgnore
+    public LocalDateTime getCompletedAtDate() {
         return completedAt;
     }
 
@@ -72,8 +73,8 @@ public class Order implements Identifiable,Serializable {
     public void setOrderItemsList(List<OrderItem> orderItemsList) {
         this.orderItemsList = orderItemsList;
     }
-
-    public void setCreatedOrder(LocalDateTime createdOrderDate) {
+    @JsonIgnore
+    public void setCreatedAtDate(LocalDateTime createdOrderDate) {
         this.createdAt = createdOrderDate;
     }
 
@@ -84,7 +85,7 @@ public class Order implements Identifiable,Serializable {
     public void setConsumerId(Long consumerId) {
         this.consumerId = consumerId;
     }
-
+    @JsonIgnore
     public void setCompletedAtDate(LocalDateTime completedAt) {
         this.completedAt = completedAt;
     }
@@ -99,12 +100,6 @@ public class Order implements Identifiable,Serializable {
 
     public boolean canBeCompleted() {
         return orderStatus == OrderStatus.IN_PROCESS;
-    }
-
-    public static void ensureId(long id) {
-        if (id >= nextId) {
-            nextId = id + 1;
-        }
     }
 
 }
