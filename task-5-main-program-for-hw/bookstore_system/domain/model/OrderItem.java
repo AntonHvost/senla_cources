@@ -1,5 +1,8 @@
 package bookstore_system.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
+@JsonAutoDetect
 public class OrderItem implements Identifiable {
     private Long id;
     private Long orderId;

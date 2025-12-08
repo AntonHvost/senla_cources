@@ -12,8 +12,6 @@ import bookstore_system.ui.factory.MainMenuFactory;
 import bookstore_system.ui.navigator.Navigator;
 import bookstore_system.ui.view.*;
 
-import java.io.IOException;
-
 public class Main {
     public static void main(String[] args) {
 

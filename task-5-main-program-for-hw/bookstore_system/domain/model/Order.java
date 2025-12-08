@@ -1,6 +1,7 @@
 package bookstore_system.domain.model;
 
 import bookstore_system.enums.OrderStatus;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonAutoDetect
 public class Order implements Identifiable {
     private Long id;
     private Long consumerId;

@@ -1,7 +1,8 @@
 package bookstore_system.domain.model;
 
-import java.io.Serializable;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
+@JsonAutoDetect
 public class Consumer implements Identifiable {
     private Long id;
     private String name;

@@ -1,11 +1,12 @@
 package bookstore_system.domain.model;
 
 import bookstore_system.enums.RequestStatus;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
+@JsonAutoDetect
 public class BookRequest implements Identifiable {
     private Long id;
     private Long reqBookId;
