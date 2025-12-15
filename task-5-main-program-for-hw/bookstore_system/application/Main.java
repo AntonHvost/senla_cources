@@ -2,10 +2,11 @@ package bookstore_system.application;
 
 import bookstore_system.config.BookstoreConfig;
 import bookstore_system.di.DIContainer;
-import bookstore_system.domain.model.Book;
+import bookstore_system.domain.repository.*;
 import bookstore_system.domain.service.*;
 import bookstore_system.facade.*;
 
+import bookstore_system.io.PersistanceManager;
 import bookstore_system.io.serializable.ApplicationState;
 import bookstore_system.io.serializable.SerializableManager;
 import bookstore_system.ui.controller.*;
@@ -19,9 +20,6 @@ import java.util.Set;
 public class Main {
     public static void main(String[] args) {
 
-        final SerializableManager manager = new SerializableManager();
-        final ApplicationState applicationState;
-
         try {
             BookstoreConfig.getInstance();
             System.out.println("\nСистема электронного магазина книг запущена!\n");
@@ -31,14 +29,16 @@ public class Main {
             return;
         }
 
-        applicationState = manager.loadState();
-
         DIContainer container = new DIContainer();
         container.registerBeans(Set.of(
+                BookRepository.class,
+                OrderRepository.class,
+                ConsumerRepository.class,
+                BookRequestRepository.class,
                 BookInventoryService.class,
                 ConsumerService.class,
-                BookRequestFullfilmentService.class,
                 RequestService.class,
+                BookRequestFullfilmentService.class,
                 OrderService.class,
                 ReportService.class,
                 IOService.class,
@@ -51,38 +51,34 @@ public class Main {
                 OrderController.class,
                 BookRequestController.class,
                 ReportController.class,
-                ConsumerController.class
+                ConsumerController.class,
+                BookView.class,
+                BookRequestView.class,
+                OrderView.class,
+                ReportView.class,
+                ConsumerView.class,
+                SerializableManager.class
         ));
 
-        //BookInventoryService bookInventoryService = new BookInventoryService(applicationState.getBooks(), applicationState.getNextBookId());
-        //RequestService requestService = new RequestService(applicationState.getRequests(), applicationState.getNextRequestId());
-        //ConsumerService consumerService = new ConsumerService(applicationState.getConsumers(), applicationState.getNextConsumerId());
-        //OrderService orderService = new OrderService(applicationState.getOrders(), applicationState.getNextOrderId(), applicationState.getNextOrderItemId(), requestService, bookInventoryService, consumerService);
-        //ReportService reportService = new ReportService(orderService, requestService, bookInventoryService, consumerService);
-        //IOService ioService = new IOService();
-        //BookRequestFullfilmentService bookRequestFullfilmentService = new BookRequestFullfilmentService(requestService, orderService);
+        final PersistanceManager persistanceManager = new PersistanceManager(
+                container.getBean(SerializableManager.class),
+                container.getBean(ConsumerRepository.class),
+                container.getBean(BookRepository.class),
+                container.getBean(BookRequestRepository.class),
+                container.getBean(OrderRepository.class));
 
-        /*BookFacade bookFacade = new BookFacade(container.getBean(BookInventoryService.class), container.getBean(IOService.class));
-        ConsumerFacade consumerFacade = new ConsumerFacade(container.getBean(ConsumerService.class), container.getBean(IOService.class));
-        OrderFacade orderFacade = new OrderFacade(container.getBean(OrderService.class),  container.getBean(IOService.class));
-        RequestFacade requestFacade = new RequestFacade(container.getBean(RequestService.class), container.getBean(BookInventoryService.class), container.getBean(BookRequestFullfilmentService.class), container.getBean(IOService.class));
-        ReportFacade reportFacade = new ReportFacade(container.getBean(ReportService.class));
-
-        BookController bookController = new BookController(reportFacade, bookFacade);
-        OrderController orderController = new OrderController(orderFacade, reportFacade);
-        BookRequestController bookRequestController = new BookRequestController(requestFacade, reportFacade);
-        ReportController reportController = new ReportController(reportFacade);
-        ConsumerController consumerController = new ConsumerController(consumerFacade);*/
-
-        BookView bookView = new BookView(container.getBean(BookController.class));
-        BookRequestView bookRequestView = new BookRequestView(container.getBean(BookRequestController.class));
-        OrderView orderView = new OrderView(container.getBean(OrderController.class));
-        ReportView reportView = new ReportView(container.getBean(ReportController.class));
-        ConsumerView consumerView = new ConsumerView(container.getBean(ConsumerController.class));
+        persistanceManager.initialState();
 
         Navigator navigator = new Navigator();
 
-        MainMenuFactory factory = new MainMenuFactory(navigator, bookView, bookRequestView, orderView, reportView, consumerView);
+        MainMenuFactory factory = new MainMenuFactory(
+                navigator,
+                container.getBean(BookView.class),
+                container.getBean(BookRequestView.class),
+                container.getBean(OrderView.class),
+                container.getBean(ReportView.class),
+                container.getBean(ConsumerView.class));
+
         Menu roofMenu = factory.createRoofMenu();
         MenuView menuView = new MenuView();
 
@@ -92,17 +88,6 @@ public class Main {
 
         controller.run();
 
-        /*ApplicationState state = new ApplicationState(
-                bookInventoryService.getBooks(),
-                bookInventoryService.getNextBookId(),
-                orderService.getOrderList(),
-                orderService.getNextOrderId(),
-                orderService.getNextOrderItemId(),
-                consumerService.findAllConsumers(),
-                consumerService.getNextConsumerId(),
-                requestService.getRequestsList(),
-                requestService.getNextRequestId()
-        );
-        manager.saveState(state);*/
+        persistanceManager.saveState();
     }
 }

@@ -6,42 +6,40 @@ import java.util.stream.Collectors;
 
 import bookstore_system.di.annotation.Component;
 import bookstore_system.di.annotation.Inject;
+import bookstore_system.domain.model.Book;
 import bookstore_system.domain.model.BookRequest;
+import bookstore_system.domain.repository.BookRequestRepository;
 import bookstore_system.enums.RequestStatus;
 
 @Component
 public class RequestService {
-    private List<BookRequest> requestsList;
-    private Long nextRequestId;
+    private BookRequestRepository bookRequestRepository;
 
     @Inject
-    public RequestService() {}
-
-    public RequestService(List<BookRequest> requestsList, Long nextRequestId) {
-        this.requestsList = requestsList;
-        this.nextRequestId = nextRequestId;
+    public RequestService(BookRequestRepository bookRequestRepository) {
+        this.bookRequestRepository = bookRequestRepository;
     }
 
     public BookRequest createRequest(Long bookId, Long orderId){
         BookRequest req = new BookRequest(bookId, orderId);
-        req.setId(nextRequestId++);
-        requestsList.add(req);
+        req.setId(bookRequestRepository.generateNextId());
+        bookRequestRepository.save(req);
         return req;
     }
 
     public Optional<BookRequest> findRequestById(long id){
-        return  requestsList.stream().filter(r -> r.getId() == id).findAny();
+        return  bookRequestRepository.findById(id);
     }
 
     public List<BookRequest> findPendingRequestsByBookId(Long bookId) {
-        return requestsList.stream()
+        return bookRequestRepository.findAll().stream()
                 .filter(r -> r.getReqBookId().equals(bookId))
                 .filter(r -> r.getStatus() == RequestStatus.PENDING)
                 .collect(Collectors.toList());
     }
 
     public RequestStatus getRequestStatusByOrderId(long id){
-        BookRequest request = requestsList.stream().filter(r -> r.getId() == id).findAny().orElse(null);
+        BookRequest request = bookRequestRepository.findAll().stream().filter(r -> r.getId() == id).findAny().orElse(null);
         return request != null ? request.getStatus() : null;
     }
 
@@ -50,19 +48,18 @@ public class RequestService {
     }
 
     public List<BookRequest> getRequestsList() {
-        return requestsList;
-    }
-
-    public Long getNextRequestId() {
-        return nextRequestId;
+        return bookRequestRepository.findAll();
     }
 
     public void save(BookRequest request){
-        requestsList.add(request);
+        if (request.getId() == null || request.getId() == 0) {
+            request.setId(bookRequestRepository.generateNextId());
+        }
+        bookRequestRepository.save(request);
     }
 
     public void update(BookRequest request) {
-        requestsList.set(requestsList.indexOf(request), request);
+        bookRequestRepository.update(request);
     }
 
 }

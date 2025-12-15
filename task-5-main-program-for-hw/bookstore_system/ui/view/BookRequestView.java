@@ -1,5 +1,7 @@
 package bookstore_system.ui.view;
 
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.domain.model.BookRequest;
 import bookstore_system.dto.BookRequestSummary;
 import bookstore_system.enums.SortByRequestBook;
@@ -7,12 +9,13 @@ import bookstore_system.ui.controller.BookRequestController;
 
 import java.util.*;
 
+@Component
 public class BookRequestView {
 
     private final BookRequestController bookRequestController;
 
     private final Scanner scanner = new Scanner(System.in);
-
+    @Inject
     public BookRequestView(BookRequestController bookRequestController) {
         this.bookRequestController = bookRequestController;
     }

@@ -13,6 +13,7 @@ import bookstore_system.domain.model.Book;
 import bookstore_system.domain.model.Consumer;
 import bookstore_system.domain.model.Order;
 import bookstore_system.domain.model.OrderItem;
+import bookstore_system.domain.repository.OrderRepository;
 import bookstore_system.enums.BookStatus;
 import bookstore_system.enums.OrderStatus;
 import bookstore_system.enums.RequestStatus;
@@ -22,41 +23,38 @@ public class OrderService {
     private final BookInventoryService bookInventoryService;
     private final RequestService requestService;
     private final ConsumerService consumerService;
-    private List<Order> ordersList = new ArrayList<>();
-    private Long nextOrderId = 1L;
-    private Long nextOrderItemId = 1L;
+    private final OrderRepository orderRepository;
 
     @Inject
-    public OrderService(RequestService requestService, BookInventoryService bookInventoryService, ConsumerService consumerService) {
+    public OrderService(RequestService requestService, BookInventoryService bookInventoryService, ConsumerService consumerService, OrderRepository orderRepository) {
         this.requestService = requestService;
         this.bookInventoryService = bookInventoryService;
         this.consumerService = consumerService;
+        this.orderRepository = orderRepository;
     }
 
     public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
         consumerService.save(consumer);
-        System.out.println(consumer.getName());
         Order order = new Order(consumer.getId());
+        order.setId(orderRepository.generateNextId());
 
         for (int i = 0; i < bookIds.length; i++) {
-            Book book = bookInventoryService.findBookById(bookIds[i])
-                    .orElseThrow(() -> new IllegalArgumentException("Ошибка создания заказа! Книга не найдена в каталоге!"));
-
-            if (book.getStatus() != BookStatus.AVAILABLE) {
-                requestService.createRequest(book.getId(), order.getId());
+            if(bookInventoryService.isAvailable(bookIds[i])){
+                requestService.createRequest(bookIds[i], order.getId());
             }
-            order.addItem(new OrderItem(nextOrderItemId++, order.getId(), book.getId(), quantities[i]));
+            order.addItem(new OrderItem(orderRepository.generateNextItemId(), order.getId(), bookIds[i], quantities[i]));
         }
 
         order.setTotalPrice(calculateTotalPrice(order));
-        ordersList.add(order);
-        order.setId(nextOrderId++);
         order.setOrderStatus(OrderStatus.NEW);
+
+        orderRepository.save(order);
+
         return order;
     }
 
     public boolean completeOrder(Long orderId) {
-        return findOrderById(orderId)
+        return orderRepository.findById(orderId)
                 .filter(order -> requestService.getRequestStatusByOrderId(orderId) == RequestStatus.FULFILLED || requestService.getRequestStatusByOrderId(orderId) == null)
                 .filter(Order::canBeCompleted)
                 .map(order ->
@@ -69,30 +67,26 @@ public class OrderService {
     }
 
     public void cancelOrder(Long orderId) {
-        findOrderById(orderId).ifPresent(order->{
+        orderRepository.findById(orderId).ifPresent(order->{
             order.setOrderStatus(OrderStatus.CANCELLED);
             order.setCompletedAtDate(LocalDateTime.now());
         });
     }
 
     public Optional<Order> findOrderById(Long orderId) {
-        return ordersList.stream().filter(o -> o.getId().equals(orderId)).findAny();
+        return orderRepository.findById(orderId);
     }
 
     public List<Order> getOrderList() {
-        return ordersList;
+        return orderRepository.findAll();
     }
 
-    public Long getNextOrderId() {
+    /*public Long getNextOrderId() {
         return nextOrderId;
-    }
-
-    public Long getNextOrderItemId() {
-        return nextOrderItemId;
-    }
+    }*/
 
     public void updateOrderStatus(long id, OrderStatus status) {
-        findOrderById(id).ifPresent(order -> {
+       orderRepository.findById(id).ifPresent(order -> {
             order.setOrderStatus(status);
             if (order.getOrderStatus() == OrderStatus.COMPLETED || order.getOrderStatus() == OrderStatus.CANCELLED) {
                 order.setCompletedAtDate(LocalDateTime.now());
@@ -112,16 +106,14 @@ public class OrderService {
     }
 
     public void saveOrder(Order order) {
-        ordersList.add(order);
+        if(order.getId() == null || order.getId() == 0){
+            order.setId(orderRepository.generateNextId());
+        }
+        orderRepository.save(order);
     }
 
     public void updateOrder(Order order){
-        for (Order o : ordersList){
-            if (o.getId().equals(order.getId())) {
-                ordersList.set(ordersList.indexOf(o), order);
-                return;
-            }
-        }
+        orderRepository.update(order);
     }
 
 }

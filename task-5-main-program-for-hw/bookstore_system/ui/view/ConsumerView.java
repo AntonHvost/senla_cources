@@ -1,13 +1,17 @@
 package bookstore_system.ui.view;
 
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.ui.controller.ConsumerController;
 
 import java.util.Scanner;
 
+@Component
 public class ConsumerView {
     private final ConsumerController consumerController;
     private final Scanner scanner = new Scanner(System.in);
 
+    @Inject
     public ConsumerView(ConsumerController consumerController) {
         this.consumerController = consumerController;
     }

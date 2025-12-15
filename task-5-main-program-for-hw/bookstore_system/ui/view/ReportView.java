@@ -1,21 +1,23 @@
 package bookstore_system.ui.view;
 
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.dto.OrderSummary;
 import bookstore_system.enums.SortByOrder;
 import bookstore_system.ui.controller.ReportController;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class ReportView {
 
     private final ReportController reportController;
 
     private final Scanner scanner = new Scanner(System.in);
 
+    @Inject
     public ReportView(ReportController reportController) {
         this.reportController = reportController;
     }
