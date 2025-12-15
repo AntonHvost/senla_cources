@@ -24,9 +24,7 @@ public class BookFacade {
     }
 
     public boolean isBookAvailable(long bookId) {
-        return bookInventoryService.findBookById(bookId)
-                .map(Book::isAvailable)
-                .orElse(false);
+        return bookInventoryService.isAvailable(bookId);
     }
 
     public void importBooksFromCSV(String filename) {

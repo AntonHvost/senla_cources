@@ -1,6 +1,7 @@
 package bookstore_system.application;
 
 import bookstore_system.config.BookstoreConfig;
+import bookstore_system.config.Configurator;
 import bookstore_system.di.DIContainer;
 import bookstore_system.domain.repository.*;
 import bookstore_system.domain.service.*;
@@ -20,14 +21,14 @@ import java.util.Set;
 public class Main {
     public static void main(String[] args) {
 
-        try {
+        /*try {
             BookstoreConfig.getInstance();
             System.out.println("\nСистема электронного магазина книг запущена!\n");
         } catch (Exception e) {
             System.err.println("Ошибка запуска программы при загрузке конфигурации: " + e.getMessage());
             System.err.println("Проверьте наличие файла app.properties в resources.");
             return;
-        }
+        }*/
 
         DIContainer container = new DIContainer();
         container.registerBeans(Set.of(
@@ -59,6 +60,8 @@ public class Main {
                 ConsumerView.class,
                 SerializableManager.class
         ));
+
+        new Configurator().configureObjects(Set.of(container.getBean(ReportService.class), container.getBean(BookRequestFullfilmentService.class)));
 
         final PersistanceManager persistanceManager = new PersistanceManager(
                 container.getBean(SerializableManager.class),

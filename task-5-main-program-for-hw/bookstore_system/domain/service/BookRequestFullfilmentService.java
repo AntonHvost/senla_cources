@@ -1,6 +1,7 @@
 package bookstore_system.domain.service;
 
 import bookstore_system.config.BookstoreConfig;
+import bookstore_system.config.ConfigProperty;
 import bookstore_system.di.annotation.Component;
 import bookstore_system.di.annotation.Inject;
 import bookstore_system.domain.model.BookRequest;
@@ -14,6 +15,9 @@ public class BookRequestFullfilmentService {
     private final RequestService requestService;
     private final OrderService orderService;
 
+    @ConfigProperty(propertyName = "autoCompleteRequest",  type = boolean.class)
+    private boolean isAutoCompleteRequest;
+
     @Inject
     public BookRequestFullfilmentService(RequestService requestService, OrderService orderService) {
         this.requestService = requestService;
@@ -24,7 +28,7 @@ public class BookRequestFullfilmentService {
         List<BookRequest> bookRequests = requestService.findPendingRequestsByBookId(bookId);
 
         for(BookRequest bookRequest : bookRequests){
-            if (BookstoreConfig.getInstance().isAutoCompleteOrder()) bookRequest.fulFilled();
+            if (isAutoCompleteRequest) bookRequest.fulFilled();
 
             bookRequest.setDeliveryDate(LocalDateTime.now());
 

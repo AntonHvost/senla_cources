@@ -8,6 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import bookstore_system.config.BookstoreConfig;
+import bookstore_system.config.ConfigProperty;
 import bookstore_system.di.annotation.Component;
 import bookstore_system.di.annotation.Inject;
 import bookstore_system.domain.model.*;
@@ -20,6 +21,9 @@ public class ReportService {
     private final RequestService requestService;
     private final ConsumerService consumerService;
     private final BookInventoryService bookInventoryService;
+
+    @ConfigProperty(propertyName = "unsoldBookMonth", type = int.class)
+    private int thresholdMonth;
 
     @Inject
     public ReportService(OrderService orderService, RequestService requestService, BookInventoryService bookInventoryService, ConsumerService consumerService) {
@@ -181,8 +185,6 @@ public class ReportService {
     }
 
     public List<BookSummary> getUnsoldBooksMoreThanNMonth (SortByUnsoldBook sortParam) {
-
-        int thresholdMonth = BookstoreConfig.getInstance().getUnsoldBookMonth();
 
         LocalDateTime sixMonthAgo = LocalDateTime.now().minusMonths(thresholdMonth);
 

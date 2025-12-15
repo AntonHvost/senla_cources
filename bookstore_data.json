@@ -1,9 +1,9 @@
 {
   "nextBookId" : 11,
-  "nextOrderId" : 6,
-  "nextOrderItemId" : 11,
-  "nextRequestId" : 0,
-  "nextConsumerId" : 6,
+  "nextOrderId" : 5,
+  "nextOrderItemId" : 9,
+  "nextRequestId" : 3,
+  "nextConsumerId" : 5,
   "books" : [ {
     "id" : 1,
     "title" : "Война и мир",
@@ -105,11 +105,6 @@
     "name" : "Borya",
     "phone" : "84384748",
     "email" : "fjdfhfj@yandex.ru"
-  }, {
-    "id" : 5,
-    "name" : "Nastya",
-    "phone" : "9343948",
-    "email" : "fksjfk@ya.ru"
   } ],
   "orders" : [ {
     "id" : 1,
@@ -164,7 +159,7 @@
     "completedAt" : null,
     "orderItemsList" : [ {
       "id" : 7,
-      "orderId" : 3,
+      "orderId" : 1,
       "bookId" : 4,
       "quantity" : 4
     } ],
@@ -177,29 +172,11 @@
     "completedAt" : null,
     "orderItemsList" : [ {
       "id" : 8,
-      "orderId" : 4,
+      "orderId" : null,
       "bookId" : 1,
       "quantity" : 1
     } ],
     "totalPrice" : 1200.5,
-    "orderStatus" : "NEW"
-  }, {
-    "id" : 5,
-    "consumerId" : 5,
-    "createdAt" : "2025-12-15 11:09:15",
-    "completedAt" : null,
-    "orderItemsList" : [ {
-      "id" : 9,
-      "orderId" : 5,
-      "bookId" : 8,
-      "quantity" : 3
-    }, {
-      "id" : 10,
-      "orderId" : 5,
-      "bookId" : 4,
-      "quantity" : 1
-    } ],
-    "totalPrice" : 3301.75,
     "orderStatus" : "NEW"
   } ],
   "requests" : [ {
