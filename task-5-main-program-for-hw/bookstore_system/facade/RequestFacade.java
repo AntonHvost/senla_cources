@@ -1,11 +1,14 @@
 package bookstore_system.facade;
 
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.domain.service.*;
 import bookstore_system.domain.model.BookRequest;
 import bookstore_system.io.csv.converter.BookRequestCSVConverter;
 
 import java.util.Optional;
 
+@Component
 public class RequestFacade {
 
     private final RequestService requestService;
@@ -14,6 +17,7 @@ public class RequestFacade {
     private final IOService ioService;
     private final BookRequestCSVConverter bookRequestCSVConverter = new BookRequestCSVConverter();
 
+    @Inject
     public RequestFacade(RequestService requestService, BookInventoryService bookInventoryService, BookRequestFullfilmentService bookRequestFullfilmentService, IOService ioService) {
         this.requestService = requestService;
         this.bookInventoryService = bookInventoryService;

@@ -1,16 +1,20 @@
 package bookstore_system.domain.service;
 
 import bookstore_system.config.BookstoreConfig;
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.domain.model.BookRequest;
 import bookstore_system.enums.OrderStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Component
 public class BookRequestFullfilmentService {
     private final RequestService requestService;
     private final OrderService orderService;
 
+    @Inject
     public BookRequestFullfilmentService(RequestService requestService, OrderService orderService) {
         this.requestService = requestService;
         this.orderService = orderService;

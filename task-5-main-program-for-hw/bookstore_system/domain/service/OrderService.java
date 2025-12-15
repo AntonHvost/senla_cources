@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.domain.model.Book;
 import bookstore_system.domain.model.Consumer;
 import bookstore_system.domain.model.Order;
@@ -15,26 +17,20 @@ import bookstore_system.enums.BookStatus;
 import bookstore_system.enums.OrderStatus;
 import bookstore_system.enums.RequestStatus;
 
+@Component
 public class OrderService {
     private final BookInventoryService bookInventoryService;
     private final RequestService requestService;
     private final ConsumerService consumerService;
-    private final List<Order> ordersList;
-    private Long nextOrderId;
-    private Long nextOrderItemId;
+    private List<Order> ordersList = new ArrayList<>();
+    private Long nextOrderId = 1L;
+    private Long nextOrderItemId = 1L;
 
-    public OrderService(List<Order> orders,
-                        Long nextOrderId,
-                        Long nextOrderItemId,
-                        RequestService requestService,
-                        BookInventoryService bookInventoryService,
-                        ConsumerService consumerService) {
+    @Inject
+    public OrderService(RequestService requestService, BookInventoryService bookInventoryService, ConsumerService consumerService) {
         this.requestService = requestService;
-        this.ordersList = orders;
         this.bookInventoryService = bookInventoryService;
         this.consumerService = consumerService;
-        this.nextOrderId = nextOrderId;
-        this.nextOrderItemId = nextOrderItemId;
     }
 
     public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {

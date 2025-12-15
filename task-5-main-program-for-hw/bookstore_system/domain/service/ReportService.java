@@ -8,16 +8,20 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import bookstore_system.config.BookstoreConfig;
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.domain.model.*;
 import bookstore_system.dto.*;
 import bookstore_system.enums.*;
 
+@Component
 public class ReportService {
     private final OrderService orderService;
     private final RequestService requestService;
     private final ConsumerService consumerService;
     private final BookInventoryService bookInventoryService;
 
+    @Inject
     public ReportService(OrderService orderService, RequestService requestService, BookInventoryService bookInventoryService, ConsumerService consumerService) {
         this.orderService = orderService;
         this.requestService = requestService;

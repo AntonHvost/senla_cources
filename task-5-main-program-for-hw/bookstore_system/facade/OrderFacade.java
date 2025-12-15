@@ -1,5 +1,7 @@
 package bookstore_system.facade;
 
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.domain.model.Consumer;
 import bookstore_system.domain.model.Order;
 import bookstore_system.domain.service.IOService;
@@ -8,12 +10,14 @@ import bookstore_system.domain.service.OrderService;
 import bookstore_system.io.csv.converter.OrderCsvConverter;
 import bookstore_system.io.csv.converter.OrderItemCsvConverter;
 
+@Component
 public class OrderFacade {
     private final OrderService orderService;
     private final IOService ioService;
     private final OrderCsvConverter orderCsvConverter = new OrderCsvConverter();
     private final OrderItemCsvConverter orderItemCsvConverter = new OrderItemCsvConverter();
 
+    @Inject
     public OrderFacade(OrderService orderService,  IOService ioService) {
         this.orderService = orderService;
         this.ioService = ioService;

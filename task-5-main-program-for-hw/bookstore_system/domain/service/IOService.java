@@ -1,6 +1,7 @@
 package bookstore_system.domain.service;
 
-import bookstore_system.domain.model.Identifiable;
+import bookstore_system.di.annotation.Component;
+import bookstore_system.domain.model.impl.Identifiable;
 import bookstore_system.domain.model.Order;
 import bookstore_system.domain.model.OrderItem;
 import bookstore_system.io.csv.CsvConverter;
@@ -12,6 +13,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+@Component
 public class IOService {
     private final GenericCSVService csvService = new GenericCSVService();
 

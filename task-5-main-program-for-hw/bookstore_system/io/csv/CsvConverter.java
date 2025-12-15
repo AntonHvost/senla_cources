@@ -1,6 +1,6 @@
 package bookstore_system.io.csv;
 
-import bookstore_system.domain.model.Identifiable;
+import bookstore_system.domain.model.impl.Identifiable;
 
 public interface CsvConverter<T extends Identifiable> {
     String getHeader();

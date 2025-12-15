@@ -4,13 +4,18 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.domain.model.BookRequest;
 import bookstore_system.enums.RequestStatus;
 
-
+@Component
 public class RequestService {
     private List<BookRequest> requestsList;
     private Long nextRequestId;
+
+    @Inject
+    public RequestService() {}
 
     public RequestService(List<BookRequest> requestsList, Long nextRequestId) {
         this.requestsList = requestsList;

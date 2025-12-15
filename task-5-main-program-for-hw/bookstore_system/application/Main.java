@@ -1,6 +1,7 @@
 package bookstore_system.application;
 
 import bookstore_system.config.BookstoreConfig;
+import bookstore_system.di.DIContainer;
 import bookstore_system.domain.service.*;
 import bookstore_system.facade.*;
 
@@ -11,6 +12,8 @@ import bookstore_system.ui.domain.Menu;
 import bookstore_system.ui.factory.MainMenuFactory;
 import bookstore_system.ui.navigator.Navigator;
 import bookstore_system.ui.view.*;
+
+import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
@@ -29,19 +32,30 @@ public class Main {
 
         applicationState = manager.loadState();
 
-        BookInventoryService bookInventoryService = new BookInventoryService(applicationState.getBooks(), applicationState.getNextBookId());
-        RequestService requestService = new RequestService(applicationState.getRequests(), applicationState.getNextRequestId());
-        ConsumerService consumerService = new ConsumerService(applicationState.getConsumers(), applicationState.getNextConsumerId());
-        OrderService orderService = new OrderService(applicationState.getOrders(), applicationState.getNextOrderId(), applicationState.getNextOrderItemId(), requestService, bookInventoryService, consumerService);
-        ReportService reportService = new ReportService(orderService, requestService, bookInventoryService, consumerService);
-        IOService ioService = new IOService();
-        BookRequestFullfilmentService bookRequestFullfilmentService = new BookRequestFullfilmentService(requestService, orderService);
+        DIContainer container = new DIContainer();
+        container.registerBeans(Set.of(
+                BookInventoryService.class,
+                ConsumerService.class,
+                BookRequestFullfilmentService.class,
+                RequestService.class,
+                OrderService.class,
+                ReportService.class,
+                IOService.class
+        ));
 
-        BookFacade bookFacade = new BookFacade(bookInventoryService, ioService);
-        OrderFacade orderFacade = new OrderFacade(orderService, ioService);
-        ReportFacade reportFacade = new ReportFacade(reportService);
-        RequestFacade requestFacade = new RequestFacade(requestService, bookInventoryService, bookRequestFullfilmentService, ioService);
-        ConsumerFacade consumerFacade = new ConsumerFacade(consumerService, ioService);
+        //BookInventoryService bookInventoryService = new BookInventoryService(applicationState.getBooks(), applicationState.getNextBookId());
+        //RequestService requestService = new RequestService(applicationState.getRequests(), applicationState.getNextRequestId());
+        //ConsumerService consumerService = new ConsumerService(applicationState.getConsumers(), applicationState.getNextConsumerId());
+        //OrderService orderService = new OrderService(applicationState.getOrders(), applicationState.getNextOrderId(), applicationState.getNextOrderItemId(), requestService, bookInventoryService, consumerService);
+        //ReportService reportService = new ReportService(orderService, requestService, bookInventoryService, consumerService);
+        //IOService ioService = new IOService();
+        //BookRequestFullfilmentService bookRequestFullfilmentService = new BookRequestFullfilmentService(requestService, orderService);
+
+        BookFacade bookFacade = new BookFacade(container.getBean(BookInventoryService.class), container.getBean(IOService.class));
+        ConsumerFacade consumerFacade = new ConsumerFacade(container.getBean(ConsumerService.class), container.getBean(IOService.class));
+        OrderFacade orderFacade = new OrderFacade(container.getBean(OrderService.class),  container.getBean(IOService.class));
+        RequestFacade requestFacade = new RequestFacade(container.getBean(RequestService.class), container.getBean(BookInventoryService.class), container.getBean(BookRequestFullfilmentService.class), container.getBean(IOService.class));
+        ReportFacade reportFacade = new ReportFacade(container.getBean(ReportService.class));
 
         BookController bookController = new BookController(reportFacade, bookFacade);
         OrderController orderController = new OrderController(orderFacade, reportFacade);
@@ -67,7 +81,7 @@ public class Main {
 
         controller.run();
 
-        ApplicationState state = new ApplicationState(
+        /*ApplicationState state = new ApplicationState(
                 bookInventoryService.getBooks(),
                 bookInventoryService.getNextBookId(),
                 orderService.getOrderList(),
@@ -78,6 +92,6 @@ public class Main {
                 requestService.getRequestsList(),
                 requestService.getNextRequestId()
         );
-        manager.saveState(state);
+        manager.saveState(state);*/
     }
 }

@@ -1,13 +1,17 @@
 package bookstore_system.domain.service;
 
+import bookstore_system.di.annotation.Component;
 import bookstore_system.domain.model.Consumer;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class ConsumerService {
-    private final List<Consumer> consumers;
+    private List<Consumer> consumers;
     private Long nextConsumerId;
+
+    public ConsumerService() {}
 
     public ConsumerService(List<Consumer> consumers, Long nextConsumerId) {
         this.consumers = consumers;

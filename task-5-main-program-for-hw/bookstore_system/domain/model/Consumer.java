@@ -1,5 +1,6 @@
 package bookstore_system.domain.model;
 
+import bookstore_system.domain.model.impl.Identifiable;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 
 @JsonAutoDetect

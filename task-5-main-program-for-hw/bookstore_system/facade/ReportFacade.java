@@ -1,5 +1,7 @@
 package bookstore_system.facade;
 
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.dto.BookRequestSummary;
 import bookstore_system.dto.BookSummary;
 import bookstore_system.dto.OrderSummary;
@@ -13,9 +15,11 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class ReportFacade {
     private final ReportService reportService;
 
+    @Inject
     public ReportFacade(ReportService reportService) {
         this.reportService = reportService;
     }

@@ -1,5 +1,7 @@
 package bookstore_system.domain.service;
 
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.domain.model.Book;
 import bookstore_system.enums.BookStatus;
 
@@ -7,10 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class BookInventoryService {
     private List<Book> books;
     private Long nextBookId;
 
+    @Inject
     public BookInventoryService() {
         this.books = new ArrayList<>();
         this.nextBookId = 1L;
