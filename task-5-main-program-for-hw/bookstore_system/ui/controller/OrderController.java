@@ -1,5 +1,7 @@
 package bookstore_system.ui.controller;
 
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.domain.model.Consumer;
 import bookstore_system.domain.model.Order;
 import bookstore_system.dto.OrderSummary;
@@ -11,11 +13,13 @@ import bookstore_system.facade.ReportFacade;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class OrderController {
 
     private final OrderFacade orderFacade;
     private final ReportFacade reportFacade;
 
+    @Inject
     public OrderController(OrderFacade orderFacade, ReportFacade reportFacade) {
         this.orderFacade = orderFacade;
         this.reportFacade = reportFacade;

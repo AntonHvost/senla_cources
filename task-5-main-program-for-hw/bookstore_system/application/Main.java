@@ -2,6 +2,7 @@ package bookstore_system.application;
 
 import bookstore_system.config.BookstoreConfig;
 import bookstore_system.di.DIContainer;
+import bookstore_system.domain.model.Book;
 import bookstore_system.domain.service.*;
 import bookstore_system.facade.*;
 
@@ -40,7 +41,17 @@ public class Main {
                 RequestService.class,
                 OrderService.class,
                 ReportService.class,
-                IOService.class
+                IOService.class,
+                BookFacade.class,
+                ConsumerFacade.class,
+                OrderFacade.class,
+                RequestFacade.class,
+                ReportFacade.class,
+                BookController.class,
+                OrderController.class,
+                BookRequestController.class,
+                ReportController.class,
+                ConsumerController.class
         ));
 
         //BookInventoryService bookInventoryService = new BookInventoryService(applicationState.getBooks(), applicationState.getNextBookId());
@@ -51,7 +62,7 @@ public class Main {
         //IOService ioService = new IOService();
         //BookRequestFullfilmentService bookRequestFullfilmentService = new BookRequestFullfilmentService(requestService, orderService);
 
-        BookFacade bookFacade = new BookFacade(container.getBean(BookInventoryService.class), container.getBean(IOService.class));
+        /*BookFacade bookFacade = new BookFacade(container.getBean(BookInventoryService.class), container.getBean(IOService.class));
         ConsumerFacade consumerFacade = new ConsumerFacade(container.getBean(ConsumerService.class), container.getBean(IOService.class));
         OrderFacade orderFacade = new OrderFacade(container.getBean(OrderService.class),  container.getBean(IOService.class));
         RequestFacade requestFacade = new RequestFacade(container.getBean(RequestService.class), container.getBean(BookInventoryService.class), container.getBean(BookRequestFullfilmentService.class), container.getBean(IOService.class));
@@ -61,13 +72,13 @@ public class Main {
         OrderController orderController = new OrderController(orderFacade, reportFacade);
         BookRequestController bookRequestController = new BookRequestController(requestFacade, reportFacade);
         ReportController reportController = new ReportController(reportFacade);
-        ConsumerController consumerController = new ConsumerController(consumerFacade);
+        ConsumerController consumerController = new ConsumerController(consumerFacade);*/
 
-        BookView bookView = new BookView(bookController);
-        BookRequestView bookRequestView = new BookRequestView(bookRequestController);
-        OrderView orderView = new OrderView(orderController);
-        ReportView reportView = new ReportView(reportController);
-        ConsumerView consumerView = new ConsumerView(consumerController);
+        BookView bookView = new BookView(container.getBean(BookController.class));
+        BookRequestView bookRequestView = new BookRequestView(container.getBean(BookRequestController.class));
+        OrderView orderView = new OrderView(container.getBean(OrderController.class));
+        ReportView reportView = new ReportView(container.getBean(ReportController.class));
+        ConsumerView consumerView = new ConsumerView(container.getBean(ConsumerController.class));
 
         Navigator navigator = new Navigator();
 
