@@ -1,5 +1,6 @@
 package bookstore_system.io.serializable;
 
+import bookstore_system.di.annotation.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.io.File;
 import java.io.IOException;
 
+@Component
 public class SerializableManager {
 
     private static final String DATA_FILE = "bookstore_data.json";

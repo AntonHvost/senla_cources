@@ -5,9 +5,6 @@ import bookstore_system.ui.domain.MenuItem;
 import bookstore_system.ui.navigator.Navigator;
 import bookstore_system.ui.view.MenuView;
 
-import java.util.List;
-import java.util.Scanner;
-
 public class MenuController {
 
     private final Navigator navigator;

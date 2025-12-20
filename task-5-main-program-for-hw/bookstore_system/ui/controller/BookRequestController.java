@@ -1,5 +1,7 @@
 package bookstore_system.ui.controller;
 
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.domain.model.BookRequest;
 import bookstore_system.dto.BookRequestSummary;
 import bookstore_system.enums.SortByRequestBook;
@@ -9,10 +11,11 @@ import bookstore_system.facade.RequestFacade;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class BookRequestController {
     private final RequestFacade requestFacade;
     private final ReportFacade reportFacade;
-
+    @Inject
     public BookRequestController(RequestFacade requestFacade, ReportFacade reportFacade) {
         this.requestFacade = requestFacade;
         this.reportFacade = reportFacade;

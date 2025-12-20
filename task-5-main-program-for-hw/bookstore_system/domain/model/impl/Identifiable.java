@@ -1,4 +1,4 @@
-package bookstore_system.domain.model;
+package bookstore_system.domain.model.impl;
 
 public interface Identifiable {
     Long getId();

@@ -1,5 +1,7 @@
 package bookstore_system.ui.view;
 
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.dto.BookSummary;
 import bookstore_system.enums.BookStatus;
 import bookstore_system.enums.SortByBook;
@@ -14,12 +16,14 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
+@Component
 public class BookView {
 
     private final BookController bookController;
 
     private final Scanner scanner = new Scanner(System.in);
 
+    @Inject
     public BookView(BookController bookController) {
         this.bookController = bookController;
     }

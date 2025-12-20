@@ -1,7 +1,7 @@
 package bookstore_system.io.csv;
 
 import bookstore_system.config.BookstoreConfig;
-import bookstore_system.domain.model.Identifiable;
+import bookstore_system.domain.model.impl.Identifiable;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

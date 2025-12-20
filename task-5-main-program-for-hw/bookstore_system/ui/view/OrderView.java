@@ -1,6 +1,7 @@
 package bookstore_system.ui.view;
 
-import bookstore_system.config.BookstoreConfig;
+import bookstore_system.di.annotation.Component;
+import bookstore_system.di.annotation.Inject;
 import bookstore_system.domain.model.Consumer;
 import bookstore_system.domain.model.Order;
 import bookstore_system.dto.OrderItemSummary;
@@ -16,6 +17,7 @@ import java.util.Scanner;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
+@Component
 public class OrderView {
 
     private static final Pattern EMAIL_PATTERN = Pattern.compile(
@@ -29,6 +31,7 @@ public class OrderView {
 
     private final Scanner scanner = new Scanner(System.in);
 
+    @Inject
     public OrderView(OrderController orderController) {
         this.orderController = orderController;
     }
