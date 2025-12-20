@@ -22,7 +22,7 @@ public class BookRequestCSVConverter implements CsvConverter<BookRequest> {
         return String.join(",",
                 String.valueOf(entity.getId()),
                 String.valueOf(entity.getReqBookId()),
-                String.valueOf(entity.getRelatedOrder()),
+                String.valueOf(entity.getRelatedOrderId()),
                 String.valueOf(entity.getRequestDate().format(DATE_TIME_FORMATTER)),
                 String.valueOf(entity.getDeliveryDate() == null ? "" : entity.getDeliveryDate().format(DATE_TIME_FORMATTER)),
                 entity.getStatus().name()
@@ -43,8 +43,6 @@ public class BookRequestCSVConverter implements CsvConverter<BookRequest> {
         request.setRequestDate(LocalDateTime.parse(parts[3], DATE_TIME_FORMATTER));
         request.setDeliveryDate(parts[4].isEmpty() ? null : LocalDateTime.parse(parts[4], DATE_TIME_FORMATTER));
         request.setStatus(RequestStatus.valueOf(parts[5]));
-
-        Book.ensureId(request.getId());
 
         return request;
     }

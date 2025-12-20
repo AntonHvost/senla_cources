@@ -1,7 +1,9 @@
 package bookstore_system.domain.model;
 
-public class Consumer implements Indedifiable {
-    private static long nextId = 1;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+
+@JsonAutoDetect
+public class Consumer implements Identifiable {
     private Long id;
     private String name;
     private String phone;
@@ -10,7 +12,6 @@ public class Consumer implements Indedifiable {
     public Consumer(){}
 
     public Consumer(String name, String phone, String email) {
-        this.id = nextId++;
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -49,9 +50,4 @@ public class Consumer implements Indedifiable {
         this.email = email;
     }
 
-    public static void ensureId(long id) {
-        if (id >= nextId) {
-            nextId = id + 1;
-        }
-    }
 }

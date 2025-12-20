@@ -1,22 +1,25 @@
 package bookstore_system.domain.model;
 
 import bookstore_system.enums.RequestStatus;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
 
-public class BookRequest implements Indedifiable {
-    private static long nextId = 1;
+@JsonAutoDetect
+public class BookRequest implements Identifiable {
     private Long id;
     private Long reqBookId;
     private Long relatedOrderId;
+    @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime requestDate;
+    @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime deliveryDate;
     private RequestStatus status;
 
     public  BookRequest() {}
 
     public BookRequest(Long bookId, Long orderId) {
-        this.id = nextId++;
         this.reqBookId = bookId;
         this.relatedOrderId = orderId;
         this.requestDate = LocalDateTime.now();
@@ -49,7 +52,7 @@ public class BookRequest implements Indedifiable {
         return status;
     }
 
-    public Long getRelatedOrder() {
+    public Long getRelatedOrderId() {
         return relatedOrderId;
     }
 
@@ -81,9 +84,4 @@ public class BookRequest implements Indedifiable {
         status = RequestStatus.CANCELLED;
     }
 
-    public static void ensureId(long id) {
-        if (id >= nextId) {
-            nextId = id + 1;
-        }
-    }
 }

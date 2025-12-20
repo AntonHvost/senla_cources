@@ -22,8 +22,8 @@ public class OrderCsvConverter implements CsvConverter<Order> {
         return String.join(",",
         String.valueOf(entity.getId()),
         String.valueOf(entity.getConsumerId()),
-        entity.getCreatedOrderDate().format(DATE_TIME_FORMATTER),
-        entity.getCompletedOrderDate() == null ? "" : entity.getCompletedOrderDate().format(DATE_TIME_FORMATTER),
+        entity.getCreatedAtDate().format(DATE_TIME_FORMATTER),
+        entity.getCompletedAtDate() == null ? "" : entity.getCompletedAtDate().format(DATE_TIME_FORMATTER),
         entity.getTotalPrice().toString(),
         entity.getOrderStatus().name()
         );
@@ -39,12 +39,10 @@ public class OrderCsvConverter implements CsvConverter<Order> {
 
         order.setId(Long.parseLong(parts[0]));
         order.setConsumerId(Long.parseLong(parts[1]));
-        order.setCreatedOrder(LocalDateTime.parse(parts[2], DATE_TIME_FORMATTER));
+        order.setCreatedAtDate(LocalDateTime.parse(parts[2], DATE_TIME_FORMATTER));
         order.setCompletedAtDate(parts[3].isEmpty() ? null : LocalDateTime.parse(parts[3], DATE_TIME_FORMATTER));
         order.setTotalPrice(BigDecimal.valueOf(Double.parseDouble(parts[4])));
         order.setOrderStatus(OrderStatus.valueOf(parts[5]));
-
-        Order.ensureId(order.getId());
 
         return order;
     }

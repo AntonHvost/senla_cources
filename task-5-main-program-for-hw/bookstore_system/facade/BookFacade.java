@@ -22,7 +22,7 @@ public class BookFacade {
 
     public boolean isBookAvailable(long bookId) {
         return bookInventoryService.findBookById(bookId)
-                .map(Book::isAvaible)
+                .map(Book::isAvailable)
                 .orElse(false);
     }
 

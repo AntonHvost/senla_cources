@@ -9,12 +9,20 @@ import java.util.Optional;
 
 public class BookInventoryService {
     private List<Book> books;
+    private Long nextBookId;
 
     public BookInventoryService() {
         this.books = new ArrayList<>();
+        this.nextBookId = 1L;
+    }
+
+    public BookInventoryService(List<Book> books, Long nextBookId) {
+        this.books = new ArrayList<>(books);
+        this.nextBookId = nextBookId;
     }
 
     public void addBookToCatalog(Book b){
+        b.setId(nextBookId++);
         books.add(b);
     }
 
@@ -44,5 +52,9 @@ public class BookInventoryService {
 
     public List<Book> getBooks() {
         return books;
+    }
+
+    public Long getNextBookId() {
+        return nextBookId;
     }
 }

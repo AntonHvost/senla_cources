@@ -1,5 +1,6 @@
 package bookstore_system.domain.service;
 
+import bookstore_system.config.BookstoreConfig;
 import bookstore_system.domain.model.BookRequest;
 import bookstore_system.enums.OrderStatus;
 
@@ -19,10 +20,11 @@ public class BookRequestFullfilmentService {
         List<BookRequest> bookRequests = requestService.findPendingRequestsByBookId(bookId);
 
         for(BookRequest bookRequest : bookRequests){
-            bookRequest.fulFilled();
+            if (BookstoreConfig.getInstance().isAutoCompleteOrder()) bookRequest.fulFilled();
+
             bookRequest.setDeliveryDate(LocalDateTime.now());
 
-            Long orderId = bookRequest.getRelatedOrder();
+            Long orderId = bookRequest.getRelatedOrderId();
             if(orderService.findOrderById(orderId).isPresent()){
                 orderService.updateOrderStatus(orderId, OrderStatus.IN_PROCESS);
             } else {

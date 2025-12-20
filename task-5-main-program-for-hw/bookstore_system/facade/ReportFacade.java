@@ -53,7 +53,7 @@ public class ReportFacade {
     }
 
     public List<BookSummary> getUnsoldBooks(SortByUnsoldBook sortParam) {
-        return reportService.getUnsoldBooksMoreThanSixMonth(sortParam);
+        return reportService.getUnsoldBooksMoreThanNMonth(sortParam);
     }
 
 }

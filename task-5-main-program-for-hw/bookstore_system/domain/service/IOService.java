@@ -1,6 +1,6 @@
 package bookstore_system.domain.service;
 
-import bookstore_system.domain.model.Indedifiable;
+import bookstore_system.domain.model.Identifiable;
 import bookstore_system.domain.model.Order;
 import bookstore_system.domain.model.OrderItem;
 import bookstore_system.io.csv.CsvConverter;
@@ -15,7 +15,7 @@ import java.util.function.Supplier;
 public class IOService {
     private final GenericCSVService csvService = new GenericCSVService();
 
-    public <T extends Indedifiable> void exportEntities(
+    public <T extends Identifiable> void exportEntities(
             String filename,
             Supplier<List<T>> entities,
             CsvConverter<T> converter) {
@@ -28,7 +28,7 @@ public class IOService {
         }
     }
 
-    public <T extends Indedifiable> void importEntities(
+    public <T extends Identifiable> void importEntities(
             String filename,
             Function<Long, Optional<T>> findById,
             Consumer<T> save,

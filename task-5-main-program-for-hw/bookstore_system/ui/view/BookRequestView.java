@@ -57,7 +57,7 @@ public class BookRequestView {
                 System.out.println("Номер запроса: " + curRequest.getId());
                 System.out.println("Дата создания запроса: " + curRequest.getRequestDate());
                 System.out.println("Дата поступления книги: " + curRequest.getDeliveryDate());
-                System.out.println("Номер прикреплённого заказа: " + (curRequest.getRelatedOrder() != null ? curRequest.getRelatedOrder() : "Нет"));
+                System.out.println("Номер прикреплённого заказа: " + (curRequest.getRelatedOrderId() != null ? curRequest.getRelatedOrderId() : "Нет"));
                 System.out.println("Статус заказа: " + curRequest.getStatus());
             });
         });

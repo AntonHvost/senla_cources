@@ -5,11 +5,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
-import bookstore_system.domain.exception.BusinessValidationException;
+import bookstore_system.config.BookstoreConfig;
 import bookstore_system.domain.model.*;
 import bookstore_system.dto.*;
 import bookstore_system.enums.*;
@@ -18,12 +16,12 @@ public class ReportService {
     private final OrderService orderService;
     private final RequestService requestService;
     private final ConsumerService consumerService;
-    private final BookInventoryService catalog;
+    private final BookInventoryService bookInventoryService;
 
-    public ReportService(OrderService orderService, RequestService requestService, BookInventoryService catalog, ConsumerService consumerService) {
+    public ReportService(OrderService orderService, RequestService requestService, BookInventoryService bookInventoryService, ConsumerService consumerService) {
         this.orderService = orderService;
         this.requestService = requestService;
-        this.catalog = catalog;
+        this.bookInventoryService = bookInventoryService;
         this.consumerService = consumerService;
     }
 
@@ -48,13 +46,13 @@ public class ReportService {
 
         return orderService.getOrderList().stream()
                 .filter(o -> o.getOrderStatus() == OrderStatus.COMPLETED)
-                .filter(o -> !o.getCompletedOrderDate().isBefore(startDateTime))
-                .filter(o -> !o.getCompletedOrderDate().isAfter(endDateTime))
+                .filter(o -> !o.getCompletedAtDate().isBefore(startDateTime))
+                .filter(o -> !o.getCompletedAtDate().isAfter(endDateTime))
                 .map(order -> {
                             Consumer consumer = consumerService.findConsumerById(order.getConsumerId())
                                     .orElse(null);
                             List<OrderItemSummary> items = order.getOrderItemsList().stream()
-                                .map(orderItem -> new OrderItemSummary(orderItem, catalog.findBookById(orderItem.getBookId())
+                                .map(orderItem -> new OrderItemSummary(orderItem, bookInventoryService.findBookById(orderItem.getBookId())
                                     .orElse(null)))
                                 .toList();
                             return new OrderSummary(order, consumer, items);
@@ -71,13 +69,13 @@ public class ReportService {
 
         return (int) orderService.getOrderList().stream()
                 .filter(o -> o.getOrderStatus() == OrderStatus.COMPLETED)
-                .filter(o -> !o.getCompletedOrderDate().isBefore(startDateTime))
-                .filter(o -> !o.getCompletedOrderDate().isAfter(endDateTime))
+                .filter(o -> !o.getCompletedAtDate().isBefore(startDateTime))
+                .filter(o -> !o.getCompletedAtDate().isAfter(endDateTime))
                 .count();
     }
 
     public String getDescriptionBook(long bookId) {
-        return catalog.findBookById(bookId).map(Book::getDescription).orElse("Книга с ID " + bookId + " не существует.");
+        return bookInventoryService.findBookById(bookId).map(Book::getDescription).orElse("Книга с ID " + bookId + " не существует.");
     }
 
     public List<BookSummary> getBookCatalog(SortByBook sortParam) {
@@ -89,7 +87,7 @@ public class ReportService {
             default -> Comparator.comparing(BookSummary::getId);
         };
 
-        return catalog.getBooks().stream()
+        return bookInventoryService.getBooks().stream()
                 .map(book -> new BookSummary(book, null))
                 .sorted(comparator)
                 .collect(Collectors.toList());
@@ -109,7 +107,7 @@ public class ReportService {
                     System.out.println(order.getConsumerId());
                     List<OrderItemSummary> items = new ArrayList<>();
                     for (OrderItem orderItem : order.getOrderItemsList()) {
-                        OrderItemSummary orderItemSummary = new OrderItemSummary(orderItem, catalog.findBookById(orderItem.getBookId())
+                        OrderItemSummary orderItemSummary = new OrderItemSummary(orderItem, bookInventoryService.findBookById(orderItem.getBookId())
                                 .orElse(null));
                         items.add(orderItemSummary);
                     }
@@ -126,8 +124,8 @@ public class ReportService {
 
         return orderService.getOrderList().stream()
                 .filter(order -> order.getOrderStatus() == OrderStatus.COMPLETED)
-                .filter(order -> !order.getCompletedOrderDate().isBefore(startDateTime))
-                .filter(order -> !order.getCompletedOrderDate().isAfter(endDateTime))
+                .filter(order -> !order.getCompletedAtDate().isBefore(startDateTime))
+                .filter(order -> !order.getCompletedAtDate().isAfter(endDateTime))
                 .map(Order::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
@@ -139,7 +137,7 @@ public class ReportService {
                 Consumer consumer = consumerService.findConsumerById(order.getConsumerId()).orElse(null);
 
                 List<OrderItemSummary> items = order.getOrderItemsList().stream()
-                        .map(orderItem -> new OrderItemSummary(orderItem, catalog.findBookById(orderItem.getBookId())
+                        .map(orderItem -> new OrderItemSummary(orderItem, bookInventoryService.findBookById(orderItem.getBookId())
                                 .orElse(null)))
                         .toList();
                 return new OrderSummary(order, consumer, items);
@@ -158,7 +156,7 @@ public class ReportService {
                     Long reqBookId = entry.getKey();
                     List<BookRequest> bookRequests = entry.getValue();
 
-                    Book book =  catalog.findBookById(reqBookId).orElse(null);
+                    Book book =  bookInventoryService.findBookById(reqBookId).orElse(null);
                     if (book == null) {
                         return null;
                     }
@@ -178,16 +176,18 @@ public class ReportService {
                 .collect(Collectors.toList());
     }
 
-    public List<BookSummary> getUnsoldBooksMoreThanSixMonth (SortByUnsoldBook sortParam) {
+    public List<BookSummary> getUnsoldBooksMoreThanNMonth (SortByUnsoldBook sortParam) {
 
-        LocalDateTime sixMonthAgo = LocalDateTime.now().minusMonths(6);
+        int thresholdMonth = BookstoreConfig.getInstance().getUnsoldBookMonth();
+
+        LocalDateTime sixMonthAgo = LocalDateTime.now().minusMonths(thresholdMonth);
 
         Map<Long, LocalDateTime> lastSoldDateByBookId = new HashMap<>();
         for (Order order : orderService.getOrderList()) {
             if (order.getOrderStatus() != OrderStatus.COMPLETED) continue;
             for (OrderItem item : order.getOrderItemsList()) {
                 Long bookId = item.getBookId();
-                LocalDateTime completedDate = order.getCompletedOrderDate();
+                LocalDateTime completedDate = order.getCompletedAtDate();
                 lastSoldDateByBookId.merge(bookId, completedDate, (old, newDate) ->
                         newDate.isAfter(old) ? newDate : old);
             }
@@ -209,7 +209,7 @@ public class ReportService {
             default -> Comparator.comparing(BookSummary::getId);
         };
 
-        return catalog.getBooks().stream()
+        return bookInventoryService.getBooks().stream()
                 .filter(book -> {
                     LocalDateTime lastSoldDate = lastSoldDateByBookId.get(book.getId());
                     return lastSoldDate == null || lastSoldDate.isBefore(sixMonthAgo);

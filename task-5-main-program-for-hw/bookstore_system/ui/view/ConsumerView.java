@@ -13,10 +13,12 @@ public class ConsumerView {
     }
 
     public void showConsumersMenu() {
-        System.out.println("Consumers Menu");
+        System.out.println("Список заказчиков:\n");
         consumerController.getConsumers().stream().forEach(consumer ->  {
-            System.out.println(consumer.getName());
-            System.out.println(consumer.getId());
+            System.out.println("Заказчик №" + consumer.getId() + ":");
+            System.out.println("ФИО: " + consumer.getName());
+            System.out.println("Контактный номер телефона: " + consumer.getPhone());
+            System.out.println("Контактный e-mail: " + consumer.getEmail() + "\n");
         });
     }
 
