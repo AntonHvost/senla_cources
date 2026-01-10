@@ -1,0 +1,279 @@
+@startuml
+
+/' diagram meta data start
+config=StructureConfiguration;
+{
+  "projectClassification": {
+    "searchMode": "OpenProject", // OpenProject, AllProjects
+    "includedProjects": "",
+    "pathEndKeywords": "*.impl",
+    "isClientPath": "",
+    "isClientName": "",
+    "isTestPath": "",
+    "isTestName": "",
+    "isMappingPath": "",
+    "isMappingName": "",
+    "isDataAccessPath": "",
+    "isDataAccessName": "",
+    "isDataStructurePath": "",
+    "isDataStructureName": "",
+    "isInterfaceStructuresPath": "",
+    "isInterfaceStructuresName": "",
+    "isEntryPointPath": "",
+    "isEntryPointName": "",
+    "treatFinalFieldsAsMandatory": false
+  },
+  "graphRestriction": {
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "*",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "removeByInheritance": "", // inheritance/annotation based filtering is done in a second step
+    "removeByAnnotation": "",
+    "removeByClassPackage": "", // cleanup the graph after inheritance/annotation based filtering is done
+    "removeByClassName": "",
+    "cutMappings": false,
+    "cutEnum": true,
+    "cutTests": true,
+    "cutClient": true,
+    "cutDataAccess": true,
+    "cutInterfaceStructures": true,
+    "cutDataStructures": true,
+    "cutGetterAndSetter": true,
+    "cutConstructors": true
+  },
+  "graphTraversal": {
+    "forwardDepth": 3,
+    "backwardDepth": 3,
+    "classPackageExcludeFilter": "",
+    "classPackageIncludeFilter": "",
+    "classNameExcludeFilter": "",
+    "classNameIncludeFilter": "",
+    "methodNameExcludeFilter": "",
+    "methodNameIncludeFilter": "",
+    "hideMappings": false,
+    "hideDataStructures": false,
+    "hidePrivateMethods": true,
+    "hideInterfaceCalls": true, // indirection: implementation -> interface (is hidden) -> implementation
+    "onlyShowApplicationEntryPoints": false, // root node is included
+    "useMethodCallsForStructureDiagram": "ForwardOnly" // ForwardOnly, BothDirections, No
+  },
+  "details": {
+    "aggregation": "GroupByClass", // ByClass, GroupByClass, None
+    "showClassGenericTypes": true,
+    "showMethods": true,
+    "showMethodParameterNames": true,
+    "showMethodParameterTypes": true,
+    "showMethodReturnType": true,
+    "showPackageLevels": 2,
+    "showDetailedClassStructure": true
+  },
+  "rootClass": "t_4.Main",
+  "extensionCallbackMethod": "" // qualified.class.name#methodName - signature: public static String method(String)
+}
+diagram meta data end '/
+
+
+
+digraph g {
+    rankdir="TB"
+    splines=polyline
+    
+
+'nodes 
+subgraph cluster_104069929 { 
+   	label=model
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Book821500892[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Book</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   author: String [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   status: BookStatus [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   title: String [0..1]</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BookCatalog821500892[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BookCatalog</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   books: List&lt;Book&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addBookToCatalog(b: Book)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ findBookById(bookId: long): Book</TD></TR>
+<TR><TD ALIGN="LEFT" >+ restockBook(bookId: long)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+BookRequest821500892[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BookRequest</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   relatedOrder: Order [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   reqBook: Book [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   requestDate: LocalDateTime [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   status: RequestStatus [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ cancel()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fulFilled()</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+Order821500892[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Order</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   id: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   orderDate: LocalDateTime [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   orderItemsList: List&lt;OrderItem&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   orderStatus: OrderStatus [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addItem(item: OrderItem)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ canBeCompleted(): boolean</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_114473 { 
+   	label=t_4
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   Main114473[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)Main</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ main(args: String[])</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_1282166630 { 
+   	label=facade
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   BookstoreFacade89908991[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)BookstoreFacade</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   catalog: BookCatalog [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   orderService: OrderService [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   requestService: RequestService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ addBookToCatalog(book: Book)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ cancelOrder(orderId: long)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ completeOrder(orderId: long): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createOrder(bookIds: long[], quantities: int[]): Order</TD></TR>
+<TR><TD ALIGN="LEFT" >+ isBookAvailable(bookId: long): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ processOrder(orderId: long)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ requestBook(bookId: long): BookRequest</TD></TR>
+<TR><TD ALIGN="LEFT" >+ requestBookForOrder(bookId: long, orderId: long): BookRequest</TD></TR>
+<TR><TD ALIGN="LEFT" >+ restockBook(bookId: long)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updStatusOrder(orderId: long, status: OrderStatus)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+subgraph cluster_1984153269 { 
+   	label=service
+	labeljust=l
+	fillcolor="#ececec"
+	style=filled
+   
+   OrderService1568824560[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)OrderService</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >-   catalog: BookCatalog [0..1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   nextOrderId: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   ordersList: List&lt;Order&gt; [0..*]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   requestService: RequestService [0..1]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ cancelOrder(orderId: Long)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ completeOrder(orderId: Long): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createOrder(bookIds: long[]): Order</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getOrderById(orderId: Long): Order</TD></TR>
+<TR><TD ALIGN="LEFT" >- isOrderCompleted(order: Order): boolean</TD></TR>
+<TR><TD ALIGN="LEFT" >+ updateOrderStatus(id: long, status: OrderStatus)</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+
+RequestService1568824560[
+	label=<<TABLE BORDER="1" CELLBORDER="0" CELLPADDING="4" CELLSPACING="0">
+<TR><TD ALIGN="LEFT" >(C)RequestService</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >#   nextRequestId: long [1]</TD></TR>
+<TR><TD ALIGN="LEFT" >-   requestsList: List&lt;BookRequest&gt; [0..*]</TD></TR>
+<HR/>
+<TR><TD ALIGN="LEFT" >+ cancelRequest(requestId: long)</TD></TR>
+<TR><TD ALIGN="LEFT" >+ createRequest(book: Book, order: Order): BookRequest</TD></TR>
+<TR><TD ALIGN="LEFT" >+ fulfillRequests()</TD></TR>
+<TR><TD ALIGN="LEFT" >+ getStatusRequest(requestId: long): RequestStatus</TD></TR>
+</TABLE>>
+	style=filled
+	margin=0
+	shape=plaintext
+	fillcolor="#FFFFFF"
+];
+} 
+
+'edges    
+BookCatalog821500892 -> Book821500892[label="books
+[0..*]"];
+BookstoreFacade89908991 -> BookCatalog821500892[label="catalog
+[0..1]"];
+BookstoreFacade89908991 -> OrderService1568824560[label="orderService
+[0..1]"];
+BookstoreFacade89908991 -> RequestService1568824560[label="requestService
+[0..1]"];
+Main114473 -> BookCatalog821500892[label="main() -> findBookById()"];
+OrderService1568824560 -> BookCatalog821500892[label="catalog
+[0..1]"];
+OrderService1568824560 -> Order821500892[label="ordersList
+[0..*]"];
+OrderService1568824560 -> RequestService1568824560[label="requestService
+[0..1]"];
+RequestService1568824560 -> BookRequest821500892[label="requestsList
+[0..*]"];
+    
+}
+@enduml
