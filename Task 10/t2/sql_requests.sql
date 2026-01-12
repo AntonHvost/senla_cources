@@ -1,9 +1,9 @@
 --Найти номер модели, скорость и размер жесткого диска для всех ПК стоимостью менее 500 долларов.
-select model,speed,hd from pc
+select model, speed, hd from pc
 where price < 500.0;
 
 --Найти производителей принтеров. Вывести поля: maker.
-select maker from product
+select distinct maker from product
 where type = 'Printer';
 
 --Найти номер модели, объем памяти и размеры экранов ноутбуков, цена которых превышает 1000 долларов.
@@ -43,11 +43,14 @@ where p.maker = 'B'
 order by model;
 
 --Найти производителя, выпускающего ПК, но не ноутбуки.
-select maker from product
-where type = 'PC' and type != 'Laptop';
+select distinct maker from product
+where type = 'PC'
+except
+select distinct maker from product
+where type = 'Laptop';
 
 --Найти производителей ПК с процессором не менее 450 Мгц. Вывести поля: maker.
-select p.maker from product p
+select distinct p.maker from product p
 join pc on pc.model = p.model
 where pc.speed >= 450;
 
@@ -92,10 +95,10 @@ join product p on l.model = p.model
 where l.speed < (select min(speed) from pc);
 
 --Найти производителей самых дешевых цветных принтеров. Вывести поля: maker, price.
-select p.maker, min(pr.price) from printer pr
+select p.maker, pr.price from printer pr
 join product p on p.model = pr.model
 where pr.color = 'y'
-group by p.maker;
+and pr.price = (select min(price) from printer where color = 'y');
 
 --Для каждого производителя найти средний размер экрана выпускаемых им ноутбуков. Вывести поля: maker, средний размер экрана.
 select p.maker, avg(l.screen) from laptop l
@@ -103,7 +106,7 @@ join product p on p.model = l.model
 group by p.maker;
 
 --Найти производителей, выпускающих по меньшей мере три различных модели ПК. Вывести поля: maker, число моделей.
-select p.maker, count(*) as count_pcs from pc
+select p.maker, count(distinct pc.model) as count_pcs from pc
 join product p on p.model = pc.model
 group by p.maker
 having count(*) >= 3;
