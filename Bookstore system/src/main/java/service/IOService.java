@@ -1,4 +1,4 @@
-package domain.service;
+package service;
 
 import di.annotation.Component;
 import domain.model.impl.Identifiable;

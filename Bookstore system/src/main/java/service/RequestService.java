@@ -1,4 +1,4 @@
-package domain.service;
+package service;
 
 import java.util.List;
 import java.util.Optional;
@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import di.annotation.Component;
 import di.annotation.Inject;
 import domain.model.BookRequest;
-import domain.repository.BookRequestRepository;
+import repository.BookRequestRepository;
 import enums.RequestStatus;
 
 @Component
@@ -21,7 +21,6 @@ public class RequestService {
 
     public BookRequest createRequest(Long bookId, Long orderId){
         BookRequest req = new BookRequest(bookId, orderId);
-        req.setId(bookRequestRepository.generateNextId());
         bookRequestRepository.save(req);
         return req;
     }
@@ -51,9 +50,6 @@ public class RequestService {
     }
 
     public void save(BookRequest request){
-        if (request.getId() == null || request.getId() == 0) {
-            request.setId(bookRequestRepository.generateNextId());
-        }
         bookRequestRepository.save(request);
     }
 

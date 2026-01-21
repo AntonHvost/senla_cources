@@ -3,8 +3,8 @@ package facade;
 import di.annotation.Component;
 import di.annotation.Inject;
 import domain.model.Consumer;
-import domain.service.ConsumerService;
-import domain.service.IOService;
+import service.ConsumerService;
+import service.IOService;
 import io.csv.converter.ConsumerCSVConverter;
 
 import java.util.List;

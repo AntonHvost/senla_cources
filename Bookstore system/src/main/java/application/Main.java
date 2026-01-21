@@ -1,13 +1,15 @@
 package application;
 
 import config.Configurator;
+import database.ConnectionManager;
+import database.DBConstant;
+import database.TransactionManager;
 import di.DIContainer;
-import domain.repository.*;
-import domain.service.*;
 import facade.*;
 
-import io.PersistanceManager;
 import io.serializable.SerializableManager;
+import repository.*;
+import service.*;
 import ui.controller.*;
 import ui.domain.Menu;
 import ui.factory.MainMenuFactory;
@@ -19,19 +21,13 @@ import java.util.Set;
 public class Main {
     public static void main(String[] args) {
 
-        /*try {
-            BookstoreConfig.getInstance();
-            System.out.println("\nСистема электронного магазина книг запущена!\n");
-        } catch (Exception e) {
-            System.err.println("Ошибка запуска программы при загрузке конфигурации: " + e.getMessage());
-            System.err.println("Проверьте наличие файла app.properties в resources.");
-            return;
-        }*/
+        new Configurator().configureClass(ConnectionManager.class);
 
         DIContainer container = new DIContainer();
         container.registerBeans(Set.of(
                 BookRepository.class,
                 OrderRepository.class,
+                OrderItemRepository.class,
                 ConsumerRepository.class,
                 BookRequestRepository.class,
                 BookInventoryService.class,
@@ -56,23 +52,15 @@ public class Main {
                 OrderView.class,
                 ReportView.class,
                 ConsumerView.class,
-                SerializableManager.class
+                SerializableManager.class,
+                TransactionManager.class
         ));
 
         new Configurator().configureObjects(Set.of(container.getBean(ReportService.class), container.getBean(BookRequestFullfilmentService.class)));
 
-        final PersistanceManager persistanceManager = new PersistanceManager(
-                container.getBean(SerializableManager.class),
-                container.getBean(ConsumerRepository.class),
-                container.getBean(BookRepository.class),
-                container.getBean(BookRequestRepository.class),
-                container.getBean(OrderRepository.class));
+        final Navigator navigator = new Navigator();
 
-        persistanceManager.initialState();
-
-        Navigator navigator = new Navigator();
-
-        MainMenuFactory factory = new MainMenuFactory(
+        final MainMenuFactory factory = new MainMenuFactory(
                 navigator,
                 container.getBean(BookView.class),
                 container.getBean(BookRequestView.class),
@@ -88,7 +76,5 @@ public class Main {
         MenuController controller = new MenuController(navigator,menuView);
 
         controller.run();
-
-        persistanceManager.saveState();
     }
 }

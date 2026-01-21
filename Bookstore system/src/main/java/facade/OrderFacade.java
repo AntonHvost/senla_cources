@@ -4,9 +4,9 @@ import di.annotation.Component;
 import di.annotation.Inject;
 import domain.model.Consumer;
 import domain.model.Order;
-import domain.service.IOService;
+import service.IOService;
 import enums.OrderStatus;
-import domain.service.OrderService;
+import service.OrderService;
 import io.csv.converter.OrderCsvConverter;
 import io.csv.converter.OrderItemCsvConverter;
 

@@ -1,9 +1,9 @@
 package io;
 
-import domain.repository.BookRepository;
-import domain.repository.BookRequestRepository;
-import domain.repository.ConsumerRepository;
-import domain.repository.OrderRepository;
+import repository.BookRepository;
+import repository.BookRequestRepository;
+import repository.ConsumerRepository;
+import repository.OrderRepository;
 import io.serializable.ApplicationState;
 import io.serializable.SerializableManager;
 
@@ -26,14 +26,14 @@ public class PersistanceManager {
 
     public void initialState() {
         ApplicationState state = serializableManager.loadState();
-        bookRepository.replaceAll(state.getBooks(), state.getNextBookId());
+        /*bookRepository.replaceAll(state.getBooks(), state.getNextBookId());
         bookRequestRepository.replaceAll(state.getRequests(), state.getNextRequestId());
         consumerRepository.replaceAll(state.getConsumers(), state.getNextConsumerId());
-        orderRepository.replaceAll(state.getOrders(), state.getNextOrderId(), state.getNextOrderItemId());
+        orderRepository.replaceAll(state.getOrders(), state.getNextOrderId(), state.getNextOrderItemId());*/
 
     }
 
-    public void saveState() {
+    /*public void saveState() {
         ApplicationState state = new ApplicationState(
                 bookRepository.findAll(),
                 bookRepository.getNextId(),
@@ -46,5 +46,5 @@ public class PersistanceManager {
                 bookRequestRepository.getNextId()
         );
         serializableManager.saveState(state);
-    }
+    }*/
 }

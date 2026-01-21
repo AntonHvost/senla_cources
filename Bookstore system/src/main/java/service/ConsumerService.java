@@ -1,8 +1,8 @@
-package domain.service;
+package service;
 
 import di.annotation.Component;
 import domain.model.Consumer;
-import domain.repository.ConsumerRepository;
+import repository.ConsumerRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,9 +24,6 @@ public class ConsumerService {
     }
 
     public void save(Consumer consumer) {
-        if(consumer.getId() == null || consumer.getId() == 0) {
-            consumer.setId(consumerRepository.generateNextId());
-        }
         consumerRepository.save(consumer);
     }
 

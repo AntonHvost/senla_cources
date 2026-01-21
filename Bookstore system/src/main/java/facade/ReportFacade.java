@@ -9,7 +9,7 @@ import enums.SortByBook;
 import enums.SortByOrder;
 import enums.SortByRequestBook;
 import enums.SortByUnsoldBook;
-import domain.service.ReportService;
+import service.ReportService;
 
 import java.math.BigDecimal;
 import java.util.List;

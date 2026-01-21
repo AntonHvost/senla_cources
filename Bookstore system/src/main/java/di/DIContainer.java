@@ -4,6 +4,7 @@ import di.annotation.Component;
 import di.annotation.Inject;
 
 import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -67,7 +68,7 @@ public class DIContainer {
             return (T) constructor.newInstance(args);
 
         } catch (Exception e) {
-            throw new IllegalArgumentException("No constructor found for " + clazz);
+            throw new IllegalArgumentException("No constructor found for " + clazz, e);
         }
     }
 
@@ -85,7 +86,6 @@ public class DIContainer {
             }
         }
 
-        // Приоритет: @Inject → no-args → единственный (если он один)
         if (injectConstructor != null) {
             injectConstructor.setAccessible(true);
             return injectConstructor;
