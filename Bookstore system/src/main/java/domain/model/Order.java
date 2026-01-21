@@ -73,6 +73,7 @@ public class Order implements Identifiable {
         this.id = id;
     }
 
+    @JsonIgnore
     public void setOrderItemsList(List<OrderItem> orderItemsList) {
         this.orderItemsList = orderItemsList;
     }

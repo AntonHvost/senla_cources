@@ -1,26 +1,24 @@
-package domain.service;
+package service;
 
 import di.annotation.Component;
 import di.annotation.Inject;
 import domain.model.Book;
-import domain.repository.BookRepository;
+import repository.BookRepository;
 import enums.BookStatus;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Component
 public class BookInventoryService {
     private final BookRepository bookRepository;
+
     @Inject
     public BookInventoryService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }
 
     public void addBookToCatalog(Book b){
-        Long nextId = bookRepository.generateNextId();
-        b.setId(nextId);
         bookRepository.save(b);
     }
 
@@ -36,9 +34,6 @@ public class BookInventoryService {
     }
 
     public void saveBook(Book book){
-        if(book.getId() == null || book.getId() == 0){
-            book.setId(bookRepository.generateNextId());
-        }
         bookRepository.save(book);
     }
 

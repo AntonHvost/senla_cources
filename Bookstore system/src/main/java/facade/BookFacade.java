@@ -3,8 +3,8 @@ package facade;
 import di.annotation.Component;
 import di.annotation.Inject;
 import domain.model.Book;
-import domain.service.BookInventoryService;
-import domain.service.IOService;
+import service.BookInventoryService;
+import service.IOService;
 import io.csv.converter.BookCsvConverter;
 
 @Component

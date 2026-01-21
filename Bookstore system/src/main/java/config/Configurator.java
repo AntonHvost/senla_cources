@@ -40,6 +40,43 @@ public class Configurator {
         }
     }
 
+    public void configureClass(Class<?> clazz) {
+        System.out.println("Configuring static fields of " + clazz.getSimpleName());
+        Properties properties;
+
+        for (Field field : clazz.getDeclaredFields()) {
+            ConfigProperty annotation = field.getAnnotation(ConfigProperty.class);
+            if (annotation == null) continue;
+
+            field.setAccessible(true);
+
+            // Статические поля не привязаны к экземпляру → используем null
+            if (!java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
+                System.err.println("Warning: @ConfigProperty on non-static field in " + clazz.getSimpleName() + "." + field.getName());
+                continue;
+            }
+
+            String fileName = annotation.ConfigFileName();
+            String key = annotation.propertyName();
+            if (key.isEmpty()) key = field.getName();
+
+            properties = loadProperties(fileName);
+
+            String value = properties.getProperty(key);
+            if (value == null) {
+                System.err.println("Property " + key + " not found in " + fileName);
+                continue;
+            }
+
+            try {
+                Object convertedValue = convertValue(value, field.getType());
+                field.set(null, convertedValue); // ← null для static-полей
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to set static field " + clazz.getSimpleName() + "." + field.getName(), e);
+            }
+        }
+    }
+
     public void configureObjects(Set<Object> obj) {
         for (Object object : obj) {
             configure(object);

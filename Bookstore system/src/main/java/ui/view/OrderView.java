@@ -136,7 +136,6 @@ public class OrderView {
         );
 
         try {
-
             switch (scanner.nextLine().trim()) {
                 case "1" -> orderSummaryList = orderController.getSortedOrders(SortByOrder.COMPLETE_DATE);
                 case "2" -> orderSummaryList = orderController.getSortedOrders(SortByOrder.PRICE);

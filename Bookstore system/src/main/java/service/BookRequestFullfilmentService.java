@@ -1,4 +1,4 @@
-package domain.service;
+package service;
 
 import config.ConfigProperty;
 import di.annotation.Component;
