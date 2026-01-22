@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,8 +53,10 @@ public class BookRequestRepository extends BaseRepository<BookRequest> {
     protected void setParametersForInsert(PreparedStatement ps, BookRequest entity) throws SQLException {
         ps.setLong(1, entity.getReqBookId());
         ps.setLong(2, entity.getRelatedOrderId());
-        ps.setTimestamp(3, Timestamp.valueOf(entity.getRequestDate()));
-        ps.setTimestamp(4, Timestamp.valueOf(entity.getDeliveryDate()));
+        LocalDateTime requestDate = entity.getRequestDate();
+        ps.setTimestamp(3, requestDate != null ? Timestamp.valueOf(requestDate) : null);
+        LocalDateTime deliveryDate = entity.getDeliveryDate();
+        ps.setTimestamp(4, deliveryDate != null ? Timestamp.valueOf(deliveryDate) : null);
         ps.setString(5, entity.getStatus().toString());
     }
 
@@ -69,6 +72,16 @@ public class BookRequestRepository extends BaseRepository<BookRequest> {
     @Override
     protected Long getIdFromEntity(BookRequest entity) {
         return entity.getId();
+    }
+
+    @Override
+    protected int getColumnCount () {
+        return 5;
+    }
+
+    @Override
+    protected String genSetClause () {
+        return "book_id = ?, order_id = ?, create_at = ?, delivery_date = ?, status = ?";
     }
 
 }

@@ -40,7 +40,6 @@ public class OrderService {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.transactionManager = transactionManager;
-        System.out.println(this.transactionManager == null);
     }
 
     public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {

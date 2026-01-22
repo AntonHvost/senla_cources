@@ -3,7 +3,6 @@ package repository;
 import database.ConnectionManager;
 import domain.model.Book;
 import domain.model.impl.Identifiable;
-import enums.BookStatus;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -61,27 +60,31 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
     }
 
     @Override
-    public void save(T entity) {
+    public T save(T entity) {
         String query = "INSERT INTO \"" + getTableName() + "\" (" + getColumns() + ") VALUES (" + genPlaceholder(getColumnCount()) + ")";
         try (PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            setParametersForInsert(ps, entity);
-            ps.executeUpdate();
 
-            try (ResultSet genKeys = ps.getGeneratedKeys()){
-                if (genKeys.next()) {
-                    Long id = genKeys.getLong(1);
-                    entity.setId(id);
+            setParametersForInsert(ps, entity);
+            int rowsAffected = ps.executeUpdate();
+
+            if(rowsAffected > 0) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if(rs.next()) {
+                    entity.setId(rs.getLong(1));
                 }
             }
+
+            return entity;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     @Override
-    public void update(T entity) {
-        String query = "UPDATE \"" + getTableName() + "\" SET " + genSetClause() + " = ?" +  " WHERE " + getIdColumnName() + " = ?";
+    public T update(T entity) {
+        String query = "UPDATE \"" + getTableName() + "\" SET " + genSetClause() +  " WHERE " + getIdColumnName() + " = ?";
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             setParametersForUpdate(ps, entity);
             ps.setObject(getColumnCount(), getIdFromEntity(entity));
@@ -91,10 +94,12 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
                 throw new RuntimeException("No rows affected");
             }
 
+            return entity;
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
+        return null;
     }
 
     @Override

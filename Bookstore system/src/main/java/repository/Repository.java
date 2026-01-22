@@ -1,12 +1,14 @@
 package repository;
 
+import domain.model.Book;
+
 import java.util.List;
 import java.util.Optional;
 
 public interface Repository<T> {
     List<T> findAll();
     Optional<T> findById(Long id);
-    void save(T entity);
-    void update(T entity);
+    T save(T entity);
+    T update(T entity);
     void delete(Long id);
 }

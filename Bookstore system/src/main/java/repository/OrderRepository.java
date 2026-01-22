@@ -1,9 +1,8 @@
 package repository;
 
-import database.ConnectionManager;
+
 import database.DBConstant;
 import di.annotation.Component;
-import di.annotation.Inject;
 import domain.model.Order;
 import enums.OrderStatus;
 
@@ -12,9 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Component
 public class OrderRepository extends BaseRepository<Order> {
@@ -53,7 +49,8 @@ public class OrderRepository extends BaseRepository<Order> {
     @Override
     protected void setParametersForInsert(PreparedStatement ps, Order entity) throws SQLException {
         ps.setLong(1, entity.getConsumerId());
-        ps.setTimestamp(2, Timestamp.valueOf(entity.getCreatedAtDate()));
+        LocalDateTime createdAt = entity.getCreatedAtDate();
+        ps.setTimestamp(2, createdAt != null ? Timestamp.valueOf(createdAt) : null);
         LocalDateTime completedAt = entity.getCompletedAtDate();
         ps.setTimestamp(3,  completedAt != null ? Timestamp.valueOf(completedAt) : null);
         ps.setBigDecimal(4, entity.getTotalPrice());
@@ -64,9 +61,11 @@ public class OrderRepository extends BaseRepository<Order> {
     protected void setParametersForUpdate(PreparedStatement ps, Order entity) throws SQLException {
         ps.setLong(1, entity.getConsumerId());
         ps.setTimestamp(2, Timestamp.valueOf(entity.getCreatedAtDate()));
-        ps.setTimestamp(3, Timestamp.valueOf(entity.getCompletedAtDate()));
+        LocalDateTime completedAt = entity.getCompletedAtDate();
+        ps.setTimestamp(3, completedAt != null ? Timestamp.valueOf(completedAt) : null);
         ps.setBigDecimal(4, entity.getTotalPrice());
         ps.setString(5, entity.getOrderStatus().name());
+        ps.setLong(6, entity.getId());
     }
 
     @Override
