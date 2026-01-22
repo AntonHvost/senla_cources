@@ -23,8 +23,9 @@ public class ConsumerService {
         return consumerRepository.findAll();
     }
 
-    public void save(Consumer consumer) {
+    public Consumer save(Consumer consumer) {
         consumerRepository.save(consumer);
+        return consumer;
     }
 
     public void update(Consumer consumer) {

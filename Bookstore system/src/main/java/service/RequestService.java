@@ -12,7 +12,7 @@ import enums.RequestStatus;
 
 @Component
 public class RequestService {
-    private BookRequestRepository bookRequestRepository;
+    private final BookRequestRepository bookRequestRepository;
 
     @Inject
     public RequestService(BookRequestRepository bookRequestRepository) {

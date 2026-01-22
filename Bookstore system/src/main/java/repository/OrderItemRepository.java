@@ -13,8 +13,7 @@ import java.util.List;
 @Component
 public class OrderItemRepository extends BaseRepository<OrderItem> {
 
-    public OrderItemRepository() {
-    }
+    public OrderItemRepository() {}
 
     public List<OrderItem> getItemByOrderId(Long orderId) {
         String query = "select * from " + getTableName() + " WHERE order_id = ?";
@@ -80,5 +79,15 @@ public class OrderItemRepository extends BaseRepository<OrderItem> {
     @Override
     protected Long getIdFromEntity(OrderItem entity) {
         return entity.getId();
+    }
+
+    @Override
+    protected int getColumnCount() {
+        return 3;
+    }
+
+    @Override
+    protected String genSetClause() {
+        return "order_id = ?, book_id = ?, quantity = ?";
     }
 }
