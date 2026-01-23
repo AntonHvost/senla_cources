@@ -21,7 +21,9 @@ import java.util.Set;
 public class Main {
     public static void main(String[] args) {
 
-        new Configurator().configureClass(ConnectionManager.class);
+        final Configurator configurator = new Configurator();
+
+        configurator.configureClass(ConnectionManager.class);
 
         DIContainer container = new DIContainer();
         container.registerBeans(Set.of(
@@ -56,7 +58,7 @@ public class Main {
                 TransactionManager.class
         ));
 
-        new Configurator().configureObjects(Set.of(container.getBean(ReportService.class), container.getBean(BookRequestFullfilmentService.class)));
+        configurator.configureObjects(Set.of(container.getBean(ReportService.class), container.getBean(BookRequestFullfilmentService.class)));
 
         final Navigator navigator = new Navigator();
 
@@ -76,5 +78,9 @@ public class Main {
         MenuController controller = new MenuController(navigator,menuView);
 
         controller.run();
+
+        System.out.println("aboba");
+
+        ConnectionManager.getInstance().closeConnection();
     }
 }

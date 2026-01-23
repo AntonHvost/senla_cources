@@ -52,15 +52,15 @@ public class BookRequestView {
         System.out.println("=Детали запроса=\n");
 
         requestList.stream().forEach(request -> {
-            System.out.println("Запрашиваемая книга: " + request.getBook().getTitle());
-            System.out.println("Количество запросов на данную книгу: " + request.getRequestCount());
+            System.out.println("Запрашиваемая книга №" + request.getBook().getId() + ": " + request.getBook().getTitle());
+            System.out.println("Количество запросов на данную книгу: " + request.getRequestCount() + "\n");
             System.out.println("==Данные о запросах==\n");
             request.getRequests().stream().forEach(curRequest -> {
                 System.out.println("Номер запроса: " + curRequest.getId());
                 System.out.println("Дата создания запроса: " + curRequest.getRequestDate());
                 System.out.println("Дата поступления книги: " + curRequest.getDeliveryDate());
                 System.out.println("Номер прикреплённого заказа: " + (curRequest.getRelatedOrderId() != null ? curRequest.getRelatedOrderId() : "Нет"));
-                System.out.println("Статус заказа: " + curRequest.getStatus());
+                System.out.println("Статус заказа: " + curRequest.getStatus() + "\n");
             });
         });
     }

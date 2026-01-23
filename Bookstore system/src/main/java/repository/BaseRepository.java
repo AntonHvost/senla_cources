@@ -85,9 +85,10 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
     @Override
     public T update(T entity) {
         String query = "UPDATE \"" + getTableName() + "\" SET " + genSetClause() +  " WHERE " + getIdColumnName() + " = ?";
+        
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             setParametersForUpdate(ps, entity);
-            ps.setObject(getColumnCount(), getIdFromEntity(entity));
+            ps.setObject(getColumnCount() + 1, getIdFromEntity(entity));
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 0) {

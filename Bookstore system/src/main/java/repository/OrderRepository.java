@@ -65,7 +65,6 @@ public class OrderRepository extends BaseRepository<Order> {
         ps.setTimestamp(3, completedAt != null ? Timestamp.valueOf(completedAt) : null);
         ps.setBigDecimal(4, entity.getTotalPrice());
         ps.setString(5, entity.getOrderStatus().name());
-        ps.setLong(6, entity.getId());
     }
 
     @Override

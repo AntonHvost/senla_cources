@@ -40,19 +40,20 @@ public class OrderView {
         System.out.println("Создание заказа");
         System.out.println("Данные заказчика: ");
 
-        String username = readNonEmptyString("Имя: ");
+        String username = readNonEmptyString("Имя (или exit для возврата в меню): ");
+
+        if ("exit".equalsIgnoreCase(username)) {
+            System.out.println("Заказ отменён.");
+            return;
+        }
+
         String phoneNumber = readValidatedString("Контактный телефон: ", this::isValidPhone, "Неверный формат номера.");
         String email = readValidatedString("Почта: ", this::isValidEmail, "Неверный формат почты.");
 
         Consumer consumer = new Consumer(username, phoneNumber, email);
 
-        System.out.println("Введите ID книг и их количество через пробел (например, '1 10, 3 5'). Введите 'end', чтобы закончить");
+        System.out.println("Введите ID книг и их количество через пробел (например, '1 10, 3 5'): ");
         String input = scanner.nextLine().trim();
-
-        if ("end".equalsIgnoreCase(input)) {
-            System.out.println("Заказ отменён.");
-            return;
-        }
 
         List<Long> bookIds = new ArrayList<>();
         List<Integer> quantities = new ArrayList<>();

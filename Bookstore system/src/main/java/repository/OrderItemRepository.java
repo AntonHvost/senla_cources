@@ -16,12 +16,14 @@ public class OrderItemRepository extends BaseRepository<OrderItem> {
     public OrderItemRepository() {}
 
     public List<OrderItem> getItemByOrderId(Long orderId) {
+
+        Connection connection = ConnectionManager.getInstance().getConnection();
+
         String query = "select * from " + getTableName() + " WHERE order_id = ?";
 
         List<OrderItem> orderItems = new ArrayList<>();
 
-        try (Connection connection = ConnectionManager.getInstance().getConnection();
-             PreparedStatement ps = connection.prepareStatement(query)) {
+        try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setLong(1, orderId);
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {

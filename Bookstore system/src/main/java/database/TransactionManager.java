@@ -13,8 +13,8 @@ public class TransactionManager {
     public TransactionManager() {}
 
     public void beginTransaction() {
+        Connection connection = ConnectionManager.getInstance().getConnection();
         try {
-            Connection connection = ConnectionManager.getInstance().getConnection();
             connection.setAutoCommit(false);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -22,8 +22,8 @@ public class TransactionManager {
     }
 
     public void commitTransaction() {
+        Connection connection = ConnectionManager.getInstance().getConnection();
         try {
-            Connection connection = ConnectionManager.getInstance().getConnection();
             connection.commit();
             connection.setAutoCommit(true);
         } catch (SQLException e) {
@@ -32,8 +32,9 @@ public class TransactionManager {
     }
 
     public void rollbackTransaction() {
+        Connection connection = ConnectionManager.getInstance().getConnection();
         try {
-            Connection connection = ConnectionManager.getInstance().getConnection();
+            System.out.println("Rolling back");
             connection.rollback();
             connection.setAutoCommit(true);
         } catch (SQLException e) {

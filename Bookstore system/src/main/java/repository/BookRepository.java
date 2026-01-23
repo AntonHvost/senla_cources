@@ -45,22 +45,22 @@ public class BookRepository extends BaseRepository<Book> {
 
     @Override
     protected void setParametersForInsert(PreparedStatement ps, Book entity) throws SQLException {
-        ps.setString(2, entity.getTitle());
-        ps.setString(3, entity.getAuthor());
-        ps.setString(4, entity.getDescription());
-        ps.setDate(5, Date.valueOf(entity.getPublishDate()));
-        ps.setBigDecimal(6, entity.getPrice());
-        ps.setString(7, entity.getStatus().name());
+        ps.setString(1, entity.getTitle());
+        ps.setString(2, entity.getAuthor());
+        ps.setString(3, entity.getDescription());
+        ps.setDate(4, Date.valueOf(entity.getPublishDate()));
+        ps.setBigDecimal(5, entity.getPrice());
+        ps.setString(6, entity.getStatus().name());
     }
 
     @Override
     protected void setParametersForUpdate(PreparedStatement ps, Book entity) throws SQLException {
-        ps.setString(2, entity.getTitle());
-        ps.setString(3, entity.getAuthor());
-        ps.setString(4, entity.getDescription());
-        ps.setObject(5, entity.getPublishDate());
-        ps.setBigDecimal(6, entity.getPrice());
-        ps.setString(7, entity.getStatus().name());
+        ps.setString(1, entity.getTitle());
+        ps.setString(2, entity.getAuthor());
+        ps.setString(3, entity.getDescription());
+        ps.setObject(4, entity.getPublishDate());
+        ps.setBigDecimal(5, entity.getPrice());
+        ps.setString(6, entity.getStatus().name());
     }
 
     @Override
@@ -70,7 +70,7 @@ public class BookRepository extends BaseRepository<Book> {
 
     @Override
     protected int getColumnCount() {
-        return 7;
+        return 6;
     }
 
     @Override

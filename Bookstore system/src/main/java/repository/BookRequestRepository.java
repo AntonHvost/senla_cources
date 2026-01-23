@@ -43,7 +43,8 @@ public class BookRequestRepository extends BaseRepository<BookRequest> {
         request.setReqBookId(rs.getLong("book_id"));
         request.setRelatedOrderId(rs.getLong("order_id"));
         request.setRequestDate(rs.getTimestamp("create_at").toLocalDateTime());
-        request.setDeliveryDate(rs.getTimestamp("delivery_date").toLocalDateTime());
+        Timestamp deliveryDate = rs.getTimestamp("delivery_date");
+        request.setDeliveryDate(deliveryDate != null ? deliveryDate.toLocalDateTime() : null);
         request.setStatus(RequestStatus.valueOf(rs.getString("status")));
 
         return request;

@@ -99,6 +99,7 @@ public class OrderService {
         orderRepository.findById(orderId).ifPresent(order->{
             order.setOrderStatus(OrderStatus.CANCELLED);
             order.setCompletedAtDate(LocalDateTime.now());
+            System.out.println("Обновляем заказ: id=" + order.getId() + ", status=" + order.getOrderStatus());
             orderRepository.update(order);
         });
     }
