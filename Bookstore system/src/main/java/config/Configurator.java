@@ -41,7 +41,6 @@ public class Configurator {
     }
 
     public void configureClass(Class<?> clazz) {
-        System.out.println("Configuring static fields of " + clazz.getSimpleName());
         Properties properties;
 
         for (Field field : clazz.getDeclaredFields()) {
@@ -50,7 +49,6 @@ public class Configurator {
 
             field.setAccessible(true);
 
-            // Статические поля не привязаны к экземпляру → используем null
             if (!java.lang.reflect.Modifier.isStatic(field.getModifiers())) {
                 System.err.println("Warning: @ConfigProperty on non-static field in " + clazz.getSimpleName() + "." + field.getName());
                 continue;
@@ -70,7 +68,7 @@ public class Configurator {
 
             try {
                 Object convertedValue = convertValue(value, field.getType());
-                field.set(null, convertedValue); // ← null для static-полей
+                field.set(null, convertedValue);
             } catch (Exception e) {
                 throw new RuntimeException("Failed to set static field " + clazz.getSimpleName() + "." + field.getName(), e);
             }

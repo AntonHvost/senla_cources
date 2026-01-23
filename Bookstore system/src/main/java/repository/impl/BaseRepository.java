@@ -1,7 +1,6 @@
-package repository;
+package repository.impl;
 
 import database.ConnectionManager;
-import domain.model.Book;
 import domain.model.impl.Identifiable;
 
 import java.sql.*;
@@ -14,7 +13,7 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
     protected BaseRepository() {}
 
     protected abstract String getTableName();
-    protected abstract String getColumns();
+    protected abstract String getColumnNames();
     protected abstract String getIdColumnName();
     protected abstract T mapResultSetToEntity(ResultSet rs) throws SQLException;
     protected abstract void setParametersForInsert(PreparedStatement ps, T entity) throws SQLException;
@@ -61,7 +60,7 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
 
     @Override
     public T save(T entity) {
-        String query = "INSERT INTO \"" + getTableName() + "\" (" + getColumns() + ") VALUES (" + genPlaceholder(getColumnCount()) + ")";
+        String query = "INSERT INTO \"" + getTableName() + "\" (" + getColumnNames() + ") VALUES (" + genPlaceholder(getColumnCount()) + ")";
         try (PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             setParametersForInsert(ps, entity);
@@ -85,7 +84,7 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
     @Override
     public T update(T entity) {
         String query = "UPDATE \"" + getTableName() + "\" SET " + genSetClause() +  " WHERE " + getIdColumnName() + " = ?";
-        
+
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             setParametersForUpdate(ps, entity);
             ps.setObject(getColumnCount() + 1, getIdFromEntity(entity));

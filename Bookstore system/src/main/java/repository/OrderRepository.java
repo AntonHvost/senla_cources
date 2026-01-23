@@ -1,10 +1,10 @@
 package repository;
 
 
-import database.DBConstant;
 import di.annotation.Component;
 import domain.model.Order;
 import enums.OrderStatus;
+import repository.impl.BaseRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,56 +15,69 @@ import java.time.LocalDateTime;
 @Component
 public class OrderRepository extends BaseRepository<Order> {
 
+    private static final String TABLE_NAME = "order";
+    public static final int COL_COUNT = 5; //Количество атрибутов без учета идентификатора
+
+    private static final String COL_ID = "id";
+    private static final String COL_CONSUMER_ID = "consumer_id";
+    private static final String COL_CREATED_AT = "created_at";
+    private static final String COL_COMPLETED_AT = "completed_at";
+    private static final String COL_TOTAL_PRICE = "total_price";
+    private static final String COL_STATUS = "status";
+
     public OrderRepository () {}
 
     @Override
     protected String getTableName() {
-        return DBConstant.TABLE_ORDERS;
+        return TABLE_NAME;
     }
 
     @Override
-    protected String getColumns() {
-        return "consumer_id, created_at, completed_at, total_price, status";
+    protected String getColumnNames() {
+        return COL_ID + ", " + COL_CONSUMER_ID + ", " + COL_CREATED_AT + ", " + COL_COMPLETED_AT + ", " + COL_STATUS;
     }
 
     @Override
     protected String getIdColumnName() {
-        return "id";
+        return COL_ID;
     }
 
     @Override
     protected Order mapResultSetToEntity(ResultSet rs) throws SQLException {
         Order order = new Order();
-        order.setId(rs.getLong("id"));
-        order.setConsumerId(rs.getLong("consumer_id"));
-        order.setCreatedAtDate(rs.getTimestamp("created_at").toLocalDateTime());
-        Timestamp completedAt = rs.getTimestamp("completed_at");
-        order.setCompletedAtDate(completedAt != null ? completedAt.toLocalDateTime() : null);
-        order.setTotalPrice(rs.getBigDecimal("total_price"));
-        order.setOrderStatus(OrderStatus.valueOf(rs.getString("status")));
+        order.setId(rs.getLong(COL_ID));
+        order.setConsumerId(rs.getLong(COL_CONSUMER_ID));
+        order.setCreatedAtDate(rs.getTimestamp(COL_CREATED_AT).toLocalDateTime());
+        Timestamp completedAt = rs.getTimestamp(COL_COMPLETED_AT);
+        order.setCompletedAtDate(rs.getObject(COL_COMPLETED_AT, LocalDateTime.class));
+        //order.setCompletedAtDate(completedAt != null ? completedAt.toLocalDateTime() : null);
+        order.setTotalPrice(rs.getBigDecimal(COL_TOTAL_PRICE));
+        order.setOrderStatus(OrderStatus.valueOf(rs.getString(COL_STATUS)));
 
         return order;
     }
 
     @Override
     protected void setParametersForInsert(PreparedStatement ps, Order entity) throws SQLException {
-        ps.setLong(1, entity.getConsumerId());
+        int index = 1;
+        ps.setLong(index++, entity.getConsumerId());
         LocalDateTime createdAt = entity.getCreatedAtDate();
-        ps.setTimestamp(2, createdAt != null ? Timestamp.valueOf(createdAt) : null);
+        ps.setTimestamp(index++, createdAt != null ? Timestamp.valueOf(createdAt) : null);
         LocalDateTime completedAt = entity.getCompletedAtDate();
-        ps.setTimestamp(3,  completedAt != null ? Timestamp.valueOf(completedAt) : null);
-        ps.setBigDecimal(4, entity.getTotalPrice());
-        ps.setString(5, entity.getOrderStatus().name());
+        ps.setTimestamp(index++,  completedAt != null ? Timestamp.valueOf(completedAt) : null);
+        ps.setBigDecimal(index++, entity.getTotalPrice());
+        ps.setString(index++, entity.getOrderStatus().name());
     }
 
     @Override
     protected void setParametersForUpdate(PreparedStatement ps, Order entity) throws SQLException {
-        ps.setLong(1, entity.getConsumerId());
-        ps.setTimestamp(2, Timestamp.valueOf(entity.getCreatedAtDate()));
+        int index = 1;
+        ps.setLong(index++, entity.getConsumerId());
+        ps.setTimestamp(index++, Timestamp.valueOf(entity.getCreatedAtDate()));
         LocalDateTime completedAt = entity.getCompletedAtDate();
-        ps.setTimestamp(3, completedAt != null ? Timestamp.valueOf(completedAt) : null);
-        ps.setBigDecimal(4, entity.getTotalPrice());
-        ps.setString(5, entity.getOrderStatus().name());
+        ps.setTimestamp(index++, completedAt != null ? Timestamp.valueOf(completedAt) : null);
+        ps.setBigDecimal(index++, entity.getTotalPrice());
+        ps.setString(index++, entity.getOrderStatus().name());
     }
 
     @Override
@@ -74,12 +87,12 @@ public class OrderRepository extends BaseRepository<Order> {
 
     @Override
     protected int getColumnCount() {
-        return 5;
+        return COL_COUNT;
     }
 
     @Override
     protected String genSetClause() {
-        return "consumer_id = ?, created_at = ?, completed_at = ?, total_price = ?, status = ?";
+        return COL_CONSUMER_ID + " = ?, " + COL_CREATED_AT +" = ?, " + COL_COMPLETED_AT + " = ?, " + COL_TOTAL_PRICE + " = ?, " +  COL_STATUS + " = ?";
     }
 
 }

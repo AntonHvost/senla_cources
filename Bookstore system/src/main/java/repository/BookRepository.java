@@ -1,66 +1,79 @@
 package repository;
 
-import database.ConnectionManager;
-import database.DBConstant;
 import di.annotation.Component;
-import di.annotation.Inject;
 import domain.model.Book;
 import enums.BookStatus;
+import repository.impl.BaseRepository;
 
 import java.sql.*;
 
 @Component
 public class BookRepository extends BaseRepository<Book> {
 
+    private static final String TABLE_NAME = "book";
+    public static final int COL_COUNT = 6; //Количество атрибутов без учета идентификатора
+
+    private static final String COL_ID = "id";
+    private static final String COL_TITLE = "title";
+    private static final String COL_AUTHOR = "author";
+    private static final String COL_DESCRIPTION = "description";
+    private static final String COL_PUBLISH_DATE = "publish_date";
+    private static final String COL_PRICE = "price";
+    private static final String COL_STATUS = "status";
+
+
 
     public BookRepository() {}
 
     @Override
     protected String getTableName() {
-        return DBConstant.TABLE_BOOKS;
+        return TABLE_NAME;
     }
 
     @Override
-    protected String getColumns() {
-        return "title, author, description, publish_date, price, status";
+    protected String getColumnNames() {
+        return COL_TITLE + ", " +  COL_AUTHOR + ", " + COL_DESCRIPTION + ", " + COL_PUBLISH_DATE + "," + COL_PRICE + ", " + COL_STATUS;
     }
 
     @Override
     protected String getIdColumnName() {
-        return "id";
+        return COL_ID;
     }
 
     @Override
     protected Book mapResultSetToEntity(ResultSet rs) throws SQLException {
         Book book = new Book();
-        book.setId(rs.getLong("id"));
-        book.setTitle(rs.getString("title"));
-        book.setAuthor(rs.getString("author"));
-        book.setDescription(rs.getString("description"));
-        book.setPublishDate(rs.getDate("publish_date").toLocalDate());
-        book.setPrice(rs.getBigDecimal("price"));
-        book.setStatus(BookStatus.valueOf(rs.getString("status")));
+        book.setId(rs.getLong(COL_ID));
+        book.setTitle(rs.getString(COL_TITLE));
+        book.setAuthor(rs.getString(COL_AUTHOR));
+        book.setDescription(rs.getString(COL_DESCRIPTION));
+        Date sqlDate = rs.getDate(COL_PUBLISH_DATE);
+        book.setPublishDate(sqlDate != null ? sqlDate.toLocalDate() : null);
+        book.setPrice(rs.getBigDecimal(COL_PRICE));
+        book.setStatus(BookStatus.valueOf(rs.getString(COL_STATUS)));
         return book;
     }
 
     @Override
     protected void setParametersForInsert(PreparedStatement ps, Book entity) throws SQLException {
-        ps.setString(1, entity.getTitle());
-        ps.setString(2, entity.getAuthor());
-        ps.setString(3, entity.getDescription());
-        ps.setDate(4, Date.valueOf(entity.getPublishDate()));
-        ps.setBigDecimal(5, entity.getPrice());
-        ps.setString(6, entity.getStatus().name());
+        int index = 1;
+        ps.setString(index++, entity.getTitle());
+        ps.setString(index++, entity.getAuthor());
+        ps.setString(index++, entity.getDescription());
+        ps.setDate(index++, entity.getPublishDate() != null ? Date.valueOf(entity.getPublishDate()) : null);
+        ps.setBigDecimal(index++, entity.getPrice());
+        ps.setString(index++, entity.getStatus().name());;
     }
 
     @Override
     protected void setParametersForUpdate(PreparedStatement ps, Book entity) throws SQLException {
-        ps.setString(1, entity.getTitle());
-        ps.setString(2, entity.getAuthor());
-        ps.setString(3, entity.getDescription());
-        ps.setObject(4, entity.getPublishDate());
-        ps.setBigDecimal(5, entity.getPrice());
-        ps.setString(6, entity.getStatus().name());
+        int index = 1;
+        ps.setString(index++, entity.getTitle());
+        ps.setString(index++, entity.getAuthor());
+        ps.setString(index++, entity.getDescription());
+        ps.setDate(index++, entity.getPublishDate() != null ? Date.valueOf(entity.getPublishDate()) : null);
+        ps.setBigDecimal(index++, entity.getPrice());
+        ps.setString(index++, entity.getStatus().name());
     }
 
     @Override
@@ -70,11 +83,11 @@ public class BookRepository extends BaseRepository<Book> {
 
     @Override
     protected int getColumnCount() {
-        return 6;
+        return COL_COUNT;
     }
 
     @Override
     protected String genSetClause() {
-        return "title = ?, author = ?, description = ?, publish_date = ?,price = ?, status = ?";
+        return COL_TITLE + " = ?, " + COL_AUTHOR + " = ?, " + COL_PUBLISH_DATE + " = ?, " + COL_PRICE + " = ?, " + COL_STATUS;
     }
 }

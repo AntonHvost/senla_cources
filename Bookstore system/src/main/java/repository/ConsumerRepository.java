@@ -1,62 +1,67 @@
 package repository;
 
-import database.ConnectionManager;
-import database.DBConstant;
 import di.annotation.Component;
 import di.annotation.Inject;
 import domain.model.Consumer;
+import repository.impl.BaseRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Component
 public class ConsumerRepository extends BaseRepository<Consumer> {
 
-    @Inject
+    private static final String TABLE_NAME = "consumer";
+    public static final int COL_COUNT = 3; //Количество атрибутов без учета идентификатора
+
+    private static final String COL_ID = "id";
+    private static final String COL_NAME = "name";
+    private static final String COL_PHONE = "phone";
+    private static final String COL_EMAIL = "email";
+
     public ConsumerRepository() {}
 
     @Override
     protected String getTableName() {
-        return DBConstant.TABLE_CONSUMERS;
+        return TABLE_NAME;
     }
 
     @Override
-    protected String getColumns() {
-        return "name, phone, email";
+    protected String getColumnNames() {
+        return COL_NAME + ", " + COL_PHONE + ", " + COL_EMAIL;
     }
 
     @Override
     protected String getIdColumnName() {
-        return "id";
+        return COL_ID;
     }
 
     @Override
     protected Consumer mapResultSetToEntity(ResultSet rs) throws SQLException {
         Consumer consumer = new Consumer();
-        consumer.setId(rs.getLong("id"));
-        consumer.setName(rs.getString("name"));
-        consumer.setPhone(rs.getString("phone"));
-        consumer.setEmail(rs.getString("email"));
+        consumer.setId(rs.getLong(COL_ID));
+        consumer.setName(rs.getString(COL_NAME));
+        consumer.setPhone(rs.getString(COL_PHONE));
+        consumer.setEmail(rs.getString(COL_EMAIL));
 
         return consumer;
     }
 
     @Override
     protected void setParametersForInsert(PreparedStatement ps, Consumer entity) throws SQLException {
-        ps.setString(1, entity.getName());
-        ps.setString(2, entity.getPhone());
-        ps.setString(3, entity.getEmail());
+        int index = 1;
+        ps.setString(index++, entity.getName());
+        ps.setString(index++, entity.getPhone());
+        ps.setString(index++, entity.getEmail());
     }
 
     @Override
     protected void setParametersForUpdate(PreparedStatement ps, Consumer entity) throws SQLException {
-        ps.setString(1, entity.getName());
-        ps.setString(2, entity.getPhone());
-        ps.setString(3, entity.getEmail());
+        int index = 1;
+        ps.setString(index++, entity.getName());
+        ps.setString(index++, entity.getPhone());
+        ps.setString(index++, entity.getEmail());
 
     }
 
@@ -67,11 +72,11 @@ public class ConsumerRepository extends BaseRepository<Consumer> {
 
     @Override
     protected int getColumnCount() {
-        return 3;
+        return COL_COUNT;
     }
 
     @Override
     protected String genSetClause() {
-        return "name = ?, phone = ?, email = ?";
+        return COL_NAME + " = ?, " + COL_PHONE + " = ?, " + COL_EMAIL;
     }
 }

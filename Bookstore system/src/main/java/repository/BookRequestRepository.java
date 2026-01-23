@@ -1,73 +1,79 @@
 package repository;
 
-import database.ConnectionManager;
-import database.DBConstant;
 import di.annotation.Component;
-import di.annotation.Inject;
 import domain.model.BookRequest;
 import enums.RequestStatus;
+import repository.impl.BaseRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
 
 @Component
 public class BookRequestRepository extends BaseRepository<BookRequest> {
 
+    private static final String TABLE_NAME = "book_request";
+    public static final int COL_COUNT = 5; //Количество атрибутов без учета идентификатора
+
+    private static final String COL_ID = "id";
+    private static final String COL_BOOK_ID = "book_id";
+    private static final String COL_ORDER_ID = "order_id";
+    private static final String COL_CREATE_AT = "create_at";
+    private static final String COL_DELIVERY_DATE = "delivery_date";
+    private static final String COL_STATUS = "status";
 
     public BookRequestRepository() {}
 
     @Override
     protected String getTableName() {
-        return DBConstant.TABLE_BOOK_REQUESTS;
+        return TABLE_NAME;
     }
 
     @Override
-    protected String getColumns() {
-        return "book_id, order_id, create_at, delivery_date, status";
+    protected String getColumnNames() {
+        return COL_BOOK_ID + "," + COL_ORDER_ID + "," + COL_CREATE_AT + "," + COL_DELIVERY_DATE + "," + COL_STATUS;
     }
 
     @Override
     protected String getIdColumnName() {
-        return "id";
+        return COL_ID;
     }
 
     @Override
     protected BookRequest mapResultSetToEntity(ResultSet rs) throws SQLException {
         BookRequest request = new BookRequest();
-        request.setId(rs.getLong("id"));
-        request.setReqBookId(rs.getLong("book_id"));
-        request.setRelatedOrderId(rs.getLong("order_id"));
-        request.setRequestDate(rs.getTimestamp("create_at").toLocalDateTime());
-        Timestamp deliveryDate = rs.getTimestamp("delivery_date");
+        request.setId(rs.getLong(COL_ID));
+        request.setReqBookId(rs.getLong(COL_BOOK_ID));
+        request.setRelatedOrderId(rs.getLong(COL_ORDER_ID));
+        Timestamp createAt = rs.getTimestamp(COL_CREATE_AT);
+        request.setRequestDate(createAt != null ? createAt.toLocalDateTime() : null);
+        Timestamp deliveryDate = rs.getTimestamp(COL_DELIVERY_DATE);
         request.setDeliveryDate(deliveryDate != null ? deliveryDate.toLocalDateTime() : null);
-        request.setStatus(RequestStatus.valueOf(rs.getString("status")));
+        request.setStatus(RequestStatus.valueOf(rs.getString(COL_STATUS)));
 
         return request;
     }
 
     @Override
     protected void setParametersForInsert(PreparedStatement ps, BookRequest entity) throws SQLException {
-        ps.setLong(1, entity.getReqBookId());
-        ps.setLong(2, entity.getRelatedOrderId());
-        LocalDateTime requestDate = entity.getRequestDate();
-        ps.setTimestamp(3, requestDate != null ? Timestamp.valueOf(requestDate) : null);
-        LocalDateTime deliveryDate = entity.getDeliveryDate();
-        ps.setTimestamp(4, deliveryDate != null ? Timestamp.valueOf(deliveryDate) : null);
-        ps.setString(5, entity.getStatus().toString());
+        int index = 1;
+        ps.setLong(index++, entity.getReqBookId());
+        ps.setLong(index++, entity.getRelatedOrderId());
+        ps.setTimestamp(index++, toTimestamp(entity.getRequestDate()));
+        ps.setTimestamp(index++, toTimestamp(entity.getDeliveryDate()));
+        ps.setString(index++, entity.getStatus().name());
     }
 
     @Override
     protected void setParametersForUpdate(PreparedStatement ps, BookRequest entity) throws SQLException {
-        ps.setLong(1, entity.getReqBookId());
-        ps.setLong(2, entity.getRelatedOrderId());
-        ps.setTimestamp(3, Timestamp.valueOf(entity.getRequestDate()));
-        ps.setTimestamp(4, Timestamp.valueOf(entity.getDeliveryDate()));
-        ps.setString(5, entity.getStatus().toString());
+        int index = 1;
+        ps.setLong(index++, entity.getReqBookId());
+        ps.setLong(index++, entity.getRelatedOrderId());
+        ps.setTimestamp(index++, toTimestamp(entity.getRequestDate()));
+        ps.setTimestamp(index++, toTimestamp(entity.getDeliveryDate()));
+        ps.setString(index++, entity.getStatus().name());
     }
 
     @Override
@@ -77,12 +83,16 @@ public class BookRequestRepository extends BaseRepository<BookRequest> {
 
     @Override
     protected int getColumnCount () {
-        return 5;
+        return COL_COUNT;
     }
 
     @Override
     protected String genSetClause () {
-        return "book_id = ?, order_id = ?, create_at = ?, delivery_date = ?, status = ?";
+        return COL_BOOK_ID + " = ?, " + COL_ORDER_ID + " = ?, " + COL_CREATE_AT + " = ?, " + COL_DELIVERY_DATE + " = ?, " + COL_STATUS;
+    }
+
+    private Timestamp toTimestamp(LocalDateTime dt) {
+        return dt != null ? Timestamp.valueOf(dt) : null;
     }
 
 }

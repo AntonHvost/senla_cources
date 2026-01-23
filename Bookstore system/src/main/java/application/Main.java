@@ -2,7 +2,6 @@ package application;
 
 import config.Configurator;
 import database.ConnectionManager;
-import database.DBConstant;
 import database.TransactionManager;
 import di.DIContainer;
 import facade.*;
@@ -78,8 +77,6 @@ public class Main {
         MenuController controller = new MenuController(navigator,menuView);
 
         controller.run();
-
-        System.out.println("aboba");
 
         ConnectionManager.getInstance().closeConnection();
     }

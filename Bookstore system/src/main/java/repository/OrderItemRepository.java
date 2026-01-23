@@ -1,10 +1,9 @@
 package repository;
 
 import database.ConnectionManager;
-import database.DBConstant;
 import di.annotation.Component;
-import di.annotation.Inject;
 import domain.model.OrderItem;
+import repository.impl.BaseRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,13 +12,21 @@ import java.util.List;
 @Component
 public class OrderItemRepository extends BaseRepository<OrderItem> {
 
+    private static final String TABLE_NAME = "order_item";
+    public static final int COL_COUNT = 3;
+
+    private static final String COL_ID = "id";
+    private static final String COL_ORDER_ID = "order_id";
+    private static final String COL_BOOK_ID = "book_id";
+    private static final String COL_QUANTITY = "quantity";
+
     public OrderItemRepository() {}
 
     public List<OrderItem> getItemByOrderId(Long orderId) {
 
         Connection connection = ConnectionManager.getInstance().getConnection();
 
-        String query = "select * from " + getTableName() + " WHERE order_id = ?";
+        String query = "select * from " + getTableName() + " WHERE " + COL_ORDER_ID + " = ?";
 
         List<OrderItem> orderItems = new ArrayList<>();
 
@@ -40,42 +47,44 @@ public class OrderItemRepository extends BaseRepository<OrderItem> {
 
     @Override
     protected String getTableName() {
-        return DBConstant.TABLE_ORDER_ITEMS;
+        return TABLE_NAME;
     }
 
     @Override
-    protected String getColumns() {
-        return "order_id, book_id, quantity";
+    protected String getColumnNames() {
+        return COL_ORDER_ID + ", " + COL_BOOK_ID + ", " + COL_QUANTITY;
     }
 
     @Override
     protected String getIdColumnName() {
-        return "id";
+        return COL_ID;
     }
 
     @Override
     protected OrderItem mapResultSetToEntity(ResultSet rs) throws SQLException {
         OrderItem orderItem = new OrderItem();
-        orderItem.setId(rs.getLong("id"));
-        orderItem.setOrderId(rs.getLong("order_id"));
-        orderItem.setBookId(rs.getLong("book_id"));
-        orderItem.setQuantity(rs.getInt("quantity"));
+        orderItem.setId(rs.getLong(COL_ID));
+        orderItem.setOrderId(rs.getLong(COL_ORDER_ID));
+        orderItem.setBookId(rs.getLong(COL_BOOK_ID));
+        orderItem.setQuantity(rs.getInt(COL_QUANTITY));
 
         return orderItem;
     }
 
     @Override
     protected void setParametersForInsert(PreparedStatement ps, OrderItem entity) throws SQLException {
-        ps.setLong(1, entity.getOrderId());
-        ps.setLong(2, entity.getBookId());
-        ps.setInt(3, entity.getQuantity());
+        int index = 1;
+        ps.setLong(index++, entity.getOrderId());
+        ps.setLong(index++, entity.getBookId());
+        ps.setInt(index++, entity.getQuantity());
     }
 
     @Override
     protected void setParametersForUpdate(PreparedStatement ps, OrderItem entity) throws SQLException {
-        ps.setLong(1, entity.getOrderId());
-        ps.setLong(2, entity.getBookId());
-        ps.setInt(3, entity.getQuantity());
+        int index = 1;
+        ps.setLong(index++, entity.getOrderId());
+        ps.setLong(index++, entity.getBookId());
+        ps.setInt(index++, entity.getQuantity());
     }
 
     @Override
@@ -85,11 +94,11 @@ public class OrderItemRepository extends BaseRepository<OrderItem> {
 
     @Override
     protected int getColumnCount() {
-        return 3;
+        return COL_COUNT;
     }
 
     @Override
     protected String genSetClause() {
-        return "order_id = ?, book_id = ?, quantity = ?";
+        return COL_ORDER_ID + " = ?, " + COL_BOOK_ID + " = ?, " + COL_QUANTITY;
     }
 }
