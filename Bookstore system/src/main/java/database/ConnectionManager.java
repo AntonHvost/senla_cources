@@ -1,12 +1,15 @@
 package database;
 
 import config.ConfigProperty;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionManager {
+    private static final Logger logger = LoggerFactory.getLogger(ConnectionManager.class);
     @ConfigProperty(propertyName = "db.url", type = String.class)
     private static String url;
     @ConfigProperty(propertyName = "db.username", type = String.class)
@@ -19,8 +22,10 @@ public class ConnectionManager {
 
     private ConnectionManager() {
         try {
+            logger.info("Creating connection");
             this.connection = DriverManager.getConnection(url, user, password);
         } catch (Exception e) {
+            logger.error(e.getMessage());
             throw new RuntimeException("Не удалось создать соединение с БД", e);
         }
     }
@@ -29,6 +34,7 @@ public class ConnectionManager {
         if (instance == null) {
             synchronized (ConnectionManager.class) {
                 if (instance == null) {
+                    logger.info("Inializing ConnectionManager");
                     instance = new ConnectionManager();
                 }
             }
@@ -38,15 +44,19 @@ public class ConnectionManager {
 
     public Connection getConnection() {
         if(connection == null){
+            logger.error("Connection exists!");
             throw new NullPointerException("Подключение отсутствует!");
         }
         try {
             if (connection.isClosed()) {
+                logger.error("Connection is closed!");
                 throw new SQLException("Подключение закрыто!");
             }
         } catch (SQLException e) {
+            logger.error(e.getMessage());
             e.printStackTrace();
         }
+        logger.info("Getting connection");
         return connection;
     }
 
@@ -54,9 +64,11 @@ public class ConnectionManager {
         if (connection != null) {
             try {
                 if (!connection.isClosed()) {
+                    logger.info("Closing connection");
                     connection.close();
                 }
             } catch (SQLException e) {
+                logger.error(e.getMessage());
                 e.printStackTrace();
             }
         }

@@ -2,6 +2,8 @@ package repository.impl;
 
 import database.ConnectionManager;
 import domain.model.impl.Identifiable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -10,7 +12,7 @@ import java.util.Optional;
 
 public abstract class BaseRepository<T extends Identifiable> implements Repository<T> {
 
-    protected BaseRepository() {}
+    private static final Logger logger = LoggerFactory.getLogger(BaseRepository.class);
 
     protected abstract String getTableName();
     protected abstract String getColumnNames();
@@ -22,9 +24,13 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
 
     private final Connection connection = ConnectionManager.getInstance().getConnection();
 
+    protected BaseRepository() {}
+
     @Override
     public List<T> findAll() {
+        logger.debug("Fetching all records...");
         String query = "SELECT * FROM \"" + getTableName() + "\"";
+        logger.info("Execute query...");
         try(Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query)) {
 
@@ -35,6 +41,7 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
             }
             return list;
         } catch (SQLException e){
+            logger.error(e.getMessage(), e);
             e.printStackTrace();
         }
         return List.of();

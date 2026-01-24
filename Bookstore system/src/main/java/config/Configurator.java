@@ -1,5 +1,8 @@
 package config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -7,6 +10,8 @@ import java.util.Properties;
 import java.util.Set;
 
 public class Configurator {
+
+    private static final Logger logger = LoggerFactory.getLogger(Configurator.class);
 
     public void configure(Object configObject) {
         Class<?> clazz = configObject.getClass();
@@ -76,7 +81,9 @@ public class Configurator {
     }
 
     public void configureObjects(Set<Object> obj) {
+        logger.debug("Configuring {} object", obj.size());
         for (Object object : obj) {
+            logger.trace("  - {}", obj.getClass().getSimpleName());
             configure(object);
         }
     }
@@ -89,6 +96,7 @@ public class Configurator {
             }
             properties.load(inputStream);
         } catch (IOException e) {
+            logger.error(e.getMessage(), e);
             throw new RuntimeException(e);
         }
 
