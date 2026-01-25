@@ -1,64 +1,194 @@
-21:14:19.114 [main] INFO  application.Main - Starting Application
-21:14:19.127 [main] DEBUG application.Main - DI Container initialized with beans
-21:14:19.128 [main] INFO  application.Main - Configured Services...
-21:14:19.375 [main] INFO  application.Main - Configuration loaded
-21:14:19.376 [main] INFO  application.Main - Launching main menu...
-21:14:19.392 [main] INFO  application.Main - Menu loaded
-21:14:58.454 [main] INFO  application.Main - Closing Application
-21:14:58.454 [main] INFO  application.Main - Application closed correctly
-21:19:37.366 [main] INFO  application.Main - Starting Application
-21:19:37.377 [main] DEBUG application.Main - DI Container initialized with beans
-21:19:37.377 [main] INFO  application.Main - Configured Services...
-21:19:37.628 [main] INFO  application.Main - Configuration loaded
-21:19:37.629 [main] INFO  application.Main - Launching main menu...
-21:19:37.642 [main] INFO  application.Main - Menu loaded
-21:19:53.631 [main] INFO  application.Main - Closing Application
-21:19:53.631 [main] INFO  application.Main - Application closed correctly
-21:20:45.619 [main] INFO  application.Main - Starting Application
-21:20:45.630 [main] DEBUG application.Main - DI Container initialized with beans
-21:20:45.630 [main] INFO  application.Main - Configured Services...
-21:20:45.637 [main] INFO  database.ConnectionManager - Creating connection
-21:20:45.875 [main] INFO  application.Main - Configuration loaded
-21:20:45.875 [main] INFO  application.Main - Launching main menu...
-21:20:45.891 [main] INFO  application.Main - Menu loaded
-21:21:02.453 [main] INFO  application.Main - Starting Application
-21:21:02.464 [main] DEBUG application.Main - DI Container initialized with beans
-21:21:02.465 [main] INFO  application.Main - Configured Services...
-21:21:02.474 [main] INFO  database.ConnectionManager - Creating connection
-21:21:02.761 [main] DEBUG config.Configurator - Configuring 2 object
-21:21:02.765 [main] INFO  application.Main - Configuration loaded
-21:21:02.766 [main] INFO  application.Main - Launching main menu...
-21:21:02.780 [main] INFO  application.Main - Menu loaded
-21:23:19.453 [main] INFO  application.Main - Starting Application
-21:23:19.463 [main] DEBUG application.Main - DI Container initialized with beans
-21:23:19.463 [main] INFO  application.Main - Configured Services...
-21:23:19.469 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
-21:23:19.469 [main] INFO  database.ConnectionManager - Creating connection
-21:23:19.698 [main] INFO  database.ConnectionManager - Getting connection
-21:23:19.698 [main] INFO  database.ConnectionManager - Getting connection
-21:23:19.698 [main] INFO  database.ConnectionManager - Getting connection
-21:23:19.698 [main] INFO  database.ConnectionManager - Getting connection
-21:23:19.699 [main] INFO  database.ConnectionManager - Getting connection
-21:23:19.704 [main] DEBUG config.Configurator - Configuring 2 object
-21:23:19.707 [main] INFO  application.Main - Configuration loaded
-21:23:19.707 [main] INFO  application.Main - Launching main menu...
-21:23:19.722 [main] INFO  application.Main - Menu loaded
-21:27:51.178 [main] INFO  application.Main - Starting Application
-21:27:51.189 [main] DEBUG application.Main - DI Container initialized with beans
-21:27:51.189 [main] INFO  application.Main - Configured Services...
-21:27:51.197 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
-21:27:51.197 [main] INFO  database.ConnectionManager - Creating connection
-21:27:51.440 [main] INFO  database.ConnectionManager - Getting connection
-21:27:51.440 [main] INFO  database.ConnectionManager - Getting connection
-21:27:51.440 [main] INFO  database.ConnectionManager - Getting connection
-21:27:51.441 [main] INFO  database.ConnectionManager - Getting connection
-21:27:51.441 [main] INFO  database.ConnectionManager - Getting connection
-21:27:51.447 [main] DEBUG config.Configurator - Configuring 2 object
-21:27:51.450 [main] INFO  application.Main - Configuration loaded
-21:27:51.450 [main] INFO  application.Main - Launching main menu...
-21:27:51.463 [main] INFO  application.Main - Menu loaded
-21:27:53.866 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
-21:27:53.866 [main] INFO  repository.impl.BaseRepository - Execute query...
-21:28:11.335 [main] INFO  application.Main - Closing Application
-21:28:11.336 [main] INFO  database.ConnectionManager - Closing connection
-21:28:11.336 [main] INFO  application.Main - Application closed correctly
+22:21:38.031 [main] INFO  application.Main - Starting Application
+22:21:38.065 [main] DEBUG application.Main - DI Container initialized with beans
+22:21:38.065 [main] INFO  application.Main - Configured Services...
+22:21:38.075 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
+22:21:38.075 [main] INFO  database.ConnectionManager - Creating connection
+22:21:38.377 [main] INFO  database.ConnectionManager - Getting connection
+22:21:38.378 [main] INFO  database.ConnectionManager - Getting connection
+22:21:38.378 [main] INFO  database.ConnectionManager - Getting connection
+22:21:38.378 [main] INFO  database.ConnectionManager - Getting connection
+22:21:38.379 [main] INFO  database.ConnectionManager - Getting connection
+22:21:38.385 [main] DEBUG config.Configurator - Configuring 2 object
+22:21:38.390 [main] INFO  application.Main - Configuration loaded
+22:21:38.390 [main] INFO  application.Main - Launching main menu...
+22:21:38.415 [main] INFO  application.Main - Menu loaded
+22:21:54.150 [main] INFO  application.Main - Starting Application
+22:21:54.161 [main] DEBUG application.Main - DI Container initialized with beans
+22:21:54.161 [main] INFO  application.Main - Configured Services...
+22:21:54.168 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
+22:21:54.169 [main] INFO  database.ConnectionManager - Creating connection
+22:21:54.420 [main] INFO  database.ConnectionManager - Getting connection
+22:21:54.420 [main] INFO  database.ConnectionManager - Getting connection
+22:21:54.420 [main] INFO  database.ConnectionManager - Getting connection
+22:21:54.420 [main] INFO  database.ConnectionManager - Getting connection
+22:21:54.420 [main] INFO  database.ConnectionManager - Getting connection
+22:21:54.425 [main] DEBUG config.Configurator - Configuring 2 object
+22:21:54.429 [main] INFO  application.Main - Configuration loaded
+22:21:54.429 [main] INFO  application.Main - Launching main menu...
+22:21:54.446 [main] INFO  application.Main - Menu loaded
+22:22:01.266 [main] INFO  ui.view.BookView - Opened book list menu
+22:22:01.913 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
+22:22:01.913 [main] INFO  repository.impl.BaseRepository - Execute query...
+22:22:01.926 [main] INFO  repository.impl.BaseRepository - Results fetched
+22:22:07.444 [main] INFO  application.Main - Closing Application
+22:22:07.444 [main] INFO  database.ConnectionManager - Closing connection
+22:22:07.444 [main] INFO  application.Main - Application closed correctly
+22:22:22.875 [main] INFO  application.Main - Starting Application
+22:22:22.886 [main] DEBUG application.Main - DI Container initialized with beans
+22:22:22.887 [main] INFO  application.Main - Configured Services...
+22:22:22.895 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
+22:22:22.895 [main] INFO  database.ConnectionManager - Creating connection
+22:22:23.118 [main] INFO  database.ConnectionManager - Getting connection
+22:22:23.118 [main] INFO  database.ConnectionManager - Getting connection
+22:22:23.118 [main] INFO  database.ConnectionManager - Getting connection
+22:22:23.118 [main] INFO  database.ConnectionManager - Getting connection
+22:22:23.119 [main] INFO  database.ConnectionManager - Getting connection
+22:22:23.123 [main] DEBUG config.Configurator - Configuring 2 object
+22:22:23.127 [main] INFO  application.Main - Configuration loaded
+22:22:23.127 [main] INFO  application.Main - Launching main menu...
+22:22:23.142 [main] INFO  application.Main - Menu loaded
+22:22:35.348 [main] INFO  ui.view.BookView - Requesting unsold books...
+22:22:36.366 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
+22:22:36.366 [main] INFO  repository.impl.BaseRepository - Execute query...
+22:22:36.381 [main] INFO  repository.impl.BaseRepository - Results fetched
+22:22:36.381 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
+22:22:36.381 [main] INFO  repository.impl.BaseRepository - Execute query...
+22:22:36.385 [main] INFO  repository.impl.BaseRepository - Results fetched
+22:22:36.388 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
+22:22:36.388 [main] INFO  repository.impl.BaseRepository - Execute query...
+22:22:36.391 [main] INFO  repository.impl.BaseRepository - Results fetched
+22:22:36.392 [main] INFO  ui.view.BookView - Sorting option selected: DELIVERY_DATE
+22:22:36.392 [main] INFO  ui.view.BookView - Displayed 10 books
+22:41:50.922 [main] INFO  application.Main - Starting Application
+22:41:50.934 [main] DEBUG application.Main - DI Container initialized with beans
+22:41:50.934 [main] INFO  application.Main - Configured Services...
+22:41:50.943 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
+22:41:50.943 [main] INFO  database.ConnectionManager - Creating connection
+22:41:51.172 [main] INFO  database.ConnectionManager - Getting connection
+22:41:51.173 [main] INFO  database.ConnectionManager - Getting connection
+22:41:51.173 [main] INFO  database.ConnectionManager - Getting connection
+22:41:51.173 [main] INFO  database.ConnectionManager - Getting connection
+22:41:51.173 [main] INFO  database.ConnectionManager - Getting connection
+22:41:51.177 [main] DEBUG config.Configurator - Configuring 2 object
+22:41:51.181 [main] INFO  application.Main - Configuration loaded
+22:41:51.181 [main] INFO  application.Main - Launching main menu...
+22:41:51.197 [main] INFO  application.Main - Menu loaded
+22:41:54.183 [main] INFO  ui.view.BookView - Initiated book import
+22:41:55.485 [main] ERROR ui.view.BookView - Failed to import books from 'dkfjdfk.csv'
+java.lang.RuntimeException: Ошибка импорта из dkfjdfk.csv
+	at service.IOService.importEntities(IOService.java:51)
+	at facade.BookFacade.importBooksFromCSV(BookFacade.java:31)
+	at ui.controller.BookController.importBooks(BookController.java:36)
+	at ui.view.BookView.showBookImportMenu(BookView.java:140)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:90)
+22:41:59.316 [main] INFO  application.Main - Closing Application
+22:41:59.316 [main] INFO  database.ConnectionManager - Closing connection
+22:41:59.317 [main] INFO  application.Main - Application closed correctly
+22:56:07.179 [main] INFO  application.Main - Starting Application
+22:56:07.191 [main] DEBUG application.Main - DI Container initialized with beans
+22:56:07.191 [main] INFO  application.Main - Configured Services...
+22:56:07.199 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
+22:56:07.199 [main] INFO  database.ConnectionManager - Creating connection
+22:56:07.421 [main] INFO  database.ConnectionManager - Getting connection
+22:56:07.426 [main] INFO  database.ConnectionManager - Getting connection
+22:56:07.426 [main] INFO  database.ConnectionManager - Getting connection
+22:56:07.426 [main] INFO  database.ConnectionManager - Getting connection
+22:56:07.426 [main] INFO  database.ConnectionManager - Getting connection
+22:56:07.432 [main] DEBUG config.Configurator - Configuring 2 object
+22:56:07.435 [main] INFO  application.Main - Configuration loaded
+22:56:07.435 [main] INFO  application.Main - Launching main menu...
+22:56:07.451 [main] INFO  application.Main - Menu loaded
+22:56:18.460 [main] INFO  ui.view.ReportView - Request count of completed orders for period
+22:56:27.453 [main] INFO  ui.view.ReportView - Report completed!
+22:56:27.495 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
+22:56:27.495 [main] INFO  repository.impl.BaseRepository - Execute query...
+22:56:27.508 [main] INFO  repository.impl.BaseRepository - Results fetched
+22:56:33.278 [main] INFO  application.Main - Closing Application
+22:56:33.279 [main] INFO  database.ConnectionManager - Closing connection
+22:56:33.279 [main] INFO  application.Main - Application closed correctly
+22:58:17.488 [main] INFO  application.Main - Starting Application
+22:58:17.499 [main] DEBUG application.Main - DI Container initialized with beans
+22:58:17.499 [main] INFO  application.Main - Configured Services...
+22:58:17.509 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
+22:58:17.509 [main] INFO  database.ConnectionManager - Creating connection
+22:58:17.748 [main] INFO  database.ConnectionManager - Getting connection
+22:58:17.749 [main] INFO  database.ConnectionManager - Getting connection
+22:58:17.749 [main] INFO  database.ConnectionManager - Getting connection
+22:58:17.749 [main] INFO  database.ConnectionManager - Getting connection
+22:58:17.749 [main] INFO  database.ConnectionManager - Getting connection
+22:58:17.755 [main] DEBUG config.Configurator - Configuring 2 object
+22:58:17.759 [main] INFO  application.Main - Configuration loaded
+22:58:17.759 [main] INFO  application.Main - Launching main menu...
+22:58:17.776 [main] INFO  application.Main - Menu loaded
+22:58:24.432 [main] INFO  ui.view.ReportView - Request completed orders report for period
+22:58:34.609 [main] INFO  service.ReportService - Generating completed orders report from 2025-12-20 to 2026-01-25, sorted by COMPLETE_DATE
+22:58:34.612 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
+22:58:34.612 [main] INFO  repository.impl.BaseRepository - Execute query...
+22:58:34.624 [main] INFO  repository.impl.BaseRepository - Results fetched
+22:58:34.674 [main] INFO  service.ReportService - Report generated: 1 completed orders in period
+22:58:34.674 [main] INFO  ui.view.ReportView - Found 1 completed orders in period
+22:58:53.670 [main] INFO  application.Main - Closing Application
+22:58:53.670 [main] INFO  database.ConnectionManager - Closing connection
+22:58:53.670 [main] INFO  application.Main - Application closed correctly
+23:24:20.861 [main] INFO  application.Main - Starting Application
+23:24:20.873 [main] DEBUG application.Main - DI Container initialized with beans
+23:24:20.873 [main] INFO  application.Main - Configured Services...
+23:24:20.881 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
+23:24:20.881 [main] INFO  database.ConnectionManager - Creating connection
+23:24:21.094 [main] INFO  database.ConnectionManager - Getting connection
+23:24:21.100 [main] INFO  database.ConnectionManager - Getting connection
+23:24:21.100 [main] INFO  database.ConnectionManager - Getting connection
+23:24:21.100 [main] INFO  database.ConnectionManager - Getting connection
+23:24:21.100 [main] INFO  database.ConnectionManager - Getting connection
+23:24:21.104 [main] DEBUG config.Configurator - Configuring 2 object
+23:24:21.108 [main] INFO  application.Main - Configuration loaded
+23:24:21.108 [main] INFO  application.Main - Launching main menu...
+23:24:21.125 [main] INFO  application.Main - Menu loaded
+23:24:24.781 [main] INFO  ui.view.BookView - Opened book list menu
+23:24:26.542 [main] INFO  service.ReportService - Fetching book catalog, sorted by: ALPHABET
+23:24:26.544 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+23:24:26.544 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
+23:24:26.545 [main] INFO  repository.impl.BaseRepository - Execute query...
+23:24:26.556 [main] INFO  repository.impl.BaseRepository - Results fetched
+23:24:26.557 [main] DEBUG service.ReportService - Catalog contains 10 books
+23:24:28.492 [main] INFO  ui.view.BookView - Requesting unsold books...
+23:24:29.795 [main] INFO  service.ReportService - Fetching unsold books (older than 6 months), sorted by: PRICE
+23:24:29.795 [main] DEBUG service.OrderService - Fetching all orders
+23:24:29.795 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
+23:24:29.795 [main] INFO  repository.impl.BaseRepository - Execute query...
+23:24:29.799 [main] INFO  repository.impl.BaseRepository - Results fetched
+23:24:29.799 [main] DEBUG service.RequestService - Fetching all book requests
+23:24:29.799 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
+23:24:29.799 [main] INFO  repository.impl.BaseRepository - Execute query...
+23:24:29.801 [main] INFO  repository.impl.BaseRepository - Results fetched
+23:24:29.801 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+23:24:29.801 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
+23:24:29.801 [main] INFO  repository.impl.BaseRepository - Execute query...
+23:24:29.802 [main] INFO  repository.impl.BaseRepository - Results fetched
+23:24:29.803 [main] DEBUG service.ReportService - Found 10 unsold books
+23:24:29.803 [main] INFO  ui.view.BookView - Sorting option selected: PRICE
+23:24:29.803 [main] INFO  ui.view.BookView - Displayed 10 books
+23:24:32.476 [main] INFO  ui.view.BookView - Initiated book export
+23:24:37.673 [main] INFO  service.IOService - Exporting entities to file: book.csv
+23:24:37.673 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+23:24:37.673 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
+23:24:37.674 [main] INFO  repository.impl.BaseRepository - Execute query...
+23:24:37.675 [main] INFO  repository.impl.BaseRepository - Results fetched
+23:24:37.675 [main] DEBUG service.IOService - Exporting 10 entities
+23:24:37.677 [main] INFO  service.IOService - Successfully exported 10 entities to 'book.csv'
+23:24:37.677 [main] INFO  ui.view.BookView - Books successfully exported to 'book.csv'
+23:24:46.685 [main] INFO  ui.view.BookRequestView - Request list of book requests
+23:24:48.151 [main] INFO  service.ReportService - Fetching book request list, sorted by: COUNT_REQUEST
+23:24:48.151 [main] DEBUG service.RequestService - Fetching all book requests
+23:24:48.151 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
+23:24:48.152 [main] INFO  repository.impl.BaseRepository - Execute query...
+23:24:48.152 [main] INFO  repository.impl.BaseRepository - Results fetched
+23:24:48.155 [main] DEBUG service.BookInventoryService - Fetching book by ID: 3
+23:24:48.158 [main] DEBUG service.BookInventoryService - Fetching book by ID: 5
+23:24:48.160 [main] DEBUG service.ReportService - Fetched 2 book request summaries
+23:24:48.160 [main] INFO  ui.view.BookRequestView - Displayed 2 book requests
+23:24:56.511 [main] INFO  application.Main - Closing Application
+23:24:56.511 [main] INFO  database.ConnectionManager - Closing connection
+23:24:56.512 [main] INFO  application.Main - Application closed correctly

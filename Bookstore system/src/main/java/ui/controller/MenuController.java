@@ -21,6 +21,8 @@ public class MenuController {
             Menu current = navigator.getCurrentMenu();
             if (current == null) break;
 
+            menuView.displayWelcomeStatus();
+
             menuView.displayMenu(current);
             int choice = menuView.readChoice(current.getItems().size());
 

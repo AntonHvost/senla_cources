@@ -3,10 +3,15 @@ package ui.view;
 import ui.domain.Menu;
 import ui.domain.MenuItem;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.List;
 import java.util.Scanner;
 
 public class MenuView {
+    private static final Logger logger = LoggerFactory.getLogger(MenuView.class);
+
     private final Scanner scanner = new Scanner(System.in);
 
     public void displayWelcomeStatus() {
@@ -25,8 +30,10 @@ public class MenuView {
 
     public int readChoice(int max) {
         try {
+            logger.debug("User selected menu option");
             return Integer.parseInt(scanner.nextLine().trim());
         } catch (NumberFormatException e) {
+            logger.warn("Invalid menu input: non-numeric value");
             return -1;
         }
     }

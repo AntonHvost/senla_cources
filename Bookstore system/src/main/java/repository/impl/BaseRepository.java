@@ -39,6 +39,7 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
             while (rs.next()){
                 list.add(mapResultSetToEntity(rs));
             }
+            logger.info("Results fetched");
             return list;
         } catch (SQLException e){
             logger.error(e.getMessage(), e);

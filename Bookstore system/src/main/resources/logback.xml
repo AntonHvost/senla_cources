@@ -2,19 +2,18 @@
 <configuration>
 
     <statusListener class="ch.qos.logback.core.status.NopStatusListener" />
-    <statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener" />
 
     <!-- Уровень логирования по умолчанию -->
     <root level="INFO">
-        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
     </root>
 
     <!-- Консольный вывод -->
-    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+    <!--<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
-    </appender>
+    </appender> -->
 
     <!-- Файловый вывод (опционально) -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
@@ -36,7 +35,7 @@
     <logger name="database" level="INFO"/>
     <logger name="repository" level="DEBUG"/>
     <logger name="service" level="DEBUG"/>
-    <logger name="facade" level="INFO"/>
+    <logger name="control" level="INFO"/>
 
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>

@@ -1,5 +1,7 @@
 package service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,6 +18,9 @@ import enums.*;
 
 @Component
 public class ReportService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReportService.class);
+
     private final OrderService orderService;
     private final RequestService requestService;
     private final ConsumerService consumerService;
@@ -36,11 +41,13 @@ public class ReportService {
         try {
             return LocalDate.parse(dateStr).atStartOfDay();
         } catch (DateTimeParseException e) {
+            logger.warn("Invalid date format: {}", dateStr);
             throw new IllegalArgumentException("Неверный формат даты: " + dateStr);
         }
     }
 
     public List<OrderSummary> getCompletedOrdersToPeriod(String startDate, String endDate, SortByOrder sortParam) {
+        logger.info("Generating completed orders report from {} to {}, sorted by {}", startDate, endDate, sortParam);
 
         LocalDateTime startDateTime = parseToDateTime(startDate);
         LocalDateTime endDateTime = parseToDateTime(endDate);
@@ -51,7 +58,7 @@ public class ReportService {
             default -> throw new IllegalArgumentException("Неверный параметр сортировки: " + sortParam);
         };
 
-        return orderService.getOrderList().stream()
+        List<OrderSummary> result = orderService.getOrderList().stream()
                 .filter(o -> o.getOrderStatus() == OrderStatus.COMPLETED)
                 .filter(o -> !o.getCompletedAtDate().isBefore(startDateTime))
                 .filter(o -> !o.getCompletedAtDate().isAfter(endDateTime))
@@ -59,33 +66,48 @@ public class ReportService {
                             Consumer consumer = consumerService.findConsumerById(order.getConsumerId())
                                     .orElse(null);
                             List<OrderItemSummary> items = order.getOrderItemsList().stream()
-                                .map(orderItem -> new OrderItemSummary(orderItem, bookInventoryService.findBookById(orderItem.getBookId())
-                                    .orElse(null)))
-                                .toList();
+                                    .map(orderItem -> new OrderItemSummary(orderItem, bookInventoryService.findBookById(orderItem.getBookId())
+                                            .orElse(null)))
+                                    .toList();
                             return new OrderSummary(order, consumer, items);
                         }
                 )
                 .sorted(comparator)
                 .collect(Collectors.toList());
+
+        logger.info("Report generated: {} completed orders in period", result.size());
+        return result;
     }
 
     public int getCompletedOrdersCount(String startDate, String endDate) {
+        logger.debug("Counting completed orders from {} to {}", startDate, endDate);
 
         LocalDateTime startDateTime = parseToDateTime(startDate);
         LocalDateTime endDateTime = parseToDateTime(endDate);
 
-        return (int) orderService.getOrderList().stream()
+        int count = (int) orderService.getOrderList().stream()
                 .filter(o -> o.getOrderStatus() == OrderStatus.COMPLETED)
                 .filter(o -> !o.getCompletedAtDate().isBefore(startDateTime))
                 .filter(o -> !o.getCompletedAtDate().isAfter(endDateTime))
                 .count();
+
+        logger.info("Found {} completed orders in period {} – {}", count, startDate, endDate);
+
+        return count;
     }
 
     public String getDescriptionBook(long bookId) {
-        return bookInventoryService.findBookById(bookId).map(Book::getDescription).orElse("Книга с ID " + bookId + " не существует.");
+        logger.debug("Fetching description for book ID: {}", bookId);
+        return bookInventoryService.findBookById(bookId)
+                .map(Book::getDescription)
+                .orElseGet(() -> {
+                    logger.warn("No description for book ID: {}", bookId);
+                    return "Книга с ID " + bookId + " не существует.";
+                });
     }
 
     public List<BookSummary> getBookCatalog(SortByBook sortParam) {
+        logger.info("Fetching book catalog, sorted by: {}", sortParam);
         Comparator<BookSummary> comparator = switch (sortParam) {
             case ALPHABET -> Comparator.comparing(BookSummary::getTitle);
             case PUBLICATION_DATE -> Comparator.comparing(BookSummary::getPublishDate);
@@ -94,19 +116,25 @@ public class ReportService {
             default -> Comparator.comparing(BookSummary::getId);
         };
 
-        return bookInventoryService.getBooks().stream()
+        List<BookSummary> result = bookInventoryService.getBooks().stream()
                 .map(book -> new BookSummary(book, null))
                 .sorted(comparator)
                 .collect(Collectors.toList());
+        logger.debug("Catalog contains {} books", result.size());
+
+        return result;
     }
 
     public List<OrderSummary> getOrderList(SortByOrder sortParam) {
+        logger.info("Fetching order list, sorted by: {}", sortParam);
         Comparator<OrderSummary> comparator = switch (sortParam) {
             case COMPLETE_DATE -> Comparator.comparing(OrderSummary::getCompletedOrderDate, Comparator.naturalOrder());
             case PRICE -> Comparator.comparing(OrderSummary::getPrice);
             case STATUS -> Comparator.comparing(OrderSummary::getStatus);
             default -> Comparator.comparing(OrderSummary::getId);
         };
+
+        logger.debug("Fetched orders");
 
         return orderService.getOrderList().stream()
                 .map(order ->  {
@@ -126,34 +154,41 @@ public class ReportService {
 
     public BigDecimal getProfitToPeriod(String startDate, String endDate) {
 
+        logger.info("Calculating profit from {} to {}", startDate, endDate);
+
         LocalDateTime startDateTime = parseToDateTime(startDate);
         LocalDateTime endDateTime = parseToDateTime(endDate);
 
-        return orderService.getOrderList().stream()
+        BigDecimal profit = orderService.getOrderList().stream()
                 .filter(order -> order.getOrderStatus() == OrderStatus.COMPLETED)
                 .filter(order -> !order.getCompletedAtDate().isBefore(startDateTime))
                 .filter(order -> !order.getCompletedAtDate().isAfter(endDateTime))
                 .map(Order::getTotalPrice)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
+        logger.info("Total profit in period: {}", profit);
+
+        return profit;
+
     }
 
     public Optional<OrderSummary> getOrderDetails(Long orderId) {
+        logger.debug("Fetching details for order ID: {}", orderId);
+        return orderService.findOrderById(orderId).map(order -> {
+                    Consumer consumer = consumerService.findConsumerById(order.getConsumerId()).orElse(null);
 
-    return orderService.findOrderById(orderId).map(order -> {
-                Consumer consumer = consumerService.findConsumerById(order.getConsumerId()).orElse(null);
-
-                List<OrderItemSummary> items = order.getOrderItemsList().stream()
-                        .map(orderItem -> new OrderItemSummary(orderItem, bookInventoryService.findBookById(orderItem.getBookId())
-                                .orElse(null)))
-                        .toList();
-                return new OrderSummary(order, consumer, items);
-            }
-        );
+                    List<OrderItemSummary> items = order.getOrderItemsList().stream()
+                            .map(orderItem -> new OrderItemSummary(orderItem, bookInventoryService.findBookById(orderItem.getBookId())
+                                    .orElse(null)))
+                            .toList();
+                    logger.info("Order details retrieved for ID: {}", orderId);
+                    return new OrderSummary(order, consumer, items);
+                }
+            );
     }
 
     public List<BookRequestSummary> getBookRequestList(SortByRequestBook sortParam) {
-
+        logger.info("Fetching book request list, sorted by: {}", sortParam);
         Map<Long, List<BookRequest>> groupedByBookId = requestService.getRequestsList().stream()
                 .collect(Collectors.groupingBy(BookRequest::getReqBookId));
 
@@ -178,13 +213,17 @@ public class ReportService {
             default -> Comparator.comparing(summary -> summary.getBook().getId());
         };
 
-        return bookRequestSummaries.stream()
+        List<BookRequestSummary> result = bookRequestSummaries.stream()
                 .sorted(comparator)
                 .collect(Collectors.toList());
+
+        logger.debug("Fetched {} book request summaries", result.size());
+
+        return result;
     }
 
     public List<BookSummary> getUnsoldBooksMoreThanNMonth (SortByUnsoldBook sortParam) {
-
+        logger.info("Fetching unsold books (older than {} months), sorted by: {}", thresholdMonth, sortParam);
         LocalDateTime sixMonthAgo = LocalDateTime.now().minusMonths(thresholdMonth);
 
         Map<Long, LocalDateTime> lastSoldDateByBookId = new HashMap<>();
@@ -214,7 +253,7 @@ public class ReportService {
             default -> Comparator.comparing(BookSummary::getId);
         };
 
-        return bookInventoryService.getBooks().stream()
+        List<BookSummary> result = bookInventoryService.getBooks().stream()
                 .filter(book -> {
                     LocalDateTime lastSoldDate = lastSoldDateByBookId.get(book.getId());
                     return lastSoldDate == null || lastSoldDate.isBefore(sixMonthAgo);
@@ -222,5 +261,9 @@ public class ReportService {
                 .map(book -> new BookSummary(book, lastDeliveryDateByBookId.get(book.getId())))
                 .sorted(comparator)
                 .collect(Collectors.toList());
+
+        logger.debug("Found {} unsold books", result.size());
+
+        return result;
     }
 }
