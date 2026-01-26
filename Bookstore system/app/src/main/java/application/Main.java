@@ -4,13 +4,13 @@ import config.Configurator;
 import database.ConnectionManager;
 import database.TransactionManager;
 import di.DIContainer;
-import facade.*;
 
 import io.serializable.SerializableManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import repository.*;
 import service.*;
+import facade.*;
 import ui.controller.*;
 import ui.domain.Menu;
 import ui.factory.MainMenuFactory;
