@@ -2,8 +2,8 @@ package ui.controller;
 
 import di.annotation.Component;
 import di.annotation.Inject;
-import domain.model.Consumer;
-import domain.model.Order;
+import domain.model.impl.Consumer;
+import domain.model.impl.Order;
 import dto.OrderSummary;
 import enums.OrderStatus;
 import enums.SortByOrder;

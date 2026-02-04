@@ -1,4 +1,4 @@
-package domain.model.impl;
+package domain.model;
 
 public interface Identifiable {
     Long getId();

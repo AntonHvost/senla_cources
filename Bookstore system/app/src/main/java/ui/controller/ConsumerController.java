@@ -2,7 +2,7 @@ package ui.controller;
 
 import di.annotation.Component;
 import di.annotation.Inject;
-import domain.model.Consumer;
+import domain.model.impl.Consumer;
 import facade.ConsumerFacade;
 
 import java.util.List;

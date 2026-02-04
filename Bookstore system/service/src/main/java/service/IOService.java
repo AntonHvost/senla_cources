@@ -1,9 +1,9 @@
 package service;
 
 import di.annotation.Component;
-import domain.model.impl.Identifiable;
-import domain.model.Order;
-import domain.model.OrderItem;
+import domain.model.Identifiable;
+import domain.model.impl.Order;
+import domain.model.impl.OrderItem;
 import io.csv.CsvConverter;
 import io.csv.GenericCSVService;
 

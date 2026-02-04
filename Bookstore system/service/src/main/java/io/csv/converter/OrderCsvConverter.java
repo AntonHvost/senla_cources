@@ -1,6 +1,6 @@
 package io.csv.converter;
 
-import domain.model.Order;
+import domain.model.impl.Order;
 import enums.OrderStatus;
 import io.csv.CsvConverter;
 

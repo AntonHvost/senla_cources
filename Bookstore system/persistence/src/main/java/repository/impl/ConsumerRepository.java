@@ -1,9 +1,10 @@
-package repository;
+package repository.impl;
 
+import database.ConnectionManager;
 import di.annotation.Component;
 import di.annotation.Inject;
-import domain.model.Consumer;
-import repository.impl.BaseRepository;
+import domain.model.impl.Consumer;
+import repository.BaseRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +21,10 @@ public class ConsumerRepository extends BaseRepository<Consumer> {
     private static final String COL_PHONE = "phone";
     private static final String COL_EMAIL = "email";
 
-    public ConsumerRepository() {}
+    @Inject
+    public ConsumerRepository(ConnectionManager connectionManager) {
+        super(connectionManager);
+    }
 
     @Override
     protected String getTableName() {

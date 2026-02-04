@@ -1,6 +1,6 @@
 package io.csv.converter;
 
-import domain.model.BookRequest;
+import domain.model.impl.BookRequest;
 import enums.RequestStatus;
 import io.csv.CsvConverter;
 

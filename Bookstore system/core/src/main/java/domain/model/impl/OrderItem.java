@@ -1,7 +1,7 @@
-package domain.model;
+package domain.model.impl;
 
-import domain.model.impl.Identifiable;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import domain.model.Identifiable;
 
 @JsonAutoDetect
 public class OrderItem implements Identifiable {

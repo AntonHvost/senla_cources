@@ -1,9 +1,10 @@
-package repository;
+package repository.impl;
 
 import database.ConnectionManager;
 import di.annotation.Component;
-import domain.model.OrderItem;
-import repository.impl.BaseRepository;
+import di.annotation.Inject;
+import domain.model.impl.OrderItem;
+import repository.BaseRepository;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,13 +21,19 @@ public class OrderItemRepository extends BaseRepository<OrderItem> {
     private static final String COL_BOOK_ID = "book_id";
     private static final String COL_QUANTITY = "quantity";
 
-    public OrderItemRepository() {}
+    private final ConnectionManager connectionManager;
+    private Connection connection;
+
+    @Inject
+    public OrderItemRepository(ConnectionManager connectionManager) {
+        super(connectionManager);
+        this.connectionManager = connectionManager;
+    }
 
     public List<OrderItem> getItemByOrderId(Long orderId) {
 
-        Connection connection = ConnectionManager.getInstance().getConnection();
-
         String query = "select * from " + getTableName() + " WHERE " + COL_ORDER_ID + " = ?";
+        connection = connectionManager.getConnection();
 
         List<OrderItem> orderItems = new ArrayList<>();
 

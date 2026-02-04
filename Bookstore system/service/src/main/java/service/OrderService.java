@@ -10,11 +10,11 @@ import java.util.Optional;
 import database.TransactionManager;
 import di.annotation.Component;
 import di.annotation.Inject;
-import domain.model.Consumer;
-import domain.model.Order;
-import domain.model.OrderItem;
-import repository.OrderItemRepository;
-import repository.OrderRepository;
+import domain.model.impl.Consumer;
+import domain.model.impl.Order;
+import domain.model.impl.OrderItem;
+import repository.impl.OrderItemRepository;
+import repository.impl.OrderRepository;
 import enums.OrderStatus;
 import enums.RequestStatus;
 

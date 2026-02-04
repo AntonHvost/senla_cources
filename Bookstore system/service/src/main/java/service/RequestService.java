@@ -1,6 +1,5 @@
 package service;
 
-import domain.model.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -10,8 +9,8 @@ import java.util.stream.Collectors;
 
 import di.annotation.Component;
 import di.annotation.Inject;
-import domain.model.BookRequest;
-import repository.BookRequestRepository;
+import domain.model.impl.BookRequest;
+import repository.impl.BookRequestRepository;
 import enums.RequestStatus;
 
 

@@ -2,7 +2,7 @@ package ui.controller;
 
 import di.annotation.Component;
 import di.annotation.Inject;
-import domain.model.BookRequest;
+import domain.model.impl.BookRequest;
 import dto.BookRequestSummary;
 import enums.SortByRequestBook;
 import facade.ReportFacade;

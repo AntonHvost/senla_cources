@@ -1,7 +1,7 @@
 package dto;
 
-import domain.model.Book;
-import domain.model.OrderItem;
+import domain.model.impl.Book;
+import domain.model.impl.OrderItem;
 
 public class OrderItemSummary {
     Long orderId;

@@ -4,7 +4,6 @@ import di.annotation.Component;
 import di.annotation.Inject;
 
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;

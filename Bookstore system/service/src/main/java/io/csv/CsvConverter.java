@@ -1,6 +1,6 @@
 package io.csv;
 
-import domain.model.impl.Identifiable;
+import domain.model.Identifiable;
 
 public interface CsvConverter<T extends Identifiable> {
     String getHeader();

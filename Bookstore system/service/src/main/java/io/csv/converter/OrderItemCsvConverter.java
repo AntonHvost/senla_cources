@@ -1,6 +1,6 @@
 package io.csv.converter;
 
-import domain.model.OrderItem;
+import domain.model.impl.OrderItem;
 import io.csv.CsvConverter;
 
 public class OrderItemCsvConverter implements CsvConverter<OrderItem> {

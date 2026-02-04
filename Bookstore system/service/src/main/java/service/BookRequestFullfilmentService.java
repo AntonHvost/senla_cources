@@ -4,7 +4,7 @@ import config.ConfigProperty;
 import database.TransactionManager;
 import di.annotation.Component;
 import di.annotation.Inject;
-import domain.model.BookRequest;
+import domain.model.impl.BookRequest;
 import enums.OrderStatus;
 
 import org.slf4j.Logger;
@@ -16,12 +16,12 @@ import java.util.List;
 public class BookRequestFullfilmentService {
     private static final Logger logger = LoggerFactory.getLogger(BookRequestFullfilmentService.class);
 
-    private final RequestService requestService;
     private final OrderService orderService;
+    private final RequestService requestService;
+    private final TransactionManager transactionManager;
 
     @ConfigProperty(propertyName = "autoCompleteRequest",  type = boolean.class)
     private boolean isAutoCompleteRequest;
-    private final TransactionManager transactionManager;
 
     @Inject
     public BookRequestFullfilmentService(RequestService requestService, OrderService orderService, TransactionManager transactionManager) {

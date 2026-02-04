@@ -1,9 +1,11 @@
-package repository;
+package repository.impl;
 
+import database.ConnectionManager;
 import di.annotation.Component;
-import domain.model.BookRequest;
+import di.annotation.Inject;
+import domain.model.impl.BookRequest;
 import enums.RequestStatus;
-import repository.impl.BaseRepository;
+import repository.BaseRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -24,7 +26,10 @@ public class BookRequestRepository extends BaseRepository<BookRequest> {
     private static final String COL_DELIVERY_DATE = "delivery_date";
     private static final String COL_STATUS = "status";
 
-    public BookRequestRepository() {}
+    @Inject
+    public BookRequestRepository(ConnectionManager connectionManager) {
+        super(connectionManager);
+    }
 
     @Override
     protected String getTableName() {

@@ -1,6 +1,6 @@
-package domain.model;
+package domain.model.impl;
 
-import domain.model.impl.Identifiable;
+import domain.model.Identifiable;
 import enums.BookStatus;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;

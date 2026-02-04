@@ -1,8 +1,8 @@
 package service;
 
 import di.annotation.Component;
-import domain.model.Consumer;
-import repository.ConsumerRepository;
+import domain.model.impl.Consumer;
+import repository.impl.ConsumerRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

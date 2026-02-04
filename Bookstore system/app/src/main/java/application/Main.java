@@ -8,7 +8,7 @@ import di.DIContainer;
 import io.serializable.SerializableManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import repository.*;
+import repository.impl.*;
 import service.*;
 import facade.*;
 import ui.controller.*;
@@ -27,10 +27,9 @@ public class Main {
         logger.info("Starting Application");
 
         final Configurator configurator = new Configurator();
+        final DIContainer container = new DIContainer();
 
         try {
-
-            DIContainer container = new DIContainer();
             container.registerBeans(Set.of(
                     BookRepository.class,
                     OrderRepository.class,
@@ -60,15 +59,15 @@ public class Main {
                     ReportView.class,
                     ConsumerView.class,
                     SerializableManager.class,
-                    TransactionManager.class
+                    TransactionManager.class,
+                    ConnectionManager.class
             ));
             logger.debug("DI Container initialized with beans");
 
             logger.info("Configured Services...");
-            configurator.configureClass(ConnectionManager.class);
-            configurator.configureObjects(Set.of(container.getBean(ReportService.class), container.getBean(BookRequestFullfilmentService.class)));
-
+            configurator.configureObjects(Set.of(container.getBean(ReportService.class), container.getBean(BookRequestFullfilmentService.class), container.getBean(OrderService.class), container.getBean(ConnectionManager.class)));
             logger.info("Configuration loaded");
+
             logger.info("Launching main menu...");
             final Navigator navigator = new Navigator();
 
@@ -95,7 +94,7 @@ public class Main {
         } finally {
             try {
                 logger.info("Closing Application");
-                ConnectionManager.getInstance().closeConnection();
+                container.getBean(ConnectionManager.class).closeConnection();
             } catch (Exception e) {
                 logger.warn("Error closing connection", e);
             }

@@ -1,7 +1,7 @@
-package repository.impl;
+package repository;
 
 import database.ConnectionManager;
-import domain.model.impl.Identifiable;
+import domain.model.Identifiable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,14 +22,18 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
     protected abstract void setParametersForUpdate(PreparedStatement ps, T entity) throws SQLException;
     protected abstract Long getIdFromEntity(T entity);
 
-    private final Connection connection = ConnectionManager.getInstance().getConnection();
+    private final ConnectionManager connectionManager;
+    private Connection connection;
 
-    protected BaseRepository() {}
+    protected BaseRepository(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
+    }
 
     @Override
     public List<T> findAll() {
         logger.debug("Fetching all records...");
         String query = "SELECT * FROM \"" + getTableName() + "\"";
+        connection = connectionManager.getConnection();
         logger.info("Execute query...");
         try(Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query)) {
@@ -51,6 +55,7 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
     @Override
     public Optional<T> findById(Long id) {
         String query = "SELECT * FROM \"" + getTableName() + "\" WHERE " + getIdColumnName() + " = ?";
+        connection = connectionManager.getConnection();
         try(PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setObject(1,id);
             ResultSet rs = ps.executeQuery();
@@ -69,6 +74,7 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
     @Override
     public T save(T entity) {
         String query = "INSERT INTO \"" + getTableName() + "\" (" + getColumnNames() + ") VALUES (" + genPlaceholder(getColumnCount()) + ")";
+        connection = connectionManager.getConnection();
         try (PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             setParametersForInsert(ps, entity);
@@ -92,6 +98,7 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
     @Override
     public T update(T entity) {
         String query = "UPDATE \"" + getTableName() + "\" SET " + genSetClause() +  " WHERE " + getIdColumnName() + " = ?";
+        connection = connectionManager.getConnection();
 
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             setParametersForUpdate(ps, entity);
@@ -113,6 +120,8 @@ public abstract class BaseRepository<T extends Identifiable> implements Reposito
     @Override
     public void delete(Long id) {
         String query = "DELETE FROM \"" + getTableName() + "\" WHERE " + getIdColumnName() + " = ?";
+        connection = connectionManager.getConnection();
+
         try (PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setObject(1,id);
             int rowsAffected = ps.executeUpdate();

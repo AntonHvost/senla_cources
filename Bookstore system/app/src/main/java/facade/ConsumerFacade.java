@@ -2,7 +2,7 @@ package facade;
 
 import di.annotation.Component;
 import di.annotation.Inject;
-import domain.model.Consumer;
+import domain.model.impl.Consumer;
 import service.ConsumerService;
 import service.IOService;
 import io.csv.converter.ConsumerCSVConverter;

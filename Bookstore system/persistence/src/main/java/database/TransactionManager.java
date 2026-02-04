@@ -9,11 +9,16 @@ import java.sql.SQLException;
 @Component
 public class TransactionManager {
 
+    private final ConnectionManager connectionManager;
+    private Connection connection;
+
     @Inject
-    public TransactionManager() {}
+    public TransactionManager(ConnectionManager connectionManager) {
+        this.connectionManager = connectionManager;
+    }
 
     public void beginTransaction() {
-        Connection connection = ConnectionManager.getInstance().getConnection();
+        this.connection = connectionManager.getConnection();
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
@@ -22,7 +27,6 @@ public class TransactionManager {
     }
 
     public void commitTransaction() {
-        Connection connection = ConnectionManager.getInstance().getConnection();
         try {
             connection.commit();
             connection.setAutoCommit(true);
@@ -32,7 +36,6 @@ public class TransactionManager {
     }
 
     public void rollbackTransaction() {
-        Connection connection = ConnectionManager.getInstance().getConnection();
         try {
             System.out.println("Rolling back");
             connection.rollback();

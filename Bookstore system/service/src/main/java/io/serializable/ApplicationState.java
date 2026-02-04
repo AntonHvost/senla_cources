@@ -1,10 +1,9 @@
 package io.serializable;
 
-import domain.model.Book;
-import domain.model.BookRequest;
-import domain.model.Consumer;
-import domain.model.Order;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import domain.model.impl.Book;
+import domain.model.impl.BookRequest;
+import domain.model.impl.Consumer;
+import domain.model.impl.Order;
 
 import java.util.ArrayList;
 import java.util.List;

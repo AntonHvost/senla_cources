@@ -2,8 +2,8 @@ package service;
 
 import di.annotation.Component;
 import di.annotation.Inject;
-import domain.model.Book;
-import repository.BookRepository;
+import domain.model.impl.Book;
+import repository.impl.BookRepository;
 import enums.BookStatus;
 
 import org.slf4j.Logger;

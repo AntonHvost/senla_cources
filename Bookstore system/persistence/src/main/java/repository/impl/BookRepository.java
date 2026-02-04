@@ -1,9 +1,11 @@
-package repository;
+package repository.impl;
 
+import database.ConnectionManager;
 import di.annotation.Component;
-import domain.model.Book;
+import di.annotation.Inject;
+import domain.model.impl.Book;
 import enums.BookStatus;
-import repository.impl.BaseRepository;
+import repository.BaseRepository;
 
 import java.sql.*;
 
@@ -21,9 +23,10 @@ public class BookRepository extends BaseRepository<Book> {
     private static final String COL_PRICE = "price";
     private static final String COL_STATUS = "status";
 
-
-
-    public BookRepository() {}
+    @Inject
+    public BookRepository(ConnectionManager connectionManager) {
+        super(connectionManager);
+    }
 
     @Override
     protected String getTableName() {

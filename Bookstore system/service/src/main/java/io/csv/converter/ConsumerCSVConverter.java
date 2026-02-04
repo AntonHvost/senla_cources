@@ -1,6 +1,6 @@
 package io.csv.converter;
 
-import domain.model.Consumer;
+import domain.model.impl.Consumer;
 import io.csv.CsvConverter;
 
 public class ConsumerCSVConverter implements CsvConverter<Consumer> {

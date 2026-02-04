@@ -1,10 +1,12 @@
-package repository;
+package repository.impl;
 
 
+import database.ConnectionManager;
 import di.annotation.Component;
-import domain.model.Order;
+import di.annotation.Inject;
+import domain.model.impl.Order;
 import enums.OrderStatus;
-import repository.impl.BaseRepository;
+import repository.BaseRepository;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,7 +27,10 @@ public class OrderRepository extends BaseRepository<Order> {
     private static final String COL_TOTAL_PRICE = "total_price";
     private static final String COL_STATUS = "status";
 
-    public OrderRepository () {}
+    @Inject
+    public OrderRepository (ConnectionManager connectionManager) {
+        super(connectionManager);
+    }
 
     @Override
     protected String getTableName() {

@@ -2,8 +2,8 @@ package ui.view;
 
 import di.annotation.Component;
 import di.annotation.Inject;
-import domain.model.Consumer;
-import domain.model.Order;
+import domain.model.impl.Consumer;
+import domain.model.impl.Order;
 import dto.OrderItemSummary;
 import dto.OrderSummary;
 import enums.OrderStatus;

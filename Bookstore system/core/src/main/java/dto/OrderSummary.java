@@ -1,8 +1,8 @@
 package dto;
 
 import enums.OrderStatus;
-import domain.model.Consumer;
-import domain.model.Order;
+import domain.model.impl.Consumer;
+import domain.model.impl.Order;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

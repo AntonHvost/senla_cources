@@ -1,9 +1,9 @@
 package io;
 
-import repository.BookRepository;
-import repository.BookRequestRepository;
-import repository.ConsumerRepository;
-import repository.OrderRepository;
+import repository.impl.BookRepository;
+import repository.impl.BookRequestRepository;
+import repository.impl.ConsumerRepository;
+import repository.impl.OrderRepository;
 import io.serializable.ApplicationState;
 import io.serializable.SerializableManager;
 

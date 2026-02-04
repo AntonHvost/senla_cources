@@ -1,7 +1,7 @@
 package dto;
 
 import enums.BookStatus;
-import domain.model.Book;
+import domain.model.impl.Book;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

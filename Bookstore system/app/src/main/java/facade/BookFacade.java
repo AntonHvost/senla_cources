@@ -2,7 +2,7 @@ package facade;
 
 import di.annotation.Component;
 import di.annotation.Inject;
-import domain.model.Book;
+import domain.model.impl.Book;
 import service.BookInventoryService;
 import service.IOService;
 import io.csv.converter.BookCsvConverter;

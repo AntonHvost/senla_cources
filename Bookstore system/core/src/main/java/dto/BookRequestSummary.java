@@ -1,7 +1,7 @@
 package dto;
 
-import domain.model.Book;
-import domain.model.BookRequest;
+import domain.model.impl.Book;
+import domain.model.impl.BookRequest;
 
 import java.util.List;
 
