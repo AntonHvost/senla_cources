@@ -6,10 +6,17 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @JsonAutoDetect
+
+@Entity
+@Table(name = "book", schema = "public")
 public class Book implements Identifiable {
     private Long id;
     private String title;
@@ -31,6 +38,8 @@ public class Book implements Identifiable {
     }
 
     @Override
+    @Id
+    @Column(name = "id")
     public Long getId() {
         return id;
     }
@@ -40,26 +49,32 @@ public class Book implements Identifiable {
         this.id = id;
     }
 
+    @Column(name = "title")
     public String getTitle() {
         return title;
     }
 
+    @Column(name = "author")
     public String getAuthor() {
         return author;
     }
 
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
 
+    @Column(name = "publish_date")
     public LocalDate getPublishDate() {
         return publishDate;
     }
 
+    @Column(name = "price")
     public BigDecimal getPrice() {
         return price;
     }
 
+    @Column(name = "status")
     public BookStatus getStatus() {
         return status;
     }

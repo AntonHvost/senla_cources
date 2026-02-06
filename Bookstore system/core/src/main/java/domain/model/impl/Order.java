@@ -6,12 +6,15 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @JsonAutoDetect
+@Entity
+@Table(name = "order")
 public class Order implements Identifiable {
     private Long id;
     private Long consumerId;
@@ -39,31 +42,39 @@ public class Order implements Identifiable {
     }
 
     @Override
+    @Id
     public Long getId() {
         return id;
     }
 
+    @Column(name = "status")
     public OrderStatus getOrderStatus() {
         return orderStatus;
     }
     @JsonIgnore
+    @Column(name = "created_at")
     public LocalDateTime getCreatedAtDate() {
         return createdAt;
     }
     @JsonIgnore
+    @Column(name = "completed_at")
     public LocalDateTime getCompletedAtDate() {
         return completedAt;
     }
 
-
+    @Column(name = "total_price")
     public BigDecimal getTotalPrice() {
         return totalPrice;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
     public List<OrderItem> getOrderItemsList() {
         return orderItemsList;
     }
 
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "consumer_id")
     public Long getConsumerId() {
         return consumerId;
     }

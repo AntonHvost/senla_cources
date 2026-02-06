@@ -5,9 +5,12 @@ import enums.RequestStatus;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @JsonAutoDetect
+@Entity
+@Table(name = "book_request")
 public class BookRequest implements Identifiable {
     private Long id;
     private Long reqBookId;
@@ -28,6 +31,8 @@ public class BookRequest implements Identifiable {
         this.status = RequestStatus.PENDING;
     }
     @Override
+    @Id
+    @Column(name = "id")
     public Long getId() {
         return id;
     }
@@ -37,24 +42,31 @@ public class BookRequest implements Identifiable {
         this.id = id;
     }
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "book_id")
     public Long getReqBookId () {
         return reqBookId;
     }
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "order_id")
+    public Long getRelatedOrderId() {
+        return relatedOrderId;
+    }
+
+    @Column(name = "create_at")
     public LocalDateTime getRequestDate () {
         return requestDate;
     }
 
+    @Column(name = "delivery_date")
     public LocalDateTime getDeliveryDate () {
         return deliveryDate;
     }
 
+    @Column(name = "status")
     public RequestStatus getStatus() {
         return status;
-    }
-
-    public Long getRelatedOrderId() {
-        return relatedOrderId;
     }
 
     public void setReqBookId(Long reqBookId) {

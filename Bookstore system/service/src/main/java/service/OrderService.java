@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import database.TransactionManager;
+import util.TransactionManager;
 import di.annotation.Component;
 import di.annotation.Inject;
 import domain.model.impl.Consumer;

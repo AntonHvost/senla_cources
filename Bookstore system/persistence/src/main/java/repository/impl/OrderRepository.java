@@ -1,7 +1,7 @@
 package repository.impl;
 
 
-import database.ConnectionManager;
+import util.ConnectionManager;
 import di.annotation.Component;
 import di.annotation.Inject;
 import domain.model.impl.Order;

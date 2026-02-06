@@ -1,7 +1,7 @@
 package service;
 
 import config.ConfigProperty;
-import database.TransactionManager;
+import util.TransactionManager;
 import di.annotation.Component;
 import di.annotation.Inject;
 import domain.model.impl.BookRequest;

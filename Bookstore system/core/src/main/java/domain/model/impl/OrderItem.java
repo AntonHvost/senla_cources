@@ -3,7 +3,11 @@ package domain.model.impl;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import domain.model.Identifiable;
 
+import javax.persistence.*;
+
 @JsonAutoDetect
+@Entity
+@Table(name = "order_item")
 public class OrderItem implements Identifiable {
     private Long id;
     private Long orderId;
@@ -21,17 +25,23 @@ public class OrderItem implements Identifiable {
     }
 
     @Override
+    @Id
     public Long getId() {
         return id;
     }
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "order_id")
     public Long getOrderId() {
         return orderId;
     }
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "book_id")
     public Long getBookId() {
         return bookId;
     }
 
+    @Column(name = "quantity")
     public int getQuantity() {
         return quantity;
     }

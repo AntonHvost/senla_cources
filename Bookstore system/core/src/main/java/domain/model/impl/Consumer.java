@@ -3,7 +3,14 @@ package domain.model.impl;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import domain.model.Identifiable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 @JsonAutoDetect
+@Entity
+@Table(name = "consumer")
 public class Consumer implements Identifiable {
     private Long id;
     private String name;
@@ -19,6 +26,7 @@ public class Consumer implements Identifiable {
     }
 
     @Override
+    @Id
     public Long getId() {
         return id;
     }
@@ -28,14 +36,17 @@ public class Consumer implements Identifiable {
         this.id = id;
     }
 
+    @Column(name = "name")
     public String getName() {
         return name;
     }
 
+    @Column(name = "phone")
     public String getPhone() {
         return phone;
     }
 
+    @Column(name = "email")
     public String getEmail() {
         return email;
     }

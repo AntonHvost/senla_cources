@@ -1,6 +1,6 @@
 package repository;
 
-import database.ConnectionManager;
+import util.ConnectionManager;
 import domain.model.Identifiable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

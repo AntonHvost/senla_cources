@@ -1,4 +1,4 @@
-package database;
+package util;
 
 import di.annotation.Component;
 import di.annotation.Inject;

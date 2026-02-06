@@ -11,7 +11,6 @@
 
     <artifactId>core</artifactId>
     <packaging>jar</packaging>
-
     <dependencies>
         <dependency>
             <groupId>com.fasterxml.jackson.datatype</groupId>
@@ -20,6 +19,18 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

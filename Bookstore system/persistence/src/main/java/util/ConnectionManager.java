@@ -1,4 +1,4 @@
-package database;
+package util;
 
 import config.ConfigProperty;
 import di.annotation.Component;

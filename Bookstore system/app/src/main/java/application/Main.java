@@ -1,8 +1,8 @@
 package application;
 
 import config.Configurator;
-import database.ConnectionManager;
-import database.TransactionManager;
+import util.ConnectionManager;
+import util.TransactionManager;
 import di.DIContainer;
 
 import io.serializable.SerializableManager;
