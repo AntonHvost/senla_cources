@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @JsonAutoDetect
 @Entity
@@ -43,7 +44,10 @@ public class Order implements Identifiable {
 
     @Override
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
+    @SequenceGenerator(name = "order_seq",
+    sequenceName = "order_id_seq",
+    allocationSize = 1)
     public Long getId() {
         return id;
     }
@@ -75,7 +79,6 @@ public class Order implements Identifiable {
         return orderItemsList;
     }
 
-    //@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @Column(name = "consumer_id")
     public Long getConsumerId() {
         return consumerId;

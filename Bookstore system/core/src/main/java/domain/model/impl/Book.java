@@ -36,7 +36,10 @@ public class Book implements Identifiable {
 
     @Override
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_seq")
+    @SequenceGenerator(name = "book_seq",
+            sequenceName = "book_id_seq",
+            allocationSize = 1)
     @Column(name = "id")
     public Long getId() {
         return id;

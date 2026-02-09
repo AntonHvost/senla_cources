@@ -26,17 +26,19 @@ public class OrderItem implements Identifiable {
 
     @Override
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_item_seq")
+    @SequenceGenerator(name = "order_item_seq",
+            sequenceName = "order_item_id_seq",
+            allocationSize = 1)
     public Long getId() {
         return id;
     }
-    //@ManyToOne(cascade = CascadeType.ALL)
+
     @Column(name = "order_id")
     public Long getOrderId() {
         return orderId;
     }
 
-    //@ManyToOne(cascade = CascadeType.ALL)
     @Column(name = "book_id")
     public Long getBookId() {
         return bookId;

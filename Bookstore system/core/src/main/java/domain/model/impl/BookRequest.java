@@ -32,7 +32,10 @@ public class BookRequest implements Identifiable {
     }
     @Override
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_request_seq")
+    @SequenceGenerator(name = "book_request_seq",
+            sequenceName = "book_request_id_seq",
+            allocationSize = 1)
     @Column(name = "id")
     public Long getId() {
         return id;
@@ -43,13 +46,11 @@ public class BookRequest implements Identifiable {
         this.id = id;
     }
 
-    //@OneToMany(cascade = CascadeType.ALL)
     @Column(name = "book_id")
     public Long getReqBookId () {
         return reqBookId;
     }
 
-    //@OneToMany(cascade = CascadeType.ALL)
     @Column(name = "order_id")
     public Long getRelatedOrderId() {
         return relatedOrderId;

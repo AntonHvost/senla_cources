@@ -24,7 +24,10 @@ public class Consumer implements Identifiable {
 
     @Override
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "consumer_seq")
+    @SequenceGenerator(name = "consumer_seq",
+            sequenceName = "consumer_id_seq",
+            allocationSize = 1)
     public Long getId() {
         return id;
     }
