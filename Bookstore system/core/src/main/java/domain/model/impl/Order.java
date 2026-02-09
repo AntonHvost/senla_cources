@@ -14,7 +14,7 @@ import java.util.List;
 
 @JsonAutoDetect
 @Entity
-@Table(name = "order")
+@Table(name = "`order`")
 public class Order implements Identifiable {
     private Long id;
     private Long consumerId;
@@ -47,7 +47,8 @@ public class Order implements Identifiable {
         return id;
     }
 
-    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(20)",name = "status")
     public OrderStatus getOrderStatus() {
         return orderStatus;
     }
@@ -67,14 +68,14 @@ public class Order implements Identifiable {
         return totalPrice;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
+    @Transient
+    //@OneToMany(mappedBy = "order",fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     public List<OrderItem> getOrderItemsList() {
         return orderItemsList;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "consumer_id")
+    //@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Column(name = "consumer_id")
     public Long getConsumerId() {
         return consumerId;
     }

@@ -1,8 +1,7 @@
 package application;
 
 import config.Configurator;
-import util.ConnectionManager;
-import util.TransactionManager;
+import util.HibernateUtil;
 import di.DIContainer;
 
 import io.serializable.SerializableManager;
@@ -58,14 +57,12 @@ public class Main {
                     OrderView.class,
                     ReportView.class,
                     ConsumerView.class,
-                    SerializableManager.class,
-                    TransactionManager.class,
-                    ConnectionManager.class
+                    SerializableManager.class
             ));
             logger.debug("DI Container initialized with beans");
 
             logger.info("Configured Services...");
-            configurator.configureObjects(Set.of(container.getBean(ReportService.class), container.getBean(BookRequestFullfilmentService.class), container.getBean(OrderService.class), container.getBean(ConnectionManager.class)));
+            configurator.configureObjects(Set.of(container.getBean(ReportService.class), container.getBean(BookRequestFullfilmentService.class), container.getBean(OrderService.class)));
             logger.info("Configuration loaded");
 
             logger.info("Launching main menu...");
@@ -94,8 +91,8 @@ public class Main {
         } finally {
             try {
                 logger.info("Closing Application");
-                container.getBean(ConnectionManager.class).closeConnection();
             } catch (Exception e) {
+                HibernateUtil.closeSession();
                 logger.warn("Error closing connection", e);
             }
             logger.info("Application closed correctly");

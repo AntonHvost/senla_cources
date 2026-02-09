@@ -6,10 +6,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -54,9 +51,17 @@ public class Book implements Identifiable {
         return title;
     }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     @Column(name = "author")
     public String getAuthor() {
         return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
     @Column(name = "description")
@@ -64,9 +69,17 @@ public class Book implements Identifiable {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Column(name = "publish_date")
     public LocalDate getPublishDate() {
         return publishDate;
+    }
+
+    public void setPublishDate(LocalDate publishDate) {
+        this.publishDate = publishDate;
     }
 
     @Column(name = "price")
@@ -74,38 +87,24 @@ public class Book implements Identifiable {
         return price;
     }
 
-    @Column(name = "status")
-    public BookStatus getStatus() {
-        return status;
-    }
-
-    @JsonIgnore
-    public boolean isAvailable(){
-        return status == BookStatus.AVAILABLE;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setPublishDate(LocalDate publishDate) {
-        this.publishDate = publishDate;
-    }
-
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(20)",name = "status")
+    public BookStatus getStatus() {
+        return status;
+    }
+
     public void setStatus(BookStatus status) {
         this.status = status;
+    }
+
+    @Transient
+    @JsonIgnore
+    public boolean isAvailable(){
+        return status == BookStatus.AVAILABLE;
     }
 
 }

@@ -42,14 +42,14 @@ public class BookRequest implements Identifiable {
         this.id = id;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "book_id")
+    //@OneToMany(cascade = CascadeType.ALL)
+    @Column(name = "book_id")
     public Long getReqBookId () {
         return reqBookId;
     }
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "order_id")
+    //@OneToMany(cascade = CascadeType.ALL)
+    @Column(name = "order_id")
     public Long getRelatedOrderId() {
         return relatedOrderId;
     }
@@ -64,7 +64,8 @@ public class BookRequest implements Identifiable {
         return deliveryDate;
     }
 
-    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(20)",name = "status")
     public RequestStatus getStatus() {
         return status;
     }

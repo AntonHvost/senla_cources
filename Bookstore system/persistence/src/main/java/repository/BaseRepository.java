@@ -1,149 +1,42 @@
 package repository;
 
-import util.ConnectionManager;
 import domain.model.Identifiable;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import util.HibernateUtil;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class BaseRepository<T extends Identifiable> implements Repository<T> {
+public abstract class BaseRepository<T extends Identifiable, PK extends Serializable> implements Repository<T, PK> {
 
-    private static final Logger logger = LoggerFactory.getLogger(BaseRepository.class);
+    protected final Class<T> type;
 
-    protected abstract String getTableName();
-    protected abstract String getColumnNames();
-    protected abstract String getIdColumnName();
-    protected abstract T mapResultSetToEntity(ResultSet rs) throws SQLException;
-    protected abstract void setParametersForInsert(PreparedStatement ps, T entity) throws SQLException;
-    protected abstract void setParametersForUpdate(PreparedStatement ps, T entity) throws SQLException;
-    protected abstract Long getIdFromEntity(T entity);
-
-    private final ConnectionManager connectionManager;
-    private Connection connection;
-
-    protected BaseRepository(ConnectionManager connectionManager) {
-        this.connectionManager = connectionManager;
+    public BaseRepository(Class<T> type) {
+        this.type = type;
     }
 
     @Override
     public List<T> findAll() {
-        logger.debug("Fetching all records...");
-        String query = "SELECT * FROM \"" + getTableName() + "\"";
-        connection = connectionManager.getConnection();
-        logger.info("Execute query...");
-        try(Statement stmt = connection.createStatement();
-            ResultSet rs = stmt.executeQuery(query)) {
-
-            List<T> list = new ArrayList<>();
-
-            while (rs.next()){
-                list.add(mapResultSetToEntity(rs));
-            }
-            logger.info("Results fetched");
-            return list;
-        } catch (SQLException e){
-            logger.error(e.getMessage(), e);
-            e.printStackTrace();
-        }
-        return List.of();
+        return HibernateUtil.getSession().createCriteria(type).list();
     }
 
     @Override
-    public Optional<T> findById(Long id) {
-        String query = "SELECT * FROM \"" + getTableName() + "\" WHERE " + getIdColumnName() + " = ?";
-        connection = connectionManager.getConnection();
-        try(PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setObject(1,id);
-            ResultSet rs = ps.executeQuery();
-            if(rs.next()){
-                return Optional.of(mapResultSetToEntity(rs));
-            } else {
-                return Optional.empty();
-            }
-
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-        return Optional.empty();
+    public Optional<T> findById(PK id) {
+        return Optional.ofNullable(HibernateUtil.getSession().load(type, id));
     }
 
     @Override
-    public T save(T entity) {
-        String query = "INSERT INTO \"" + getTableName() + "\" (" + getColumnNames() + ") VALUES (" + genPlaceholder(getColumnCount()) + ")";
-        connection = connectionManager.getConnection();
-        try (PreparedStatement ps = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-
-            setParametersForInsert(ps, entity);
-            int rowsAffected = ps.executeUpdate();
-
-            if(rowsAffected > 0) {
-                ResultSet rs = ps.getGeneratedKeys();
-                if(rs.next()) {
-                    entity.setId(rs.getLong(1));
-                }
-            }
-
-            return entity;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public PK save(T entity) {
+        return (PK) HibernateUtil.getSession().save(entity);
     }
 
     @Override
-    public T update(T entity) {
-        String query = "UPDATE \"" + getTableName() + "\" SET " + genSetClause() +  " WHERE " + getIdColumnName() + " = ?";
-        connection = connectionManager.getConnection();
-
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            setParametersForUpdate(ps, entity);
-            ps.setObject(getColumnCount() + 1, getIdFromEntity(entity));
-
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected == 0) {
-                throw new RuntimeException("No rows affected");
-            }
-
-            return entity;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public void update(T entity) {
+        HibernateUtil.getSession().update(entity);
     }
 
     @Override
-    public void delete(Long id) {
-        String query = "DELETE FROM \"" + getTableName() + "\" WHERE " + getIdColumnName() + " = ?";
-        connection = connectionManager.getConnection();
-
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setObject(1,id);
-            int rowsAffected = ps.executeUpdate();
-
-            if (rowsAffected == 0) {
-                throw new RuntimeException("No rows affected");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected String genPlaceholder(int count) {
-        if (count <= 0) return "";
-        return "?, ".repeat(count - 1) + "?";
-    }
-
-    protected String genSetClause() {
-        return "";
-    }
-
-    protected int getColumnCount(){
-        return 0;
+    public void delete(PK id) {
+        HibernateUtil.getSession().delete(id);
     }
 }

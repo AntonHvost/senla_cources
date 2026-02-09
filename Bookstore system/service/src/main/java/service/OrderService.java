@@ -1,5 +1,6 @@
 package service;
 
+import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
@@ -7,7 +8,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import util.TransactionManager;
+import util.HibernateUtil;
 import di.annotation.Component;
 import di.annotation.Inject;
 import domain.model.impl.Consumer;
@@ -28,7 +29,6 @@ public class OrderService {
     private final ConsumerService consumerService;
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
-    private final TransactionManager transactionManager;
 
 
     @Inject
@@ -36,22 +36,21 @@ public class OrderService {
                         BookInventoryService bookInventoryService,
                         ConsumerService consumerService,
                         OrderRepository orderRepository,
-                        OrderItemRepository orderItemRepository,
-                        TransactionManager transactionManager) {
+                        OrderItemRepository orderItemRepository
+    ) {
         this.requestService = requestService;
         this.bookInventoryService = bookInventoryService;
         this.consumerService = consumerService;
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
-        this.transactionManager = transactionManager;
     }
 
     public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
         logger.info("Creating new order for consumer: {}", consumer.getName());
         logger.debug("Order items: {} books", bookIds.length);
+        Transaction trx = HibernateUtil.getSession().beginTransaction();
+        try{
 
-        try {
-            transactionManager.beginTransaction();
             logger.debug("Transaction started for order creation");
 
             consumerService.save(consumer);
@@ -81,12 +80,12 @@ public class OrderService {
             order.setTotalPrice(calculateTotalPrice(order));
             orderRepository.update(order);
 
-            transactionManager.commitTransaction();
+            trx.commit();
             logger.info("Order ID {} created successfully with total: {}", order.getId(), order.getTotalPrice());
             return order;
 
         } catch (Exception e) {
-            transactionManager.rollbackTransaction();
+            trx.rollback();
             logger.error("Failed to create order for consumer: {}", consumer.getName(), e);
             throw new RuntimeException(e.getMessage());
         }
@@ -94,28 +93,43 @@ public class OrderService {
 
     public boolean completeOrder(Long orderId) {
         logger.info("Attempting to complete order ID: {}", orderId);
-        return orderRepository.findById(orderId)
-                .filter(order -> requestService.getRequestStatusByOrderId(orderId) == RequestStatus.FULFILLED || requestService.getRequestStatusByOrderId(orderId) == null)
-                .filter(Order::canBeCompleted)
-                .map(order ->
-                {
-                    order.setOrderStatus(OrderStatus.COMPLETED);
-                    order.setCompletedAtDate(LocalDateTime.now());
-                    orderRepository.update(order);
-                    logger.info("Order ID {} completed successfully", orderId);
-                    return true;
-                })
-                .orElse(false);
+        Transaction trx = HibernateUtil.getSession().beginTransaction();
+        try {
+            boolean result = orderRepository.findById(orderId)
+                    .filter(order -> requestService.getRequestStatusByOrderId(orderId) == RequestStatus.FULFILLED || requestService.getRequestStatusByOrderId(orderId) == null)
+                    .filter(Order::canBeCompleted)
+                    .map(order ->
+                    {
+                        order.setOrderStatus(OrderStatus.COMPLETED);
+                        order.setCompletedAtDate(LocalDateTime.now());
+                        orderRepository.update(order);
+                        logger.info("Order ID {} completed successfully", orderId);
+                        return true;
+                    })
+                    .orElse(false);
+            trx.commit();
+            return result;
+        } catch (Exception e) {
+            trx.rollback();
+            logger.error("Failed to complete order for order ID: {}", orderId, e);
+        }
+        return false;
     }
 
     public void cancelOrder(Long orderId) {
         logger.info("Cancelling order ID: {}", orderId);
-        orderRepository.findById(orderId).ifPresent(order->{
-            order.setOrderStatus(OrderStatus.CANCELLED);
-            order.setCompletedAtDate(LocalDateTime.now());
-            orderRepository.update(order);
-            logger.info("Order ID {} cancelled", orderId);
-        });
+        Transaction trx = HibernateUtil.getSession().beginTransaction();
+        try {
+            orderRepository.findById(orderId).ifPresent(order -> {
+                order.setOrderStatus(OrderStatus.CANCELLED);
+                order.setCompletedAtDate(LocalDateTime.now());
+                orderRepository.update(order);
+                logger.info("Order ID {} cancelled", orderId);
+            });
+        } catch (Exception e) {
+            trx.rollback();
+            logger.error("Failed to cancel order for order ID: {}", orderId, e);
+        }
     }
 
     public Optional<Order> findOrderById(Long orderId) {

@@ -29,14 +29,14 @@ public class OrderItem implements Identifiable {
     public Long getId() {
         return id;
     }
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "order_id")
+    //@ManyToOne(cascade = CascadeType.ALL)
+    @Column(name = "order_id")
     public Long getOrderId() {
         return orderId;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinTable(name = "book_id")
+    //@ManyToOne(cascade = CascadeType.ALL)
+    @Column(name = "book_id")
     public Long getBookId() {
         return bookId;
     }

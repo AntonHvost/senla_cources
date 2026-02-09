@@ -7,10 +7,11 @@ import org.hibernate.cfg.Configuration;
 public class HibernateUtil {
     public static final SessionFactory sessionFactory;
     private static Session session;
+
     static {
         try {
             sessionFactory = new Configuration()
-                    .configure("/resources/hibernate.cfg.xml")
+                    .configure("hibernate.cfg.xml")
                     .buildSessionFactory();
         } catch (Throwable e) {
             throw new ExceptionInInitializerError(e);
@@ -23,5 +24,11 @@ public class HibernateUtil {
         }
         session = sessionFactory.openSession();
         return session;
+    }
+
+    public static void closeSession() {
+        if (session != null && session.isOpen()) {
+            session.close();
+        }
     }
 }
