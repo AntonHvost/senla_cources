@@ -43,6 +43,7 @@ public class Order implements Identifiable {
 
     @Override
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
