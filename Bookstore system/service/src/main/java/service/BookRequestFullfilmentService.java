@@ -43,7 +43,7 @@ public class BookRequestFullfilmentService {
                 }
 
                 bookRequest.setDeliveryDate(LocalDateTime.now());
-                Long orderId = bookRequest.getRelatedOrderId();
+                Long orderId = bookRequest.getRelatedOrder().getId();
 
                 requestService.update(bookRequest);
 

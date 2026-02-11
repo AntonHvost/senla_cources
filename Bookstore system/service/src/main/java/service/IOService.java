@@ -117,12 +117,12 @@ public class IOService {
 
             List<OrderItem> orderItemList = csvService.readToCsv(itemFilename, itemConverter);
             for (OrderItem orderItem : orderItemList) {
-                Order order = orderMap.get(orderItem.getOrderId());
+                Order order = orderMap.get(orderItem.getOrder().getId());
                 if (order == null) {
-                    String msg = "Order ID " + orderItem.getOrderId() + " not found for order item ID " + orderItem.getId();
+                    String msg = "Order ID " + orderItem.getOrder().getId() + " not found for order item ID " + orderItem.getId();
                     logger.error(msg);
                     throw new RuntimeException(
-                            "Заказ с ID " + orderItem.getOrderId() + "не найден для позиции заказа" + orderItem.getId()
+                            "Заказ с ID " + orderItem.getOrder().getId() + "не найден для позиции заказа" + orderItem.getId()
                     );
                 }
                 order.addItem(orderItem);

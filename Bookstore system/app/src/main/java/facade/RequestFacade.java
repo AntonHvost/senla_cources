@@ -2,6 +2,7 @@ package facade;
 
 import di.annotation.Component;
 import di.annotation.Inject;
+import domain.model.impl.Book;
 import domain.model.impl.BookRequest;
 import io.csv.converter.BookRequestCSVConverter;
 
@@ -29,7 +30,7 @@ public class RequestFacade {
         this.ioService = ioService;
     }
 
-    public Optional<BookRequest> requestBook(Long bookId) {
+    public Optional<BookRequest> requestBook(Book bookId) {
        return Optional.of(requestService.createRequest(bookId, null));
     }
 

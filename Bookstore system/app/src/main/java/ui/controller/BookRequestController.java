@@ -2,6 +2,7 @@ package ui.controller;
 
 import di.annotation.Component;
 import di.annotation.Inject;
+import domain.model.impl.Book;
 import domain.model.impl.BookRequest;
 import dto.BookRequestSummary;
 import enums.SortByRequestBook;
@@ -21,7 +22,7 @@ public class BookRequestController {
         this.reportFacade = reportFacade;
     }
 
-    public Optional<BookRequest> createRequestBook(Long requestId) {
+    public Optional<BookRequest> createRequestBook(Book requestId) {
        return requestFacade.requestBook(requestId);
     }
 

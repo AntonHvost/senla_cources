@@ -18,7 +18,7 @@ import java.util.Locale;
 @Table(name = "`order`")
 public class Order implements Identifiable {
     private Long id;
-    private Long consumerId;
+    private Consumer consumer;
     @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
     @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -34,10 +34,10 @@ public class Order implements Identifiable {
         this.totalPrice = BigDecimal.ZERO;
     }
 
-    public Order(Long consumerId) {
+    public Order(Consumer consumer) {
         this.createdAt = LocalDateTime.now();
         this.orderStatus = OrderStatus.NEW;
-        this.consumerId = consumerId;
+        this.consumer = consumer;
         this.orderItemsList = new ArrayList<>();
         this.totalPrice = BigDecimal.ZERO;
     }
@@ -73,15 +73,16 @@ public class Order implements Identifiable {
         return totalPrice;
     }
 
-    @Transient
-    //@OneToMany(mappedBy = "order",fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+
+    @OneToMany(mappedBy = "order",fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     public List<OrderItem> getOrderItemsList() {
         return orderItemsList;
     }
 
-    @Column(name = "consumer_id")
-    public Long getConsumerId() {
-        return consumerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "consumer_id", nullable = false)
+    public Consumer getConsumer() {
+        return consumer;
     }
 
     @Override
@@ -102,8 +103,8 @@ public class Order implements Identifiable {
         this.totalPrice = totalPrice;
     }
 
-    public void setConsumerId(Long consumerId) {
-        this.consumerId = consumerId;
+    public void setConsumer(Consumer consumer) {
+        this.consumer = consumer;
     }
     @JsonIgnore
     public void setCompletedAtDate(LocalDateTime completedAt) {

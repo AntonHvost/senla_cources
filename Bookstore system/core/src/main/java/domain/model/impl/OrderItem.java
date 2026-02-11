@@ -10,17 +10,17 @@ import javax.persistence.*;
 @Table(name = "order_item")
 public class OrderItem implements Identifiable {
     private Long id;
-    private Long orderId;
-    private Long bookId;
+    private Order order;
+    private Book book;
     private int quantity;
 
 
     public OrderItem() {}
 
-    public OrderItem(Long id,Long orderId, Long bookId, int quantity) {
+    public OrderItem(Long id,Order order, Book book, int quantity) {
         this.id = id;
-        this.orderId = orderId;
-        this.bookId = bookId;
+        this.order = order;
+        this.book = book;
         this.quantity = quantity;
     }
 
@@ -34,14 +34,16 @@ public class OrderItem implements Identifiable {
         return id;
     }
 
-    @Column(name = "order_id")
-    public Long getOrderId() {
-        return orderId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
+    public Order getOrder() {
+        return order;
     }
 
-    @Column(name = "book_id")
-    public Long getBookId() {
-        return bookId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    public Book getBook() {
+        return book;
     }
 
     @Column(name = "quantity")
@@ -53,12 +55,12 @@ public class OrderItem implements Identifiable {
         this.id = id;
     }
 
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public void setOrder(Order order) {
+        this.order = order;
     }
 
-    public void setBookId(Long bookId) {
-        this.bookId = bookId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public void setQuantity(int quantity) {

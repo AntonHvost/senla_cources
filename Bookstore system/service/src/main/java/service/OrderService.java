@@ -1,10 +1,13 @@
 package service;
 
+import domain.model.impl.Book;
+import enums.BookStatus;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +48,65 @@ public class OrderService {
         this.orderItemRepository = orderItemRepository;
     }
 
+    private BigDecimal calculateTotalPrice(Order order) {
+        BigDecimal totalPrice;
+        totalPrice = order.getOrderItemsList().stream()
+                .map(orderItem -> orderItem.getBook().getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        logger.debug("Calculated total price: {}", totalPrice);
+        return totalPrice;
+    }
+
+    /*private BigDecimal calculateTotalPrice(Order order) {
+        BigDecimal totalPrice;
+        totalPrice = order.getOrderItemsList().stream()
+                .map(orderItem ->
+                        bookInventoryService.findBookById(orderItem.getBookId())
+                            .map(book -> book.getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())))
+                            .orElse(BigDecimal.ZERO)
+                ).reduce(BigDecimal.ZERO, BigDecimal::add);
+        logger.debug("Calculated total price: {}", totalPrice);
+        return totalPrice;
+    }*/
+
     public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
+        logger.info("Creating new order for consumer: {}", consumer.getName());
+        logger.debug("Order items: {} books", bookIds.length);
+        Transaction trx = HibernateUtil.getSession().beginTransaction();
+        try {
+            logger.debug("Transaction started for order creation");
+            Order order = new Order(consumer);
+            orderRepository.save(order);
+            logger.debug("Order ID {} created", order.getId());
+
+            List<Book> books = bookInventoryService.getBooks();
+
+            for(int i = 0; i < bookIds.length; i++){
+                OrderItem orderItem = new OrderItem();
+                orderItem.setBook(books.get(i));
+                orderItem.setQuantity(quantities[i]);
+
+                if(!books.get(i).isAvailable()){
+                    logger.warn("Book ID {} is unavailable, creating request", books.get(i).getId());
+                    requestService.createRequest(books.get(i), order);
+                }
+
+                order.addItem(orderItem);
+            }
+            order.setTotalPrice(calculateTotalPrice(order));
+            orderRepository.update(order);
+            trx.commit();
+
+            return order;
+
+        } catch (Exception e) {
+            trx.rollback();
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    /*public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
         logger.info("Creating new order for consumer: {}", consumer.getName());
         logger.debug("Order items: {} books", bookIds.length);
         Transaction trx = HibernateUtil.getSession().beginTransaction();
@@ -89,7 +150,7 @@ public class OrderService {
             logger.error("Failed to create order for consumer: {}", consumer.getName(), e);
             throw new RuntimeException(e.getMessage());
         }
-    }
+    }*/
 
     public boolean completeOrder(Long orderId) {
         logger.info("Attempting to complete order ID: {}", orderId);
@@ -156,18 +217,6 @@ public class OrderService {
             orderRepository.update(order);
             logger.debug("Order ID {} status updated", id);
         });
-    }
-
-    private BigDecimal calculateTotalPrice(Order order) {
-        BigDecimal totalPrice;
-        totalPrice = order.getOrderItemsList().stream()
-                .map(orderItem ->
-                        bookInventoryService.findBookById(orderItem.getBookId())
-                            .map(book -> book.getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())))
-                            .orElse(BigDecimal.ZERO)
-                ).reduce(BigDecimal.ZERO, BigDecimal::add);
-        logger.debug("Calculated total price: {}", totalPrice);
-        return totalPrice;
     }
 
     public void saveOrder(Order order) {

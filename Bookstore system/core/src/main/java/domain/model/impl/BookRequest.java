@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Table(name = "book_request")
 public class BookRequest implements Identifiable {
     private Long id;
-    private Long reqBookId;
-    private Long relatedOrderId;
+    private Book reqBook;
+    private Order relatedOrder;
     @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime requestDate;
     @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
@@ -23,9 +23,9 @@ public class BookRequest implements Identifiable {
 
     public  BookRequest() {}
 
-    public BookRequest(Long bookId, Long orderId) {
-        this.reqBookId = bookId;
-        this.relatedOrderId = orderId;
+    public BookRequest(Book book, Order order) {
+        this.reqBook = book;
+        this.relatedOrder = order;
         this.requestDate = LocalDateTime.now();
         this.deliveryDate = null;
         this.status = RequestStatus.PENDING;
@@ -46,14 +46,16 @@ public class BookRequest implements Identifiable {
         this.id = id;
     }
 
-    @Column(name = "book_id")
-    public Long getReqBookId () {
-        return reqBookId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "book_id")
+    public Book getReqBook () {
+        return reqBook;
     }
 
-    @Column(name = "order_id")
-    public Long getRelatedOrderId() {
-        return relatedOrderId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id")
+    public Order getRelatedOrder() {
+        return relatedOrder;
     }
 
     @Column(name = "create_at")
@@ -72,12 +74,12 @@ public class BookRequest implements Identifiable {
         return status;
     }
 
-    public void setReqBookId(Long reqBookId) {
-        this.reqBookId = reqBookId;
+    public void setReqBook(Book reqBook) {
+        this.reqBook = reqBook;
     }
 
-    public void setRelatedOrderId(Long relatedOrderId) {
-        this.relatedOrderId = relatedOrderId;
+    public void setRelatedOrder(Order relatedOrder) {
+        this.relatedOrder = relatedOrder;
     }
 
     public void setRequestDate(LocalDateTime requestDate) {

@@ -14,8 +14,8 @@ public class OrderItemCsvConverter implements CsvConverter<OrderItem> {
     public String toCsvRow(OrderItem entity) {
         return String.join(",",
                 String.valueOf(entity.getId()),
-                String.valueOf(entity.getOrderId()),
-                String.valueOf(entity.getBookId()),
+                String.valueOf(entity.getOrder().getId()),
+                String.valueOf(entity.getBook().getId()),
                 String.valueOf(entity.getQuantity())
                 );
     }
@@ -29,8 +29,8 @@ public class OrderItemCsvConverter implements CsvConverter<OrderItem> {
         OrderItem item = new OrderItem();
 
         item.setId(Long.parseLong(parts[0]));
-        item.setOrderId(Long.parseLong(parts[1]));
-        item.setBookId(Long.parseLong(parts[2]));
+        //item.setOrderId(Long.parseLong(parts[1]));
+        //item.setBookId(Long.parseLong(parts[2]));
         item.setQuantity(Integer.parseInt(parts[3]));
 
         return item;
