@@ -1,6 +1,5 @@
 Bookstore system/.idea
 Bookstore system/.mvn
-Bookstore system/pom.xml
 Bookstore system/target/
 
 Task 9/.idea
@@ -10,3 +9,4 @@ Task 9/out/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+Bookstore system/.vscode/settings.json
