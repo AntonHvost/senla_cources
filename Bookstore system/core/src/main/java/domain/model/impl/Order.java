@@ -79,8 +79,8 @@ public class Order implements Identifiable {
         return orderItemsList;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "consumer_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "consumer_id")
     public Consumer getConsumer() {
         return consumer;
     }

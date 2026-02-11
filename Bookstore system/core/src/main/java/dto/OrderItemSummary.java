@@ -8,9 +8,9 @@ public class OrderItemSummary {
     Book book;
     int quantity;
 
-    public OrderItemSummary(OrderItem item, Book book) {
+    public OrderItemSummary(OrderItem item) {
         this.orderId = item.getOrder().getId();
-        this.book = book;
+        this.book = item.getBook();
         this.quantity = item.getQuantity();
     }
 

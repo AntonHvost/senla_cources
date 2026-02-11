@@ -1,194 +1,1093 @@
-22:21:38.031 [main] INFO  application.Main - Starting Application
-22:21:38.065 [main] DEBUG application.Main - DI Container initialized with beans
-22:21:38.065 [main] INFO  application.Main - Configured Services...
-22:21:38.075 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
-22:21:38.075 [main] INFO  database.ConnectionManager - Creating connection
-22:21:38.377 [main] INFO  database.ConnectionManager - Getting connection
-22:21:38.378 [main] INFO  database.ConnectionManager - Getting connection
-22:21:38.378 [main] INFO  database.ConnectionManager - Getting connection
-22:21:38.378 [main] INFO  database.ConnectionManager - Getting connection
-22:21:38.379 [main] INFO  database.ConnectionManager - Getting connection
-22:21:38.385 [main] DEBUG config.Configurator - Configuring 2 object
-22:21:38.390 [main] INFO  application.Main - Configuration loaded
-22:21:38.390 [main] INFO  application.Main - Launching main menu...
-22:21:38.415 [main] INFO  application.Main - Menu loaded
-22:21:54.150 [main] INFO  application.Main - Starting Application
-22:21:54.161 [main] DEBUG application.Main - DI Container initialized with beans
-22:21:54.161 [main] INFO  application.Main - Configured Services...
-22:21:54.168 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
-22:21:54.169 [main] INFO  database.ConnectionManager - Creating connection
-22:21:54.420 [main] INFO  database.ConnectionManager - Getting connection
-22:21:54.420 [main] INFO  database.ConnectionManager - Getting connection
-22:21:54.420 [main] INFO  database.ConnectionManager - Getting connection
-22:21:54.420 [main] INFO  database.ConnectionManager - Getting connection
-22:21:54.420 [main] INFO  database.ConnectionManager - Getting connection
-22:21:54.425 [main] DEBUG config.Configurator - Configuring 2 object
-22:21:54.429 [main] INFO  application.Main - Configuration loaded
-22:21:54.429 [main] INFO  application.Main - Launching main menu...
-22:21:54.446 [main] INFO  application.Main - Menu loaded
-22:22:01.266 [main] INFO  ui.view.BookView - Opened book list menu
-22:22:01.913 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
-22:22:01.913 [main] INFO  repository.impl.BaseRepository - Execute query...
-22:22:01.926 [main] INFO  repository.impl.BaseRepository - Results fetched
-22:22:07.444 [main] INFO  application.Main - Closing Application
-22:22:07.444 [main] INFO  database.ConnectionManager - Closing connection
-22:22:07.444 [main] INFO  application.Main - Application closed correctly
-22:22:22.875 [main] INFO  application.Main - Starting Application
-22:22:22.886 [main] DEBUG application.Main - DI Container initialized with beans
-22:22:22.887 [main] INFO  application.Main - Configured Services...
-22:22:22.895 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
-22:22:22.895 [main] INFO  database.ConnectionManager - Creating connection
-22:22:23.118 [main] INFO  database.ConnectionManager - Getting connection
-22:22:23.118 [main] INFO  database.ConnectionManager - Getting connection
-22:22:23.118 [main] INFO  database.ConnectionManager - Getting connection
-22:22:23.118 [main] INFO  database.ConnectionManager - Getting connection
-22:22:23.119 [main] INFO  database.ConnectionManager - Getting connection
-22:22:23.123 [main] DEBUG config.Configurator - Configuring 2 object
-22:22:23.127 [main] INFO  application.Main - Configuration loaded
-22:22:23.127 [main] INFO  application.Main - Launching main menu...
-22:22:23.142 [main] INFO  application.Main - Menu loaded
-22:22:35.348 [main] INFO  ui.view.BookView - Requesting unsold books...
-22:22:36.366 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
-22:22:36.366 [main] INFO  repository.impl.BaseRepository - Execute query...
-22:22:36.381 [main] INFO  repository.impl.BaseRepository - Results fetched
-22:22:36.381 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
-22:22:36.381 [main] INFO  repository.impl.BaseRepository - Execute query...
-22:22:36.385 [main] INFO  repository.impl.BaseRepository - Results fetched
-22:22:36.388 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
-22:22:36.388 [main] INFO  repository.impl.BaseRepository - Execute query...
-22:22:36.391 [main] INFO  repository.impl.BaseRepository - Results fetched
-22:22:36.392 [main] INFO  ui.view.BookView - Sorting option selected: DELIVERY_DATE
-22:22:36.392 [main] INFO  ui.view.BookView - Displayed 10 books
-22:41:50.922 [main] INFO  application.Main - Starting Application
-22:41:50.934 [main] DEBUG application.Main - DI Container initialized with beans
-22:41:50.934 [main] INFO  application.Main - Configured Services...
-22:41:50.943 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
-22:41:50.943 [main] INFO  database.ConnectionManager - Creating connection
-22:41:51.172 [main] INFO  database.ConnectionManager - Getting connection
-22:41:51.173 [main] INFO  database.ConnectionManager - Getting connection
-22:41:51.173 [main] INFO  database.ConnectionManager - Getting connection
-22:41:51.173 [main] INFO  database.ConnectionManager - Getting connection
-22:41:51.173 [main] INFO  database.ConnectionManager - Getting connection
-22:41:51.177 [main] DEBUG config.Configurator - Configuring 2 object
-22:41:51.181 [main] INFO  application.Main - Configuration loaded
-22:41:51.181 [main] INFO  application.Main - Launching main menu...
-22:41:51.197 [main] INFO  application.Main - Menu loaded
-22:41:54.183 [main] INFO  ui.view.BookView - Initiated book import
-22:41:55.485 [main] ERROR ui.view.BookView - Failed to import books from 'dkfjdfk.csv'
-java.lang.RuntimeException: Ошибка импорта из dkfjdfk.csv
-	at service.IOService.importEntities(IOService.java:51)
-	at facade.BookFacade.importBooksFromCSV(BookFacade.java:31)
-	at ui.controller.BookController.importBooks(BookController.java:36)
-	at ui.view.BookView.showBookImportMenu(BookView.java:140)
+10:38:22.258 [main] INFO  application.Main - Starting Application
+10:38:22.284 [main] DEBUG application.Main - DI Container initialized with beans
+10:38:22.284 [main] INFO  application.Main - Configured Services...
+10:38:22.295 [main] DEBUG config.Configurator - Configuring 3 object
+10:38:22.302 [main] INFO  application.Main - Configuration loaded
+10:38:22.302 [main] INFO  application.Main - Launching main menu...
+10:38:22.325 [main] INFO  application.Main - Menu loaded
+10:38:25.361 [main] INFO  ui.view.BookView - Opened book list menu
+10:38:26.060 [main] ERROR application.Main - Unexpected error
+java.lang.NullPointerException: Cannot invoke "java.util.List.forEach(java.util.function.Consumer)" because "info" is null
+	at ui.view.BookView.showBooksMenu(BookView.java:69)
 	at ui.domain.MenuItem.doAction(MenuItem.java:14)
 	at ui.controller.MenuController.run(MenuController.java:36)
-	at application.Main.main(Main.java:90)
-22:41:59.316 [main] INFO  application.Main - Closing Application
-22:41:59.316 [main] INFO  database.ConnectionManager - Closing connection
-22:41:59.317 [main] INFO  application.Main - Application closed correctly
-22:56:07.179 [main] INFO  application.Main - Starting Application
-22:56:07.191 [main] DEBUG application.Main - DI Container initialized with beans
-22:56:07.191 [main] INFO  application.Main - Configured Services...
-22:56:07.199 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
-22:56:07.199 [main] INFO  database.ConnectionManager - Creating connection
-22:56:07.421 [main] INFO  database.ConnectionManager - Getting connection
-22:56:07.426 [main] INFO  database.ConnectionManager - Getting connection
-22:56:07.426 [main] INFO  database.ConnectionManager - Getting connection
-22:56:07.426 [main] INFO  database.ConnectionManager - Getting connection
-22:56:07.426 [main] INFO  database.ConnectionManager - Getting connection
-22:56:07.432 [main] DEBUG config.Configurator - Configuring 2 object
-22:56:07.435 [main] INFO  application.Main - Configuration loaded
-22:56:07.435 [main] INFO  application.Main - Launching main menu...
-22:56:07.451 [main] INFO  application.Main - Menu loaded
-22:56:18.460 [main] INFO  ui.view.ReportView - Request count of completed orders for period
-22:56:27.453 [main] INFO  ui.view.ReportView - Report completed!
-22:56:27.495 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
-22:56:27.495 [main] INFO  repository.impl.BaseRepository - Execute query...
-22:56:27.508 [main] INFO  repository.impl.BaseRepository - Results fetched
-22:56:33.278 [main] INFO  application.Main - Closing Application
-22:56:33.279 [main] INFO  database.ConnectionManager - Closing connection
-22:56:33.279 [main] INFO  application.Main - Application closed correctly
-22:58:17.488 [main] INFO  application.Main - Starting Application
-22:58:17.499 [main] DEBUG application.Main - DI Container initialized with beans
-22:58:17.499 [main] INFO  application.Main - Configured Services...
-22:58:17.509 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
-22:58:17.509 [main] INFO  database.ConnectionManager - Creating connection
-22:58:17.748 [main] INFO  database.ConnectionManager - Getting connection
-22:58:17.749 [main] INFO  database.ConnectionManager - Getting connection
-22:58:17.749 [main] INFO  database.ConnectionManager - Getting connection
-22:58:17.749 [main] INFO  database.ConnectionManager - Getting connection
-22:58:17.749 [main] INFO  database.ConnectionManager - Getting connection
-22:58:17.755 [main] DEBUG config.Configurator - Configuring 2 object
-22:58:17.759 [main] INFO  application.Main - Configuration loaded
-22:58:17.759 [main] INFO  application.Main - Launching main menu...
-22:58:17.776 [main] INFO  application.Main - Menu loaded
-22:58:24.432 [main] INFO  ui.view.ReportView - Request completed orders report for period
-22:58:34.609 [main] INFO  service.ReportService - Generating completed orders report from 2025-12-20 to 2026-01-25, sorted by COMPLETE_DATE
-22:58:34.612 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
-22:58:34.612 [main] INFO  repository.impl.BaseRepository - Execute query...
-22:58:34.624 [main] INFO  repository.impl.BaseRepository - Results fetched
-22:58:34.674 [main] INFO  service.ReportService - Report generated: 1 completed orders in period
-22:58:34.674 [main] INFO  ui.view.ReportView - Found 1 completed orders in period
-22:58:53.670 [main] INFO  application.Main - Closing Application
-22:58:53.670 [main] INFO  database.ConnectionManager - Closing connection
-22:58:53.670 [main] INFO  application.Main - Application closed correctly
-23:24:20.861 [main] INFO  application.Main - Starting Application
-23:24:20.873 [main] DEBUG application.Main - DI Container initialized with beans
-23:24:20.873 [main] INFO  application.Main - Configured Services...
-23:24:20.881 [main] INFO  database.ConnectionManager - Inializing ConnectionManager
-23:24:20.881 [main] INFO  database.ConnectionManager - Creating connection
-23:24:21.094 [main] INFO  database.ConnectionManager - Getting connection
-23:24:21.100 [main] INFO  database.ConnectionManager - Getting connection
-23:24:21.100 [main] INFO  database.ConnectionManager - Getting connection
-23:24:21.100 [main] INFO  database.ConnectionManager - Getting connection
-23:24:21.100 [main] INFO  database.ConnectionManager - Getting connection
-23:24:21.104 [main] DEBUG config.Configurator - Configuring 2 object
-23:24:21.108 [main] INFO  application.Main - Configuration loaded
-23:24:21.108 [main] INFO  application.Main - Launching main menu...
-23:24:21.125 [main] INFO  application.Main - Menu loaded
-23:24:24.781 [main] INFO  ui.view.BookView - Opened book list menu
-23:24:26.542 [main] INFO  service.ReportService - Fetching book catalog, sorted by: ALPHABET
-23:24:26.544 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
-23:24:26.544 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
-23:24:26.545 [main] INFO  repository.impl.BaseRepository - Execute query...
-23:24:26.556 [main] INFO  repository.impl.BaseRepository - Results fetched
-23:24:26.557 [main] DEBUG service.ReportService - Catalog contains 10 books
-23:24:28.492 [main] INFO  ui.view.BookView - Requesting unsold books...
-23:24:29.795 [main] INFO  service.ReportService - Fetching unsold books (older than 6 months), sorted by: PRICE
-23:24:29.795 [main] DEBUG service.OrderService - Fetching all orders
-23:24:29.795 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
-23:24:29.795 [main] INFO  repository.impl.BaseRepository - Execute query...
-23:24:29.799 [main] INFO  repository.impl.BaseRepository - Results fetched
-23:24:29.799 [main] DEBUG service.RequestService - Fetching all book requests
-23:24:29.799 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
-23:24:29.799 [main] INFO  repository.impl.BaseRepository - Execute query...
-23:24:29.801 [main] INFO  repository.impl.BaseRepository - Results fetched
-23:24:29.801 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
-23:24:29.801 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
-23:24:29.801 [main] INFO  repository.impl.BaseRepository - Execute query...
-23:24:29.802 [main] INFO  repository.impl.BaseRepository - Results fetched
-23:24:29.803 [main] DEBUG service.ReportService - Found 10 unsold books
-23:24:29.803 [main] INFO  ui.view.BookView - Sorting option selected: PRICE
-23:24:29.803 [main] INFO  ui.view.BookView - Displayed 10 books
-23:24:32.476 [main] INFO  ui.view.BookView - Initiated book export
-23:24:37.673 [main] INFO  service.IOService - Exporting entities to file: book.csv
-23:24:37.673 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
-23:24:37.673 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
-23:24:37.674 [main] INFO  repository.impl.BaseRepository - Execute query...
-23:24:37.675 [main] INFO  repository.impl.BaseRepository - Results fetched
-23:24:37.675 [main] DEBUG service.IOService - Exporting 10 entities
-23:24:37.677 [main] INFO  service.IOService - Successfully exported 10 entities to 'book.csv'
-23:24:37.677 [main] INFO  ui.view.BookView - Books successfully exported to 'book.csv'
-23:24:46.685 [main] INFO  ui.view.BookRequestView - Request list of book requests
-23:24:48.151 [main] INFO  service.ReportService - Fetching book request list, sorted by: COUNT_REQUEST
-23:24:48.151 [main] DEBUG service.RequestService - Fetching all book requests
-23:24:48.151 [main] DEBUG repository.impl.BaseRepository - Fetching all records...
-23:24:48.152 [main] INFO  repository.impl.BaseRepository - Execute query...
-23:24:48.152 [main] INFO  repository.impl.BaseRepository - Results fetched
-23:24:48.155 [main] DEBUG service.BookInventoryService - Fetching book by ID: 3
-23:24:48.158 [main] DEBUG service.BookInventoryService - Fetching book by ID: 5
-23:24:48.160 [main] DEBUG service.ReportService - Fetched 2 book request summaries
-23:24:48.160 [main] INFO  ui.view.BookRequestView - Displayed 2 book requests
-23:24:56.511 [main] INFO  application.Main - Closing Application
-23:24:56.511 [main] INFO  database.ConnectionManager - Closing connection
-23:24:56.512 [main] INFO  application.Main - Application closed correctly
+	at application.Main.main(Main.java:86)
+10:48:37.989 [main] INFO  application.Main - Starting Application
+10:48:37.999 [main] DEBUG application.Main - DI Container initialized with beans
+10:48:37.999 [main] INFO  application.Main - Configured Services...
+10:48:38.009 [main] DEBUG config.Configurator - Configuring 3 object
+10:48:38.014 [main] INFO  application.Main - Configuration loaded
+10:48:38.014 [main] INFO  application.Main - Launching main menu...
+10:48:38.031 [main] INFO  application.Main - Menu loaded
+10:48:39.585 [main] INFO  ui.view.BookView - Opened book list menu
+10:48:40.491 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+10:48:40.551 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+10:48:40.948 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+10:48:41.058 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+10:48:41.062 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+10:48:41.062 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+10:48:41.062 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+10:48:41.066 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+10:48:41.687 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+10:48:41.979 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/bookstore]
+10:48:41.980 [main] INFO  application.Main - Closing Application
+10:48:41.980 [main] INFO  application.Main - Application closed correctly
+10:57:24.217 [main] INFO  application.Main - Starting Application
+10:57:24.227 [main] DEBUG application.Main - DI Container initialized with beans
+10:57:24.228 [main] INFO  application.Main - Configured Services...
+10:57:24.239 [main] DEBUG config.Configurator - Configuring 3 object
+10:57:24.246 [main] INFO  application.Main - Configuration loaded
+10:57:24.246 [main] INFO  application.Main - Launching main menu...
+10:57:24.262 [main] INFO  application.Main - Menu loaded
+10:57:27.600 [main] INFO  ui.view.BookView - Opened book list menu
+10:57:28.228 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+10:57:28.273 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+10:57:28.559 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+10:57:28.658 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+10:57:28.660 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+10:57:28.661 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+10:57:28.661 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+10:57:28.663 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+10:57:28.935 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+10:57:29.086 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/bookstore]
+10:57:29.087 [main] INFO  application.Main - Closing Application
+10:57:29.087 [main] INFO  application.Main - Application closed correctly
+10:57:58.497 [main] INFO  application.Main - Starting Application
+10:57:58.507 [main] DEBUG application.Main - DI Container initialized with beans
+10:57:58.507 [main] INFO  application.Main - Configured Services...
+10:57:58.517 [main] DEBUG config.Configurator - Configuring 3 object
+10:57:58.522 [main] INFO  application.Main - Configuration loaded
+10:57:58.522 [main] INFO  application.Main - Launching main menu...
+10:57:58.537 [main] INFO  application.Main - Menu loaded
+10:58:00.036 [main] INFO  ui.view.BookView - Opened book list menu
+10:58:00.668 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+10:58:00.715 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+10:58:01.015 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+10:58:01.109 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+10:58:01.113 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+10:58:01.113 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+10:58:01.113 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+10:58:01.115 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+10:58:01.291 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+10:58:01.522 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001008: Cleaning up connection pool [jdbc:postgresql://localhost:5432/bookstore]
+10:58:01.523 [main] INFO  application.Main - Closing Application
+10:58:01.523 [main] INFO  application.Main - Application closed correctly
+10:58:37.320 [main] INFO  application.Main - Starting Application
+10:58:37.331 [main] DEBUG application.Main - DI Container initialized with beans
+10:58:37.331 [main] INFO  application.Main - Configured Services...
+10:58:37.342 [main] DEBUG config.Configurator - Configuring 3 object
+10:58:37.347 [main] INFO  application.Main - Configuration loaded
+10:58:37.347 [main] INFO  application.Main - Launching main menu...
+10:58:37.361 [main] INFO  application.Main - Menu loaded
+10:58:40.687 [main] INFO  ui.view.BookView - Opened book list menu
+10:58:41.598 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+10:58:41.642 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+10:58:41.942 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+10:58:42.033 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+10:58:42.036 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+10:58:42.036 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+10:58:42.036 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+10:58:42.038 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+10:58:42.208 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+10:58:42.790 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@5503de1] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+10:58:43.079 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+10:58:43.122 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+10:58:49.582 [main] INFO  ui.view.BookView - Requesting book description...
+10:58:49.583 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+10:58:49.583 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+10:58:57.369 [main] INFO  ui.view.BookView - Showing book description
+10:58:57.369 [main] DEBUG service.BookInventoryService - Fetching book by ID: 3
+10:59:07.348 [main] INFO  application.Main - Closing Application
+10:59:07.349 [main] INFO  application.Main - Application closed correctly
+11:01:58.191 [main] INFO  application.Main - Starting Application
+11:01:58.201 [main] DEBUG application.Main - DI Container initialized with beans
+11:01:58.202 [main] INFO  application.Main - Configured Services...
+11:01:58.212 [main] DEBUG config.Configurator - Configuring 3 object
+11:01:58.217 [main] INFO  application.Main - Configuration loaded
+11:01:58.217 [main] INFO  application.Main - Launching main menu...
+11:01:58.234 [main] INFO  application.Main - Menu loaded
+11:01:59.894 [main] INFO  ui.view.OrderView - Initialized creating a new order
+11:02:10.927 [main] INFO  application.Main - Starting Application
+11:02:10.940 [main] DEBUG application.Main - DI Container initialized with beans
+11:02:10.940 [main] INFO  application.Main - Configured Services...
+11:02:10.956 [main] DEBUG config.Configurator - Configuring 3 object
+11:02:10.962 [main] INFO  application.Main - Configuration loaded
+11:02:10.962 [main] INFO  application.Main - Launching main menu...
+11:02:10.983 [main] INFO  application.Main - Menu loaded
+11:02:14.020 [main] INFO  ui.view.OrderView - Requested sorted order list
+11:02:16.780 [main] DEBUG service.OrderService - Fetching all orders
+11:02:16.826 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:02:17.111 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:02:17.210 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:02:17.213 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:02:17.213 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:02:17.213 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:02:17.215 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:02:17.391 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:02:17.916 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@20d33ea] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:02:18.126 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:02:18.164 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+11:02:18.246 [main] DEBUG service.BookInventoryService - Fetching book by ID: 4
+11:02:18.248 [main] DEBUG service.BookInventoryService - Fetching book by ID: 1
+11:02:18.249 [main] DEBUG service.BookInventoryService - Fetching book by ID: 1
+11:02:18.249 [main] DEBUG service.BookInventoryService - Fetching book by ID: 2
+11:02:18.251 [main] DEBUG service.BookInventoryService - Fetching book by ID: 3
+11:02:18.251 [main] DEBUG service.BookInventoryService - Fetching book by ID: 2
+11:02:18.251 [main] DEBUG service.BookInventoryService - Fetching book by ID: 6
+11:02:18.251 [main] DEBUG service.BookInventoryService - Fetching book by ID: 8
+11:02:18.252 [main] DEBUG service.BookInventoryService - Fetching book by ID: 5
+11:02:18.252 [main] DEBUG service.BookInventoryService - Fetching book by ID: 9
+11:02:18.253 [main] DEBUG service.BookInventoryService - Fetching book by ID: 1
+11:02:18.253 [main] DEBUG service.BookInventoryService - Fetching book by ID: 3
+11:02:18.254 [main] DEBUG service.BookInventoryService - Fetching book by ID: 6
+11:02:18.254 [main] DEBUG service.BookInventoryService - Fetching book by ID: 2
+11:02:18.254 [main] DEBUG service.BookInventoryService - Fetching book by ID: 3
+11:02:18.255 [main] DEBUG service.BookInventoryService - Fetching book by ID: 5
+11:02:18.255 [main] DEBUG service.BookInventoryService - Fetching book by ID: 6
+11:02:18.256 [main] DEBUG service.BookInventoryService - Fetching book by ID: 3
+11:02:18.256 [main] DEBUG service.BookInventoryService - Fetching book by ID: 4
+11:02:18.256 [main] INFO  ui.view.OrderView - Displaying 9 orders
+11:05:39.257 [main] INFO  application.Main - Starting Application
+11:05:39.267 [main] DEBUG application.Main - DI Container initialized with beans
+11:05:39.267 [main] INFO  application.Main - Configured Services...
+11:05:39.277 [main] DEBUG config.Configurator - Configuring 3 object
+11:05:39.283 [main] INFO  application.Main - Configuration loaded
+11:05:39.283 [main] INFO  application.Main - Launching main menu...
+11:05:39.300 [main] INFO  application.Main - Menu loaded
+11:05:42.245 [main] INFO  ui.view.OrderView - Requested sorted order list
+11:05:43.831 [main] DEBUG service.OrderService - Fetching all orders
+11:05:43.879 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:05:44.165 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:05:44.267 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:05:44.271 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:05:44.271 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:05:44.271 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:05:44.273 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:05:44.448 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:05:44.956 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@5503de1] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:05:45.156 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:05:45.193 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+11:05:45.224 [main] INFO  ui.view.OrderView - Displaying 9 orders
+11:06:02.496 [main] INFO  ui.view.OrderView - Requested order details
+11:06:03.644 [main] ERROR ui.view.OrderView - Error displaying order details
+java.lang.NullPointerException: Cannot invoke "java.util.Optional.isEmpty()" because "currentOrder" is null
+	at ui.view.OrderView.showOrderDetailsMenu(OrderView.java:199)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:86)
+11:09:52.510 [main] INFO  application.Main - Starting Application
+11:09:52.519 [main] DEBUG application.Main - DI Container initialized with beans
+11:09:52.519 [main] INFO  application.Main - Configured Services...
+11:09:52.529 [main] DEBUG config.Configurator - Configuring 3 object
+11:09:52.534 [main] INFO  application.Main - Configuration loaded
+11:09:52.534 [main] INFO  application.Main - Launching main menu...
+11:09:52.548 [main] INFO  application.Main - Menu loaded
+11:09:56.164 [main] INFO  ui.view.OrderView - Requested order details
+11:09:57.287 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:09:57.588 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:09:57.681 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:09:57.684 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:09:57.684 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:09:57.684 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:09:57.686 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:09:57.867 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:09:58.405 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@16da476c] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:09:58.620 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:09:58.716 [main] ERROR ui.view.OrderView - Error displaying order details
+java.lang.IllegalArgumentException: Unable to locate Attribute  with the the given name [orderId] on this ManagedType [domain.model.impl.OrderItem]
+	at org.hibernate.metamodel.model.domain.internal.AbstractManagedType.checkNotNull(AbstractManagedType.java:148)
+	at org.hibernate.metamodel.model.domain.internal.AbstractManagedType.getAttribute(AbstractManagedType.java:119)
+	at org.hibernate.metamodel.model.domain.internal.AbstractManagedType.getAttribute(AbstractManagedType.java:44)
+	at org.hibernate.query.criteria.internal.path.AbstractFromImpl.locateAttributeInternal(AbstractFromImpl.java:111)
+	at org.hibernate.query.criteria.internal.path.AbstractPathImpl.locateAttribute(AbstractPathImpl.java:204)
+	at org.hibernate.query.criteria.internal.path.AbstractPathImpl.get(AbstractPathImpl.java:177)
+	at repository.impl.OrderItemRepository.getItemByOrderId(OrderItemRepository.java:28)
+	at service.OrderService.lambda$findOrderById$4(OrderService.java:199)
+	at java.base/java.util.Optional.map(Optional.java:260)
+	at service.OrderService.findOrderById(OrderService.java:198)
+	at service.ReportService.getOrderDetails(ReportService.java:134)
+	at facade.ReportFacade.getOrderDetails(ReportFacade.java:44)
+	at ui.controller.OrderController.getOrder(OrderController.java:49)
+	at ui.view.OrderView.showOrderDetailsMenu(OrderView.java:197)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:86)
+11:17:03.126 [main] INFO  application.Main - Starting Application
+11:17:03.136 [main] DEBUG application.Main - DI Container initialized with beans
+11:17:03.136 [main] INFO  application.Main - Configured Services...
+11:17:03.145 [main] DEBUG config.Configurator - Configuring 3 object
+11:17:03.150 [main] INFO  application.Main - Configuration loaded
+11:17:03.150 [main] INFO  application.Main - Launching main menu...
+11:17:03.166 [main] INFO  application.Main - Menu loaded
+11:17:06.387 [main] INFO  ui.view.OrderView - Requested order details
+11:17:07.899 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:17:08.203 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:17:08.303 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:17:08.307 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:17:08.307 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:17:08.307 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:17:08.309 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:17:08.578 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:17:09.092 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@86d6bf7] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:17:09.300 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:17:09.355 [main] ERROR ui.view.OrderView - Error displaying order details
+java.lang.IllegalArgumentException: Unable to locate Attribute  with the the given name [orderId] on this ManagedType [domain.model.impl.OrderItem]
+	at org.hibernate.metamodel.model.domain.internal.AbstractManagedType.checkNotNull(AbstractManagedType.java:148)
+	at org.hibernate.metamodel.model.domain.internal.AbstractManagedType.getAttribute(AbstractManagedType.java:119)
+	at org.hibernate.metamodel.model.domain.internal.AbstractManagedType.getAttribute(AbstractManagedType.java:44)
+	at org.hibernate.query.criteria.internal.path.AbstractFromImpl.locateAttributeInternal(AbstractFromImpl.java:111)
+	at org.hibernate.query.criteria.internal.path.AbstractPathImpl.locateAttribute(AbstractPathImpl.java:204)
+	at org.hibernate.query.criteria.internal.path.AbstractPathImpl.get(AbstractPathImpl.java:177)
+	at repository.impl.OrderItemRepository.getItemByOrderId(OrderItemRepository.java:27)
+	at service.OrderService.lambda$findOrderById$4(OrderService.java:199)
+	at java.base/java.util.Optional.map(Optional.java:260)
+	at service.OrderService.findOrderById(OrderService.java:198)
+	at service.ReportService.getOrderDetails(ReportService.java:134)
+	at facade.ReportFacade.getOrderDetails(ReportFacade.java:44)
+	at ui.controller.OrderController.getOrder(OrderController.java:49)
+	at ui.view.OrderView.showOrderDetailsMenu(OrderView.java:197)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:86)
+11:18:20.861 [main] INFO  application.Main - Starting Application
+11:18:20.871 [main] DEBUG application.Main - DI Container initialized with beans
+11:18:20.871 [main] INFO  application.Main - Configured Services...
+11:18:20.881 [main] DEBUG config.Configurator - Configuring 3 object
+11:18:20.886 [main] INFO  application.Main - Configuration loaded
+11:18:20.886 [main] INFO  application.Main - Launching main menu...
+11:18:20.900 [main] INFO  application.Main - Menu loaded
+11:18:24.695 [main] INFO  ui.view.OrderView - Requested order details
+11:18:25.765 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:18:26.064 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:18:26.158 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:18:26.161 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:18:26.161 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:18:26.161 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:18:26.162 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:18:26.342 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:18:26.860 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@16da476c] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:18:27.074 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:18:27.130 [main] ERROR ui.view.OrderView - Error displaying order details
+java.lang.IllegalArgumentException: Unable to locate Attribute  with the the given name [orderId] on this ManagedType [domain.model.impl.OrderItem]
+	at org.hibernate.metamodel.model.domain.internal.AbstractManagedType.checkNotNull(AbstractManagedType.java:148)
+	at org.hibernate.metamodel.model.domain.internal.AbstractManagedType.getAttribute(AbstractManagedType.java:119)
+	at org.hibernate.metamodel.model.domain.internal.AbstractManagedType.getAttribute(AbstractManagedType.java:44)
+	at org.hibernate.query.criteria.internal.path.AbstractFromImpl.locateAttributeInternal(AbstractFromImpl.java:111)
+	at org.hibernate.query.criteria.internal.path.AbstractPathImpl.locateAttribute(AbstractPathImpl.java:204)
+	at org.hibernate.query.criteria.internal.path.AbstractPathImpl.get(AbstractPathImpl.java:177)
+	at repository.impl.OrderItemRepository.getItemByOrderId(OrderItemRepository.java:27)
+	at service.OrderService.lambda$findOrderById$4(OrderService.java:199)
+	at java.base/java.util.Optional.map(Optional.java:260)
+	at service.OrderService.findOrderById(OrderService.java:198)
+	at service.ReportService.getOrderDetails(ReportService.java:134)
+	at facade.ReportFacade.getOrderDetails(ReportFacade.java:44)
+	at ui.controller.OrderController.getOrder(OrderController.java:49)
+	at ui.view.OrderView.showOrderDetailsMenu(OrderView.java:197)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:86)
+11:19:17.136 [main] INFO  application.Main - Starting Application
+11:19:17.146 [main] DEBUG application.Main - DI Container initialized with beans
+11:19:17.146 [main] INFO  application.Main - Configured Services...
+11:19:17.158 [main] DEBUG config.Configurator - Configuring 3 object
+11:19:17.164 [main] INFO  application.Main - Configuration loaded
+11:19:17.164 [main] INFO  application.Main - Launching main menu...
+11:19:17.177 [main] INFO  application.Main - Menu loaded
+11:19:19.776 [main] INFO  ui.view.OrderView - Requested order details
+11:19:20.588 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:19:20.890 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:19:20.985 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:19:20.988 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:19:20.988 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:19:20.988 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:19:20.990 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:19:21.170 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:19:21.707 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@3290b1a6] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:19:21.910 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:19:22.100 [main] INFO  service.ReportService - Order details retrieved for ID: 1
+11:19:22.101 [main] INFO  ui.view.OrderView - Displayed details for order ID 1
+11:22:47.582 [main] INFO  application.Main - Starting Application
+11:22:47.594 [main] DEBUG application.Main - DI Container initialized with beans
+11:22:47.594 [main] INFO  application.Main - Configured Services...
+11:22:47.605 [main] DEBUG config.Configurator - Configuring 3 object
+11:22:47.611 [main] INFO  application.Main - Configuration loaded
+11:22:47.611 [main] INFO  application.Main - Launching main menu...
+11:22:47.628 [main] INFO  application.Main - Menu loaded
+11:22:57.187 [main] INFO  ui.view.OrderView - Requested order details
+11:22:58.740 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:22:59.036 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:22:59.139 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:22:59.142 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:22:59.142 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:22:59.142 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:22:59.145 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:22:59.315 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:22:59.853 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@51f18e31] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:23:00.056 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:23:00.123 [main] INFO  service.ReportService - Order details retrieved for ID: 1
+11:23:00.123 [main] INFO  ui.view.OrderView - Displayed details for order ID 1
+11:25:47.525 [main] INFO  application.Main - Starting Application
+11:25:47.536 [main] DEBUG application.Main - DI Container initialized with beans
+11:25:47.536 [main] INFO  application.Main - Configured Services...
+11:25:47.545 [main] DEBUG config.Configurator - Configuring 3 object
+11:25:47.551 [main] INFO  application.Main - Configuration loaded
+11:25:47.551 [main] INFO  application.Main - Launching main menu...
+11:25:47.565 [main] INFO  application.Main - Menu loaded
+11:25:50.939 [main] INFO  ui.view.BookRequestView - Request list of book requests
+11:25:52.084 [main] DEBUG service.RequestService - Fetching all book requests
+11:25:52.132 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:25:52.434 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:25:52.526 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:25:52.528 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:25:52.528 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:25:52.529 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:25:52.530 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:25:52.705 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:25:53.224 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@41d16cc3] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:25:53.427 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:25:53.466 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+11:25:53.497 [main] INFO  ui.view.BookRequestView - Displayed 2 book requests
+11:26:58.570 [main] INFO  ui.view.ReportView - Request count of completed orders for period
+11:27:15.922 [main] DEBUG service.OrderService - Fetching all orders
+11:27:15.922 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+11:27:15.933 [main] INFO  ui.view.ReportView - Report completed!
+11:27:27.476 [main] INFO  ui.view.OrderView - Initialized creating a new order
+11:27:42.335 [main] INFO  service.OrderService - Creating new order for consumer: Georgy
+11:27:42.335 [main] DEBUG service.OrderService - Order items: 2 books
+11:27:42.337 [main] DEBUG service.OrderService - Transaction started for order creation
+11:27:42.351 [main] WARN  o.h.a.i.UnresolvedEntityInsertActions - HHH000437: Attempting to save one or more entities that have a non-nullable association with an unsaved transient entity. The unsaved transient entity must be saved in an operation prior to saving these dependent entities.
+	Unsaved transient entity: ([domain.model.impl.Consumer#<null>])
+	Dependent entities: ([[domain.model.impl.Order#11]])
+	Non-nullable association(s): ([domain.model.impl.Order.consumer])
+11:27:42.355 [main] ERROR application.Main - Unexpected error
+java.lang.RuntimeException: org.hibernate.TransientPropertyValueException: Not-null property references a transient value - transient instance must be saved before current operation : domain.model.impl.Order.consumer -> domain.model.impl.Consumer
+	at service.OrderService.createOrder(OrderService.java:104)
+	at facade.OrderFacade.createOrder(OrderFacade.java:27)
+	at ui.controller.OrderController.createOrder(OrderController.java:29)
+	at ui.view.OrderView.showCreateOrderMenu(OrderView.java:92)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:86)
+Caused by: org.hibernate.TransientPropertyValueException: Not-null property references a transient value - transient instance must be saved before current operation : domain.model.impl.Order.consumer -> domain.model.impl.Consumer
+	at org.hibernate.action.internal.UnresolvedEntityInsertActions.checkNoUnresolvedActionsAfterOperation(UnresolvedEntityInsertActions.java:122)
+	at org.hibernate.engine.spi.ActionQueue.checkNoUnresolvedActionsAfterOperation(ActionQueue.java:436)
+	at org.hibernate.internal.SessionImpl.checkNoUnresolvedActionsAfterOperation(SessionImpl.java:623)
+	at org.hibernate.internal.SessionImpl.fireSave(SessionImpl.java:673)
+	at org.hibernate.internal.SessionImpl.save(SessionImpl.java:665)
+	at org.hibernate.internal.SessionImpl.save(SessionImpl.java:660)
+	at repository.BaseRepository.save(BaseRepository.java:30)
+	at service.OrderService.createOrder(OrderService.java:79)
+	... 6 common frames omitted
+11:30:23.644 [main] INFO  application.Main - Starting Application
+11:30:23.654 [main] DEBUG application.Main - DI Container initialized with beans
+11:30:23.654 [main] INFO  application.Main - Configured Services...
+11:30:23.664 [main] DEBUG config.Configurator - Configuring 3 object
+11:30:23.669 [main] INFO  application.Main - Configuration loaded
+11:30:23.669 [main] INFO  application.Main - Launching main menu...
+11:30:23.683 [main] INFO  application.Main - Menu loaded
+11:30:26.012 [main] INFO  ui.view.OrderView - Initialized creating a new order
+11:30:38.900 [main] INFO  service.OrderService - Creating new order for consumer: Georgy
+11:30:38.900 [main] DEBUG service.OrderService - Order items: 2 books
+11:30:38.948 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:30:39.250 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:30:39.363 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:30:39.366 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:30:39.366 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:30:39.366 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:30:39.368 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:30:39.538 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:30:40.052 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@34be065a] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:30:40.260 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:30:40.303 [main] DEBUG service.OrderService - Transaction started for order creation
+11:30:40.324 [main] DEBUG service.OrderService - Order ID 12 created
+11:30:40.325 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+11:30:40.326 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+11:30:40.345 [main] DEBUG service.OrderService - Calculated total price: 3100.50
+11:30:40.350 [main] ERROR application.Main - Unexpected error
+java.lang.RuntimeException: javax.persistence.PersistenceException: org.hibernate.PropertyValueException: not-null property references a null or transient value : domain.model.impl.OrderItem.order
+	at service.OrderService.createOrder(OrderService.java:104)
+	at facade.OrderFacade.createOrder(OrderFacade.java:27)
+	at ui.controller.OrderController.createOrder(OrderController.java:29)
+	at ui.view.OrderView.showCreateOrderMenu(OrderView.java:92)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:86)
+Caused by: javax.persistence.PersistenceException: org.hibernate.PropertyValueException: not-null property references a null or transient value : domain.model.impl.OrderItem.order
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:154)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:181)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:188)
+	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1411)
+	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:489)
+	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:3290)
+	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:2425)
+	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:449)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:183)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.access$300(JdbcResourceLocalTransactionCoordinatorImpl.java:40)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:281)
+	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)
+	at service.OrderService.createOrder(OrderService.java:98)
+	... 6 common frames omitted
+Caused by: org.hibernate.PropertyValueException: not-null property references a null or transient value : domain.model.impl.OrderItem.order
+	at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:111)
+	at org.hibernate.engine.internal.Nullability.checkNullability(Nullability.java:55)
+	at org.hibernate.action.internal.AbstractEntityInsertAction.nullifyTransientReferencesIfNotAlready(AbstractEntityInsertAction.java:116)
+	at org.hibernate.action.internal.AbstractEntityInsertAction.makeEntityManaged(AbstractEntityInsertAction.java:125)
+	at org.hibernate.engine.spi.ActionQueue.addResolvedEntityInsertAction(ActionQueue.java:289)
+	at org.hibernate.engine.spi.ActionQueue.addInsertAction(ActionQueue.java:263)
+	at org.hibernate.engine.spi.ActionQueue.addAction(ActionQueue.java:250)
+	at org.hibernate.event.internal.AbstractSaveEventListener.addInsertAction(AbstractSaveEventListener.java:338)
+	at org.hibernate.event.internal.AbstractSaveEventListener.performSaveOrReplicate(AbstractSaveEventListener.java:287)
+	at org.hibernate.event.internal.AbstractSaveEventListener.performSave(AbstractSaveEventListener.java:193)
+	at org.hibernate.event.internal.AbstractSaveEventListener.saveWithGeneratedId(AbstractSaveEventListener.java:135)
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.saveWithGeneratedOrRequestedId(DefaultSaveOrUpdateEventListener.java:194)
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.entityIsTransient(DefaultSaveOrUpdateEventListener.java:179)
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.performSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:100)
+	at org.hibernate.event.internal.DefaultSaveOrUpdateEventListener.onSaveOrUpdate(DefaultSaveOrUpdateEventListener.java:75)
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:107)
+	at org.hibernate.internal.SessionImpl.fireSaveOrUpdate(SessionImpl.java:652)
+	at org.hibernate.internal.SessionImpl.saveOrUpdate(SessionImpl.java:645)
+	at org.hibernate.engine.spi.CascadingActions$5.cascade(CascadingActions.java:219)
+	at org.hibernate.engine.internal.Cascade.cascadeToOne(Cascade.java:510)
+	at org.hibernate.engine.internal.Cascade.cascadeAssociation(Cascade.java:434)
+	at org.hibernate.engine.internal.Cascade.cascadeProperty(Cascade.java:220)
+	at org.hibernate.engine.internal.Cascade.cascadeCollectionElements(Cascade.java:543)
+	at org.hibernate.engine.internal.Cascade.cascadeCollection(Cascade.java:474)
+	at org.hibernate.engine.internal.Cascade.cascadeAssociation(Cascade.java:437)
+	at org.hibernate.engine.internal.Cascade.cascadeProperty(Cascade.java:220)
+	at org.hibernate.engine.internal.Cascade.cascade(Cascade.java:153)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.cascadeOnFlush(AbstractFlushingEventListener.java:159)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.prepareEntityFlushes(AbstractFlushingEventListener.java:149)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.flushEverythingToExecutions(AbstractFlushingEventListener.java:82)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:39)
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:107)
+	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1407)
+	... 15 common frames omitted
+11:31:21.674 [main] INFO  application.Main - Starting Application
+11:31:21.684 [main] DEBUG application.Main - DI Container initialized with beans
+11:31:21.684 [main] INFO  application.Main - Configured Services...
+11:31:21.693 [main] DEBUG config.Configurator - Configuring 3 object
+11:31:21.697 [main] INFO  application.Main - Configuration loaded
+11:31:21.697 [main] INFO  application.Main - Launching main menu...
+11:31:21.711 [main] INFO  application.Main - Menu loaded
+11:31:23.197 [main] INFO  ui.view.OrderView - Initialized creating a new order
+11:31:34.620 [main] INFO  service.OrderService - Creating new order for consumer: Georgy
+11:31:34.620 [main] DEBUG service.OrderService - Order items: 2 books
+11:31:34.666 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:31:34.955 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:31:35.055 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:31:35.058 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:31:35.059 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:31:35.059 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:31:35.061 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:31:35.245 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:31:35.746 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@5df63359] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:31:35.955 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:31:35.997 [main] DEBUG service.OrderService - Transaction started for order creation
+11:31:36.015 [main] DEBUG service.OrderService - Order ID 13 created
+11:31:36.015 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+11:31:36.017 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+11:31:36.037 [main] DEBUG service.OrderService - Calculated total price: 3100.50
+11:31:36.098 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 0, SQLState: 23502
+11:31:36.098 [main] ERROR o.h.e.jdbc.spi.SqlExceptionHelper - ОШИБКА: null value in column "order_id" of relation "order_item" violates not-null constraint
+  Подробности: Failing row contains (21, null, 1, 1).
+11:31:36.099 [main] INFO  o.h.e.j.b.internal.AbstractBatchImpl - HHH000010: On release of batch it still contained JDBC statements
+11:31:36.102 [main] ERROR application.Main - Unexpected error
+java.lang.RuntimeException: javax.persistence.PersistenceException: org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at service.OrderService.createOrder(OrderService.java:104)
+	at facade.OrderFacade.createOrder(OrderFacade.java:27)
+	at ui.controller.OrderController.createOrder(OrderController.java:29)
+	at ui.view.OrderView.showCreateOrderMenu(OrderView.java:92)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:86)
+Caused by: javax.persistence.PersistenceException: org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:154)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:181)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:188)
+	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1411)
+	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:489)
+	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:3290)
+	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:2425)
+	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:449)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:183)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.access$300(JdbcResourceLocalTransactionCoordinatorImpl.java:40)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:281)
+	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)
+	at service.OrderService.createOrder(OrderService.java:98)
+	... 6 common frames omitted
+Caused by: org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:109)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:37)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:113)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:99)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:200)
+	at org.hibernate.engine.jdbc.batch.internal.NonBatchingBatch.addToBatch(NonBatchingBatch.java:46)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:3375)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:3908)
+	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:107)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:604)
+	at org.hibernate.engine.spi.ActionQueue.lambda$executeActions$1(ActionQueue.java:478)
+	at java.base/java.util.LinkedHashMap.forEach(LinkedHashMap.java:986)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:475)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:344)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:40)
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:107)
+	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1407)
+	... 15 common frames omitted
+Caused by: org.postgresql.util.PSQLException: ОШИБКА: null value in column "order_id" of relation "order_item" violates not-null constraint
+  Подробности: Failing row contains (21, null, 1, 1).
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2734)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2421)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:518)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:435)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:196)
+	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:157)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:197)
+	... 27 common frames omitted
+11:33:24.187 [main] INFO  application.Main - Starting Application
+11:33:24.196 [main] DEBUG application.Main - DI Container initialized with beans
+11:33:24.196 [main] INFO  application.Main - Configured Services...
+11:33:24.205 [main] DEBUG config.Configurator - Configuring 3 object
+11:33:24.211 [main] INFO  application.Main - Configuration loaded
+11:33:24.211 [main] INFO  application.Main - Launching main menu...
+11:33:24.226 [main] INFO  application.Main - Menu loaded
+11:33:25.514 [main] INFO  ui.view.OrderView - Initialized creating a new order
+11:33:37.660 [main] INFO  service.OrderService - Creating new order for consumer: Georgy
+11:33:37.660 [main] DEBUG service.OrderService - Order items: 2 books
+11:33:37.706 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:33:37.999 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:33:38.097 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:33:38.099 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:33:38.099 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:33:38.099 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:33:38.101 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:33:38.272 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:33:38.790 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@557b6a37] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:33:38.998 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:33:39.036 [main] DEBUG service.OrderService - Transaction started for order creation
+11:33:39.059 [main] DEBUG service.OrderService - Order ID 14 created
+11:33:39.059 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+11:33:39.060 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+11:33:39.084 [main] DEBUG service.OrderService - Calculated total price: 3100.50
+11:33:39.105 [main] INFO  ui.view.OrderView - Order ID 14 created successfully
+11:33:49.135 [main] INFO  ui.view.OrderView - Requested order details
+11:33:50.955 [main] INFO  service.ReportService - Order details retrieved for ID: 14
+11:33:50.955 [main] INFO  ui.view.OrderView - Displayed details for order ID 14
+11:34:24.891 [main] INFO  ui.view.BookView - Opened book list menu
+11:34:27.360 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+11:34:27.360 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+11:37:46.074 [main] INFO  ui.view.OrderView - Initialized creating a new order
+11:38:02.877 [main] INFO  service.OrderService - Creating new order for consumer: Valery
+11:38:02.877 [main] DEBUG service.OrderService - Order items: 1 books
+11:38:02.877 [main] DEBUG service.OrderService - Transaction started for order creation
+11:38:02.879 [main] DEBUG service.OrderService - Order ID 15 created
+11:38:02.879 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+11:38:02.879 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+11:38:02.881 [main] DEBUG service.OrderService - Calculated total price: 1200.50
+11:38:02.888 [main] INFO  ui.view.OrderView - Order ID 15 created successfully
+11:38:20.909 [main] INFO  application.Main - Closing Application
+11:38:20.909 [main] INFO  application.Main - Application closed correctly
+11:38:24.686 [main] INFO  application.Main - Starting Application
+11:38:24.695 [main] DEBUG application.Main - DI Container initialized with beans
+11:38:24.695 [main] INFO  application.Main - Configured Services...
+11:38:24.704 [main] DEBUG config.Configurator - Configuring 3 object
+11:38:24.709 [main] INFO  application.Main - Configuration loaded
+11:38:24.709 [main] INFO  application.Main - Launching main menu...
+11:38:24.723 [main] INFO  application.Main - Menu loaded
+11:38:32.478 [main] INFO  ui.view.BookRequestView - Request list of book requests
+11:38:33.755 [main] DEBUG service.RequestService - Fetching all book requests
+11:38:33.804 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:38:34.100 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:38:34.195 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:38:34.198 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:38:34.199 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:38:34.199 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:38:34.200 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:38:34.370 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:38:34.895 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@662e682a] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:38:35.103 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:38:35.140 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+11:38:35.169 [main] INFO  ui.view.BookRequestView - Displayed 2 book requests
+11:43:02.592 [main] INFO  ui.view.OrderView - Requested order details
+11:43:03.762 [main] ERROR ui.view.OrderView - Error displaying order details
+org.hibernate.ObjectNotFoundException: No row with the given identifier exists: [domain.model.impl.Order#13]
+	at org.hibernate.boot.internal.StandardEntityNotFoundDelegate.handleEntityNotFound(StandardEntityNotFoundDelegate.java:28)
+	at org.hibernate.proxy.AbstractLazyInitializer.checkTargetState(AbstractLazyInitializer.java:298)
+	at org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:187)
+	at org.hibernate.proxy.AbstractLazyInitializer.getImplementation(AbstractLazyInitializer.java:322)
+	at org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor.intercept(ByteBuddyInterceptor.java:45)
+	at org.hibernate.proxy.ProxyConfiguration$InterceptorDispatcher.intercept(ProxyConfiguration.java:95)
+	at domain.model.impl.Order$HibernateProxy$yx9NObQ2.getConsumer(Unknown Source)
+	at service.ReportService.lambda$getOrderDetails$9(ReportService.java:135)
+	at java.base/java.util.Optional.map(Optional.java:260)
+	at service.ReportService.getOrderDetails(ReportService.java:134)
+	at facade.ReportFacade.getOrderDetails(ReportFacade.java:44)
+	at ui.controller.OrderController.getOrder(OrderController.java:49)
+	at ui.view.OrderView.showOrderDetailsMenu(OrderView.java:197)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:86)
+11:43:26.933 [main] INFO  ui.view.OrderView - Requested order details
+11:43:38.358 [main] INFO  service.ReportService - Order details retrieved for ID: 15
+11:43:38.359 [main] INFO  ui.view.OrderView - Displayed details for order ID 15
+11:45:50.792 [main] INFO  application.Main - Starting Application
+11:45:50.802 [main] DEBUG application.Main - DI Container initialized with beans
+11:45:50.802 [main] INFO  application.Main - Configured Services...
+11:45:50.809 [main] DEBUG config.Configurator - Configuring 3 object
+11:45:50.814 [main] INFO  application.Main - Configuration loaded
+11:45:50.814 [main] INFO  application.Main - Launching main menu...
+11:45:50.828 [main] INFO  application.Main - Menu loaded
+11:45:54.406 [main] INFO  ui.view.OrderView - Initialized creating a new order
+11:46:09.703 [main] INFO  service.OrderService - Creating new order for consumer: dkgjgkj
+11:46:09.704 [main] DEBUG service.OrderService - Order items: 1 books
+11:46:09.750 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:46:10.055 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:46:10.150 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:46:10.153 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:46:10.153 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:46:10.153 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:46:10.155 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:46:10.328 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:46:10.844 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@250b5e5b] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:46:11.044 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:46:11.087 [main] DEBUG service.OrderService - Transaction started for order creation
+11:46:11.106 [main] DEBUG service.OrderService - Order ID 16 created
+11:46:11.106 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+11:46:11.107 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+11:46:11.128 [main] ERROR application.Main - Unexpected error
+java.lang.RuntimeException: java.lang.IndexOutOfBoundsException: Index 10 out of bounds for length 10
+	at service.OrderService.createOrder(OrderService.java:108)
+	at facade.OrderFacade.createOrder(OrderFacade.java:27)
+	at ui.controller.OrderController.createOrder(OrderController.java:29)
+	at ui.view.OrderView.showCreateOrderMenu(OrderView.java:92)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:86)
+Caused by: java.lang.IndexOutOfBoundsException: Index 10 out of bounds for length 10
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:100)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:106)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
+	at java.base/java.util.Objects.checkIndex(Objects.java:385)
+	at java.base/java.util.ArrayList.get(ArrayList.java:427)
+	at service.OrderService.createOrder(OrderService.java:90)
+	... 6 common frames omitted
+11:47:25.075 [main] INFO  application.Main - Starting Application
+11:47:25.085 [main] DEBUG application.Main - DI Container initialized with beans
+11:47:25.085 [main] INFO  application.Main - Configured Services...
+11:47:25.093 [main] DEBUG config.Configurator - Configuring 3 object
+11:47:25.099 [main] INFO  application.Main - Configuration loaded
+11:47:25.099 [main] INFO  application.Main - Launching main menu...
+11:47:25.115 [main] INFO  application.Main - Menu loaded
+11:47:27.249 [main] INFO  ui.view.OrderView - Initialized creating a new order
+11:47:38.605 [main] INFO  service.OrderService - Creating new order for consumer: sfkjsfk
+11:47:38.605 [main] DEBUG service.OrderService - Order items: 1 books
+11:47:38.654 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:47:38.954 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:47:39.051 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:47:39.053 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:47:39.053 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:47:39.054 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:47:39.055 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:47:39.218 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:47:39.725 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@4ef2ab73] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:47:39.939 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:47:39.980 [main] DEBUG service.OrderService - Transaction started for order creation
+11:47:39.998 [main] DEBUG service.OrderService - Order ID 17 created
+11:47:39.998 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+11:47:39.999 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+11:47:40.019 [main] ERROR application.Main - Unexpected error
+java.lang.RuntimeException: java.lang.IndexOutOfBoundsException: Index 10 out of bounds for length 10
+	at service.OrderService.createOrder(OrderService.java:108)
+	at facade.OrderFacade.createOrder(OrderFacade.java:27)
+	at ui.controller.OrderController.createOrder(OrderController.java:29)
+	at ui.view.OrderView.showCreateOrderMenu(OrderView.java:92)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:86)
+Caused by: java.lang.IndexOutOfBoundsException: Index 10 out of bounds for length 10
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:100)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:106)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:302)
+	at java.base/java.util.Objects.checkIndex(Objects.java:385)
+	at java.base/java.util.ArrayList.get(ArrayList.java:427)
+	at service.OrderService.createOrder(OrderService.java:93)
+	... 6 common frames omitted
+11:48:21.409 [main] INFO  application.Main - Starting Application
+11:48:21.419 [main] DEBUG application.Main - DI Container initialized with beans
+11:48:21.419 [main] INFO  application.Main - Configured Services...
+11:48:21.430 [main] DEBUG config.Configurator - Configuring 3 object
+11:48:21.435 [main] INFO  application.Main - Configuration loaded
+11:48:21.435 [main] INFO  application.Main - Launching main menu...
+11:48:21.450 [main] INFO  application.Main - Menu loaded
+11:48:23.952 [main] INFO  ui.view.OrderView - Initialized creating a new order
+11:48:35.499 [main] INFO  service.OrderService - Creating new order for consumer: dkjfdkfj
+11:48:35.499 [main] DEBUG service.OrderService - Order items: 1 books
+11:48:35.547 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+11:48:35.834 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+11:48:35.932 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+11:48:35.935 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+11:48:35.935 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+11:48:35.935 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+11:48:35.937 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+11:48:36.114 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+11:48:36.629 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@41ef1ea2] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+11:48:36.837 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+11:48:36.875 [main] DEBUG service.OrderService - Transaction started for order creation
+11:48:36.894 [main] DEBUG service.OrderService - Order ID 18 created
+11:48:36.894 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+11:48:36.895 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+11:48:36.915 [main] DEBUG service.OrderService - Calculated total price: 6800.00
+11:48:36.933 [main] INFO  ui.view.OrderView - Order ID 18 created successfully
+11:48:44.049 [main] INFO  ui.view.BookRequestView - Request list of book requests
+11:48:45.316 [main] DEBUG service.RequestService - Fetching all book requests
+11:48:45.316 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+11:48:45.330 [main] INFO  ui.view.BookRequestView - Displayed 2 book requests
+11:51:52.577 [main] INFO  ui.view.OrderView - Requested order details
+11:52:03.446 [main] INFO  service.ReportService - Order details retrieved for ID: 18
+11:52:03.447 [main] INFO  ui.view.OrderView - Displayed details for order ID 18
+12:04:36.547 [main] INFO  application.Main - Starting Application
+12:04:36.556 [main] DEBUG application.Main - DI Container initialized with beans
+12:04:36.556 [main] INFO  application.Main - Configured Services...
+12:04:36.565 [main] DEBUG config.Configurator - Configuring 3 object
+12:04:36.570 [main] INFO  application.Main - Configuration loaded
+12:04:36.570 [main] INFO  application.Main - Launching main menu...
+12:04:36.585 [main] INFO  application.Main - Menu loaded
+12:04:40.307 [main] INFO  application.Main - Closing Application
+12:04:40.307 [main] INFO  application.Main - Application closed correctly
+12:05:00.431 [main] INFO  application.Main - Starting Application
+12:05:00.441 [main] DEBUG application.Main - DI Container initialized with beans
+12:05:00.441 [main] INFO  application.Main - Configured Services...
+12:05:00.459 [main] DEBUG config.Configurator - Configuring 3 object
+12:05:00.465 [main] INFO  application.Main - Configuration loaded
+12:05:00.465 [main] INFO  application.Main - Launching main menu...
+12:05:00.482 [main] INFO  application.Main - Menu loaded
+12:05:09.765 [main] INFO  ui.view.OrderView - Initialized creating a new order
+12:05:18.734 [main] INFO  service.OrderService - Creating new order for consumer: 34984398
+12:05:18.734 [main] DEBUG service.OrderService - Order items: 1 books
+12:05:18.793 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+12:05:19.113 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+12:05:19.233 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+12:05:19.236 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+12:05:19.236 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+12:05:19.236 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+12:05:19.239 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+12:05:19.428 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+12:05:19.998 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@c1e14f] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+12:05:20.210 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+12:05:20.259 [main] DEBUG service.OrderService - Transaction started for order creation
+12:05:20.259 [main] DEBUG service.OrderService - Order ID null created
+12:05:20.259 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+12:05:20.260 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+12:05:47.621 [main] WARN  service.OrderService - Book ID 10 is unavailable, creating request
+12:05:50.521 [main] DEBUG service.RequestService - Creating request for book ID domain.model.impl.Book@46394f65 linked to order ID domain.model.impl.Order@33c88d91
+12:05:50.566 [main] INFO  service.RequestService - Request ID 6 created successfully
+12:05:50.570 [main] DEBUG service.OrderService - Calculated total price: 800.25
+12:05:50.688 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 0, SQLState: 23502
+12:05:50.688 [main] ERROR o.h.e.jdbc.spi.SqlExceptionHelper - ОШИБКА: null value in column "order_id" of relation "book_request" violates not-null constraint
+  Подробности: Failing row contains (6, null, 10, 2026-02-11 12:05:50.521203, null, PENDING).
+12:05:50.692 [main] INFO  o.h.e.j.b.internal.AbstractBatchImpl - HHH000010: On release of batch it still contained JDBC statements
+12:05:50.713 [main] ERROR application.Main - Unexpected error
+java.lang.RuntimeException: javax.persistence.PersistenceException: org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at service.OrderService.createOrder(OrderService.java:114)
+	at facade.OrderFacade.createOrder(OrderFacade.java:27)
+	at ui.controller.OrderController.createOrder(OrderController.java:29)
+	at ui.view.OrderView.showCreateOrderMenu(OrderView.java:92)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:86)
+Caused by: javax.persistence.PersistenceException: org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:154)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:181)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:188)
+	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1411)
+	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:489)
+	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:3290)
+	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:2425)
+	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:449)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:183)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.access$300(JdbcResourceLocalTransactionCoordinatorImpl.java:40)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:281)
+	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)
+	at service.OrderService.createOrder(OrderService.java:108)
+	... 6 common frames omitted
+Caused by: org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:109)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:37)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:113)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:99)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:200)
+	at org.hibernate.engine.jdbc.batch.internal.NonBatchingBatch.addToBatch(NonBatchingBatch.java:46)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:3375)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:3908)
+	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:107)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:604)
+	at org.hibernate.engine.spi.ActionQueue.lambda$executeActions$1(ActionQueue.java:478)
+	at java.base/java.util.LinkedHashMap.forEach(LinkedHashMap.java:986)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:475)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:344)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:40)
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:107)
+	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1407)
+	... 15 common frames omitted
+Caused by: org.postgresql.util.PSQLException: ОШИБКА: null value in column "order_id" of relation "book_request" violates not-null constraint
+  Подробности: Failing row contains (6, null, 10, 2026-02-11 12:05:50.521203, null, PENDING).
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2734)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2421)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:518)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:435)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:196)
+	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:157)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:197)
+	... 27 common frames omitted
+12:11:58.272 [main] INFO  application.Main - Starting Application
+12:11:58.281 [main] DEBUG application.Main - DI Container initialized with beans
+12:11:58.281 [main] INFO  application.Main - Configured Services...
+12:11:58.290 [main] DEBUG config.Configurator - Configuring 3 object
+12:11:58.296 [main] INFO  application.Main - Configuration loaded
+12:11:58.296 [main] INFO  application.Main - Launching main menu...
+12:11:58.310 [main] INFO  application.Main - Menu loaded
+12:12:02.275 [main] INFO  ui.view.OrderView - Initialized creating a new order
+12:12:14.098 [main] INFO  service.OrderService - Creating new order for consumer: fskfjsk
+12:12:14.099 [main] DEBUG service.OrderService - Order items: 1 books
+12:12:14.151 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+12:12:14.451 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+12:12:14.548 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+12:12:14.551 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+12:12:14.551 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+12:12:14.551 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+12:12:14.553 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+12:12:14.714 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+12:12:15.222 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@34be065a] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+12:12:15.432 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+12:12:15.471 [main] DEBUG service.OrderService - Transaction started for order creation
+12:12:15.471 [main] DEBUG service.OrderService - Order ID null created
+12:12:15.471 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+12:12:15.473 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+12:12:15.496 [main] WARN  service.OrderService - Book ID 10 is unavailable, creating request
+12:12:15.496 [main] DEBUG service.RequestService - Creating request for book ID domain.model.impl.Book@6048e26a linked to order ID domain.model.impl.Order@7f42e06e
+12:12:15.505 [main] INFO  service.RequestService - Request ID 7 created successfully
+12:12:15.505 [main] DEBUG service.OrderService - Calculated total price: 800.25
+12:12:15.531 [main] WARN  o.h.e.jdbc.spi.SqlExceptionHelper - SQL Error: 0, SQLState: 23502
+12:12:15.531 [main] ERROR o.h.e.jdbc.spi.SqlExceptionHelper - ОШИБКА: null value in column "order_id" of relation "book_request" violates not-null constraint
+  Подробности: Failing row contains (7, null, 10, 2026-02-11 12:12:15.496092, null, PENDING).
+12:12:15.532 [main] INFO  o.h.e.j.b.internal.AbstractBatchImpl - HHH000010: On release of batch it still contained JDBC statements
+12:12:15.535 [main] ERROR application.Main - Unexpected error
+java.lang.RuntimeException: javax.persistence.PersistenceException: org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at service.OrderService.createOrder(OrderService.java:114)
+	at facade.OrderFacade.createOrder(OrderFacade.java:27)
+	at ui.controller.OrderController.createOrder(OrderController.java:29)
+	at ui.view.OrderView.showCreateOrderMenu(OrderView.java:92)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:86)
+Caused by: javax.persistence.PersistenceException: org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:154)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:181)
+	at org.hibernate.internal.ExceptionConverterImpl.convert(ExceptionConverterImpl.java:188)
+	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1411)
+	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:489)
+	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:3290)
+	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:2425)
+	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:449)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:183)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.access$300(JdbcResourceLocalTransactionCoordinatorImpl.java:40)
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:281)
+	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101)
+	at service.OrderService.createOrder(OrderService.java:108)
+	... 6 common frames omitted
+Caused by: org.hibernate.exception.ConstraintViolationException: could not execute statement
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:109)
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:37)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:113)
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:99)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:200)
+	at org.hibernate.engine.jdbc.batch.internal.NonBatchingBatch.addToBatch(NonBatchingBatch.java:46)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:3375)
+	at org.hibernate.persister.entity.AbstractEntityPersister.insert(AbstractEntityPersister.java:3908)
+	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:107)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:604)
+	at org.hibernate.engine.spi.ActionQueue.lambda$executeActions$1(ActionQueue.java:478)
+	at java.base/java.util.LinkedHashMap.forEach(LinkedHashMap.java:986)
+	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:475)
+	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:344)
+	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:40)
+	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:107)
+	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1407)
+	... 15 common frames omitted
+Caused by: org.postgresql.util.PSQLException: ОШИБКА: null value in column "order_id" of relation "book_request" violates not-null constraint
+  Подробности: Failing row contains (7, null, 10, 2026-02-11 12:12:15.496092, null, PENDING).
+	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2734)
+	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2421)
+	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372)
+	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:518)
+	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:435)
+	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:196)
+	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:157)
+	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:197)
+	... 27 common frames omitted
+12:16:10.166 [main] INFO  application.Main - Starting Application
+12:16:10.177 [main] DEBUG application.Main - DI Container initialized with beans
+12:16:10.177 [main] INFO  application.Main - Configured Services...
+12:16:10.188 [main] DEBUG config.Configurator - Configuring 3 object
+12:16:10.192 [main] INFO  application.Main - Configuration loaded
+12:16:10.192 [main] INFO  application.Main - Launching main menu...
+12:16:10.207 [main] INFO  application.Main - Menu loaded
+12:16:12.786 [main] INFO  ui.view.OrderView - Initialized creating a new order
+12:16:23.055 [main] INFO  service.OrderService - Creating new order for consumer: fksfksf
+12:16:23.055 [main] DEBUG service.OrderService - Order items: 1 books
+12:16:23.104 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+12:16:23.397 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+12:16:23.489 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+12:16:23.492 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+12:16:23.492 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+12:16:23.492 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+12:16:23.494 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+12:16:23.679 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+12:16:24.198 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@53d2d002] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+12:16:24.404 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+12:16:24.446 [main] DEBUG service.OrderService - Transaction started for order creation
+12:16:24.476 [main] DEBUG service.OrderService - Order ID 21 created
+12:16:24.476 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+12:16:24.476 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+12:16:24.495 [main] WARN  service.OrderService - Book ID 10 is unavailable, creating request
+12:16:24.495 [main] DEBUG service.RequestService - Creating request for book ID domain.model.impl.Book@4a058df8 linked to order ID domain.model.impl.Order@691124ee
+12:16:24.496 [main] INFO  service.RequestService - Request ID 8 created successfully
+12:16:24.497 [main] DEBUG service.OrderService - Calculated total price: 800.25
+12:16:24.506 [main] INFO  ui.view.OrderView - Order ID 21 created successfully
+12:16:45.060 [main] INFO  ui.view.BookRequestView - Request list of book requests
+12:16:47.003 [main] DEBUG service.RequestService - Fetching all book requests
+12:16:47.003 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+12:16:47.015 [main] INFO  ui.view.BookRequestView - Displayed 3 book requests
+12:16:53.359 [main] INFO  application.Main - Closing Application
+12:16:53.359 [main] INFO  application.Main - Application closed correctly
+12:18:29.442 [main] INFO  application.Main - Starting Application
+12:18:29.453 [main] DEBUG application.Main - DI Container initialized with beans
+12:18:29.454 [main] INFO  application.Main - Configured Services...
+12:18:29.464 [main] DEBUG config.Configurator - Configuring 3 object
+12:18:29.469 [main] INFO  application.Main - Configuration loaded
+12:18:29.469 [main] INFO  application.Main - Launching main menu...
+12:18:29.485 [main] INFO  application.Main - Menu loaded
+12:18:32.437 [main] INFO  ui.view.OrderView - Request to complete an order
+12:18:35.101 [main] INFO  service.OrderService - Attempting to complete order ID: 12
+12:18:35.149 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+12:18:35.453 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+12:18:35.554 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+12:18:35.557 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+12:18:35.557 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+12:18:35.557 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+12:18:35.559 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+12:18:35.733 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+12:18:36.244 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@5503de1] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+12:18:36.447 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+12:18:36.496 [main] DEBUG service.RequestService - Fetching request status for order ID: 12
+12:18:36.496 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+12:18:36.518 [main] DEBUG service.RequestService - Fetching request status for order ID: 12
+12:18:36.518 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+12:18:36.531 [main] ERROR service.OrderService - Failed to complete order for order ID: 12
+org.hibernate.ObjectNotFoundException: No row with the given identifier exists: [domain.model.impl.Order#12]
+	at org.hibernate.boot.internal.StandardEntityNotFoundDelegate.handleEntityNotFound(StandardEntityNotFoundDelegate.java:28)
+	at org.hibernate.proxy.AbstractLazyInitializer.checkTargetState(AbstractLazyInitializer.java:298)
+	at org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:187)
+	at org.hibernate.proxy.AbstractLazyInitializer.getImplementation(AbstractLazyInitializer.java:322)
+	at org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor.intercept(ByteBuddyInterceptor.java:45)
+	at org.hibernate.proxy.ProxyConfiguration$InterceptorDispatcher.intercept(ProxyConfiguration.java:95)
+	at domain.model.impl.Order$HibernateProxy$ZYLROTSU.canBeCompleted(Unknown Source)
+	at java.base/java.util.Optional.filter(Optional.java:218)
+	at service.OrderService.completeOrder(OrderService.java:130)
+	at facade.OrderFacade.completeOrder(OrderFacade.java:35)
+	at ui.controller.OrderController.completeOrder(OrderController.java:41)
+	at ui.view.OrderView.showCompleteOrderMenu(OrderView.java:139)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:86)
+12:18:36.532 [main] WARN  ui.view.OrderView - Failed to complete order ID 12
+12:19:03.003 [main] INFO  service.OrderService - Cancelling order ID: 13
+12:19:03.004 [main] ERROR service.OrderService - Failed to cancel order for order ID: 13
+org.hibernate.ObjectNotFoundException: No row with the given identifier exists: [domain.model.impl.Order#13]
+	at org.hibernate.boot.internal.StandardEntityNotFoundDelegate.handleEntityNotFound(StandardEntityNotFoundDelegate.java:28)
+	at org.hibernate.proxy.AbstractLazyInitializer.checkTargetState(AbstractLazyInitializer.java:298)
+	at org.hibernate.proxy.AbstractLazyInitializer.initialize(AbstractLazyInitializer.java:187)
+	at org.hibernate.proxy.AbstractLazyInitializer.getImplementation(AbstractLazyInitializer.java:322)
+	at org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor.intercept(ByteBuddyInterceptor.java:45)
+	at org.hibernate.proxy.ProxyConfiguration$InterceptorDispatcher.intercept(ProxyConfiguration.java:95)
+	at domain.model.impl.Order$HibernateProxy$ZYLROTSU.setOrderStatus(Unknown Source)
+	at service.OrderService.lambda$cancelOrder$3(OrderService.java:154)
+	at java.base/java.util.Optional.ifPresent(Optional.java:178)
+	at service.OrderService.cancelOrder(OrderService.java:153)
+	at facade.OrderFacade.cancelOrder(OrderFacade.java:31)
+	at ui.controller.OrderController.cancelOrder(OrderController.java:33)
+	at ui.view.OrderView.showCancelOrderMenu(OrderView.java:105)
+	at ui.domain.MenuItem.doAction(MenuItem.java:14)
+	at ui.controller.MenuController.run(MenuController.java:36)
+	at application.Main.main(Main.java:86)
+12:19:03.005 [main] INFO  ui.view.OrderView - Cancelled order ID=13
+12:31:56.526 [main] INFO  application.Main - Starting Application
+12:31:56.536 [main] DEBUG application.Main - DI Container initialized with beans
+12:31:56.537 [main] INFO  application.Main - Configured Services...
+12:31:56.544 [main] DEBUG config.Configurator - Configuring 3 object
+12:31:56.549 [main] INFO  application.Main - Configuration loaded
+12:31:56.549 [main] INFO  application.Main - Launching main menu...
+12:31:56.565 [main] INFO  application.Main - Menu loaded
+12:32:13.122 [main] INFO  ui.view.BookView - Requesting unsold books...
+12:32:15.818 [main] DEBUG service.OrderService - Fetching all orders
+12:32:15.865 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+12:32:16.153 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+12:32:16.248 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+12:32:16.251 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+12:32:16.251 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+12:32:16.251 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+12:32:16.253 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+12:32:16.426 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+12:32:16.929 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@343fddd9] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+12:32:17.134 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+12:32:17.174 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+12:32:17.204 [main] DEBUG service.RequestService - Fetching all book requests
+12:32:17.204 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+12:32:17.219 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+12:32:17.219 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+12:32:17.224 [main] DEBUG service.ReportService - Found 8 unsold books
+12:32:17.224 [main] INFO  ui.view.BookView - Sorting option selected: PRICE
+12:32:17.224 [main] INFO  ui.view.BookView - Displayed 8 books
+12:33:14.936 [main] INFO  ui.view.ReportView - Request completed orders report for period
+12:33:30.413 [main] DEBUG service.OrderService - Fetching all orders
+12:33:30.414 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+12:33:30.416 [main] INFO  service.ReportService - Report generated: 1 completed orders in period
+12:33:30.416 [main] INFO  ui.view.ReportView - Found 1 completed orders in period
+12:33:37.401 [main] INFO  ui.view.ReportView - Request count of completed orders for period
+12:33:50.264 [main] DEBUG service.OrderService - Fetching all orders
+12:33:50.264 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+12:33:50.266 [main] INFO  ui.view.ReportView - Report completed!
+12:33:55.192 [main] INFO  application.Main - Closing Application
+12:33:55.193 [main] INFO  application.Main - Application closed correctly
+12:36:56.087 [main] INFO  application.Main - Starting Application
+12:36:56.097 [main] DEBUG application.Main - DI Container initialized with beans
+12:36:56.098 [main] INFO  application.Main - Configured Services...
+12:36:56.107 [main] DEBUG config.Configurator - Configuring 3 object
+12:36:56.113 [main] INFO  application.Main - Configuration loaded
+12:36:56.113 [main] INFO  application.Main - Launching main menu...
+12:36:56.126 [main] INFO  application.Main - Menu loaded
+12:36:58.298 [main] INFO  ui.view.BookView - Requesting unsold books...
+12:36:59.395 [main] INFO  service.ReportService - Fetching unsold books (older than 6 months), sorted by: PRICE
+12:36:59.395 [main] DEBUG service.OrderService - Fetching all orders
+12:36:59.443 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+12:36:59.767 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+12:36:59.865 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+12:36:59.867 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+12:36:59.867 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+12:36:59.867 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+12:36:59.869 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+12:37:00.043 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+12:37:00.564 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@662e682a] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+12:37:00.773 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+12:37:00.811 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+12:37:00.845 [main] DEBUG service.RequestService - Fetching all book requests
+12:37:00.845 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+12:37:00.859 [main] DEBUG service.BookInventoryService - Fetching all books from inventory
+12:37:00.859 [main] WARN  org.hibernate.orm.deprecation - HHH90000022: Hibernate's legacy org.hibernate.Criteria API is deprecated; use the JPA javax.persistence.criteria.CriteriaQuery instead
+12:37:00.864 [main] DEBUG service.ReportService - Found 8 unsold books
+12:37:00.864 [main] INFO  ui.view.BookView - Sorting option selected: PRICE
+12:37:00.864 [main] INFO  ui.view.BookView - Displayed 8 books
+12:37:07.137 [main] INFO  application.Main - Closing Application
+12:37:07.137 [main] INFO  application.Main - Application closed correctly

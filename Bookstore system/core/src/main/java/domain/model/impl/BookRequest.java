@@ -52,7 +52,7 @@ public class BookRequest implements Identifiable {
         return reqBook;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "order_id")
     public Order getRelatedOrder() {
         return relatedOrder;

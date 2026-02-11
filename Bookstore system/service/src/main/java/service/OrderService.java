@@ -9,7 +9,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import util.HibernateUtil;
 import di.annotation.Component;
@@ -77,18 +80,28 @@ public class OrderService {
             logger.debug("Transaction started for order creation");
             Order order = new Order(consumer);
             orderRepository.save(order);
+            HibernateUtil.getSession().flush();
+
             logger.debug("Order ID {} created", order.getId());
 
             List<Book> books = bookInventoryService.getBooks();
+            Map<Long, Book> bookMap = books.stream()
+                    .collect(Collectors.toMap(Book::getId, Function.identity()));
 
             for(int i = 0; i < bookIds.length; i++){
-                OrderItem orderItem = new OrderItem();
-                orderItem.setBook(books.get(i));
-                orderItem.setQuantity(quantities[i]);
 
-                if(!books.get(i).isAvailable()){
-                    logger.warn("Book ID {} is unavailable, creating request", books.get(i).getId());
-                    requestService.createRequest(books.get(i), order);
+                long bookId = bookIds[i];
+                int quantity = quantities[i];
+                Book book = bookMap.get(bookId);
+
+                OrderItem orderItem = new OrderItem();
+                orderItem.setOrder(order);
+                orderItem.setBook(book);
+                orderItem.setQuantity(quantity);
+
+                if(!book.isAvailable()){
+                    logger.warn("Book ID {} is unavailable, creating request", book.getId());
+                    requestService.createRequest(book, order);
                 }
 
                 order.addItem(orderItem);
@@ -97,52 +110,8 @@ public class OrderService {
             orderRepository.update(order);
             trx.commit();
 
-            return order;
-
-        } catch (Exception e) {
-            trx.rollback();
-            throw new RuntimeException(e);
-        }
-    }
-
-
-    /*public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
-        logger.info("Creating new order for consumer: {}", consumer.getName());
-        logger.debug("Order items: {} books", bookIds.length);
-        Transaction trx = HibernateUtil.getSession().beginTransaction();
-        try{
-
-            logger.debug("Transaction started for order creation");
-
-            consumerService.save(consumer);
-            Order order = new Order(consumer.getId());
-            orderRepository.save(order);
-            logger.debug("Order ID {} created", order.getId());
-
-            for (int i = 0; i < bookIds.length; i++) {
-                long bookId = bookIds[i];
-                int quantity = quantities[i];
-
-                if(!bookInventoryService.isAvailable(bookId)){
-                    logger.warn("Book ID {} is unavailable, creating request", bookId);
-                    requestService.createRequest(bookId, order.getId());
-                }
-
-                OrderItem item = new OrderItem();
-                item.setOrderId(order.getId());
-                item.setBookId(bookId);
-                item.setQuantity(quantity);
-
-                order.addItem(item);
-
-                orderItemRepository.save(item);
-            }
-
-            order.setTotalPrice(calculateTotalPrice(order));
-            orderRepository.update(order);
-
-            trx.commit();
             logger.info("Order ID {} created successfully with total: {}", order.getId(), order.getTotalPrice());
+
             return order;
 
         } catch (Exception e) {
@@ -150,7 +119,7 @@ public class OrderService {
             logger.error("Failed to create order for consumer: {}", consumer.getName(), e);
             throw new RuntimeException(e.getMessage());
         }
-    }*/
+    }
 
     public boolean completeOrder(Long orderId) {
         logger.info("Attempting to complete order ID: {}", orderId);
@@ -194,12 +163,7 @@ public class OrderService {
     }
 
     public Optional<Order> findOrderById(Long orderId) {
-        return orderRepository.findById(orderId)
-                .map(order -> {
-                    List<OrderItem> items = orderItemRepository.getItemByOrderId(order.getId());
-                    order.setOrderItemsList(items);
-                    return order;
-                });
+        return orderRepository.findById(orderId);
     }
 
     public List<Order> getOrderList() {
@@ -209,14 +173,23 @@ public class OrderService {
 
     public void updateOrderStatus(long id, OrderStatus status) {
         logger.info("Updating order ID {} status to: {}", id, status);
-        orderRepository.findById(id).ifPresent(order -> {
-            order.setOrderStatus(status);
-            if (order.getOrderStatus() == OrderStatus.COMPLETED || order.getOrderStatus() == OrderStatus.CANCELLED) {
-                order.setCompletedAtDate(LocalDateTime.now());
-            }
-            orderRepository.update(order);
-            logger.debug("Order ID {} status updated", id);
-        });
+        Transaction trx = HibernateUtil.getSession().beginTransaction();
+        try {
+            orderRepository.findById(id).ifPresent(order -> {
+                order.setOrderStatus(status);
+                if (order.getOrderStatus() == OrderStatus.COMPLETED || order.getOrderStatus() == OrderStatus.CANCELLED) {
+                    order.setCompletedAtDate(LocalDateTime.now());
+                }
+                orderRepository.update(order);
+                logger.debug("Order ID {} status updated", id);
+            });
+            trx.commit();
+            logger.info("Order ID {} updated successfully", id);
+        } catch (Exception e) {
+            trx.rollback();
+            logger.error("Failed to update order status for order ID: {}", id, e);
+            throw new RuntimeException(e.getMessage());
+        }
     }
 
     public void saveOrder(Order order) {
