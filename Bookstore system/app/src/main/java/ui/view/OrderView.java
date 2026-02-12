@@ -1,13 +1,12 @@
 package ui.view;
 
-import di.annotation.Component;
-import di.annotation.Inject;
 import domain.model.impl.Consumer;
 import domain.model.impl.Order;
 import dto.OrderItemSummary;
 import dto.OrderSummary;
 import enums.OrderStatus;
 import enums.SortByOrder;
+import org.springframework.stereotype.Component;
 import ui.controller.OrderController;
 
 import org.slf4j.Logger;
@@ -35,7 +34,6 @@ public class OrderView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    @Inject
     public OrderView(OrderController orderController) {
         this.orderController = orderController;
     }

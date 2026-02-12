@@ -1,9 +1,9 @@
 package io.serializable;
 
-import di.annotation.Component;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;

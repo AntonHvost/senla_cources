@@ -1,8 +1,6 @@
 package ui.view;
 
-import di.annotation.Component;
-import di.annotation.Inject;
-
+import org.springframework.stereotype.Component;
 import ui.controller.ConsumerController;
 
 import org.slf4j.Logger;
@@ -17,7 +15,6 @@ public class ConsumerView {
     private final ConsumerController consumerController;
     private final Scanner scanner = new Scanner(System.in);
 
-    @Inject
     public ConsumerView(ConsumerController consumerController) {
         this.consumerController = consumerController;
     }

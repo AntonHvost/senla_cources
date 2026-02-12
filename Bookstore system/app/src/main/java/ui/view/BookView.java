@@ -1,13 +1,13 @@
 package ui.view;
 
-import di.annotation.Component;
-import di.annotation.Inject;
 import dto.BookSummary;
 import enums.BookStatus;
 import enums.SortByBook;
 import enums.SortByUnsoldBook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import ui.controller.BookController;
 
 import java.util.ArrayList;
@@ -22,8 +22,9 @@ public class BookView {
 
     private final BookController bookController;
     private final Scanner scanner = new Scanner(System.in);
+    @Value("${unsoldBookMonth}")
+    private String unsoldBookMonth;
 
-    @Inject
     public BookView(BookController bookController) {
         this.bookController = bookController;
     }
@@ -78,6 +79,7 @@ public class BookView {
 
     public void showUnsoldBooks() {
         logger.info("Requesting unsold books...");
+        System.out.println("Примечание: непроданные книги будут отображаться за период не более " + unsoldBookMonth + " месяцев.");
         List<BookSummary> info = new ArrayList<>();
         System.out.println("Выберите параметр сортировки:\n" +
                 "1. По дате доставки;\n" +
@@ -100,7 +102,7 @@ public class BookView {
             }
 
         }
-        System.out.println("\nСписок непроданных книг за срок не более 6 месяцев:");
+        System.out.println("\nСписок непроданных книг за срок не более " + unsoldBookMonth + " месяцев:");
         logger.info("Displayed {} books", info.size());
         info.forEach(bookSummary -> System.out.println(
                 "Название: "  + bookSummary.getTitle() + "\n"

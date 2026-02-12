@@ -1,30 +1,30 @@
 package service;
 
-import config.ConfigProperty;
-import di.annotation.Component;
-import di.annotation.Inject;
 import domain.model.impl.BookRequest;
 import enums.OrderStatus;
 
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import util.HibernateUtil;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Component
+@Service
 public class BookRequestFullfilmentService {
     private static final Logger logger = LoggerFactory.getLogger(BookRequestFullfilmentService.class);
 
     private final OrderService orderService;
     private final RequestService requestService;
 
-    @ConfigProperty(propertyName = "autoCompleteRequest",  type = boolean.class)
+    @Value("${autoCompleteRequest}")
     private boolean isAutoCompleteRequest;
 
-    @Inject
+    @Autowired
     public BookRequestFullfilmentService(RequestService requestService, OrderService orderService) {
         this.requestService = requestService;
         this.orderService = orderService;

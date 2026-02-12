@@ -1,54 +1,45 @@
 package service;
 
 import domain.model.impl.Book;
-import enums.BookStatus;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import util.HibernateUtil;
-import di.annotation.Component;
-import di.annotation.Inject;
 import domain.model.impl.Consumer;
 import domain.model.impl.Order;
 import domain.model.impl.OrderItem;
-import repository.impl.OrderItemRepository;
 import repository.impl.OrderRepository;
 import enums.OrderStatus;
 import enums.RequestStatus;
 
-@Component
+@Service
 public class OrderService {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
 
     private final BookInventoryService bookInventoryService;
     private final RequestService requestService;
-    private final ConsumerService consumerService;
+
     private final OrderRepository orderRepository;
-    private final OrderItemRepository orderItemRepository;
 
-
-    @Inject
+    @Autowired
     public OrderService(RequestService requestService,
                         BookInventoryService bookInventoryService,
-                        ConsumerService consumerService,
-                        OrderRepository orderRepository,
-                        OrderItemRepository orderItemRepository
+                        OrderRepository orderRepository
     ) {
         this.requestService = requestService;
         this.bookInventoryService = bookInventoryService;
-        this.consumerService = consumerService;
         this.orderRepository = orderRepository;
-        this.orderItemRepository = orderItemRepository;
     }
 
     private BigDecimal calculateTotalPrice(Order order) {
@@ -59,18 +50,6 @@ public class OrderService {
         logger.debug("Calculated total price: {}", totalPrice);
         return totalPrice;
     }
-
-    /*private BigDecimal calculateTotalPrice(Order order) {
-        BigDecimal totalPrice;
-        totalPrice = order.getOrderItemsList().stream()
-                .map(orderItem ->
-                        bookInventoryService.findBookById(orderItem.getBookId())
-                            .map(book -> book.getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())))
-                            .orElse(BigDecimal.ZERO)
-                ).reduce(BigDecimal.ZERO, BigDecimal::add);
-        logger.debug("Calculated total price: {}", totalPrice);
-        return totalPrice;
-    }*/
 
     public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
         logger.info("Creating new order for consumer: {}", consumer.getName());

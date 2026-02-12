@@ -1,22 +1,21 @@
 package ui.controller;
 
-import di.annotation.Component;
-import di.annotation.Inject;
 import domain.model.impl.Book;
 import domain.model.impl.BookRequest;
 import dto.BookRequestSummary;
 import enums.SortByRequestBook;
 import facade.ReportFacade;
 import facade.RequestFacade;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Controller
 public class BookRequestController {
     private final RequestFacade requestFacade;
     private final ReportFacade reportFacade;
-    @Inject
+
     public BookRequestController(RequestFacade requestFacade, ReportFacade reportFacade) {
         this.requestFacade = requestFacade;
         this.reportFacade = reportFacade;

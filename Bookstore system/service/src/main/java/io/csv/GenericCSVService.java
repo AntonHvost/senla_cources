@@ -1,7 +1,7 @@
 package io.csv;
 
-import config.BookstoreConfig;
 import domain.model.Identifiable;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -11,13 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GenericCSVService {
+    @Value("${ioPath}")
+    private Path ioDir;
     public <T extends Identifiable> void writeToCsv(
             String filename,
             List<T> entities,
             CsvConverter<T> converter
             ) throws IOException {
 
-        Path ioDir = BookstoreConfig.getInstance().getIoDir();
 
         if (!Files.exists(ioDir)) Files.createDirectories(ioDir);
 
@@ -42,7 +43,6 @@ public class GenericCSVService {
 
         List<T> entities = new ArrayList<>();
 
-        Path ioDir = BookstoreConfig.getInstance().getIoDir();
         Path filePath =  ioDir.resolve(filename);
 
         if (!Files.exists(filePath)) {

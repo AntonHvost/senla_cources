@@ -59,4 +59,5 @@ public class BookSummary {
     public BookStatus getStatus() {
         return status;
     }
+
 }

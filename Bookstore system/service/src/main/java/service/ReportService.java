@@ -10,31 +10,29 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import config.ConfigProperty;
-import di.annotation.Component;
-import di.annotation.Inject;
 import dto.*;
 import enums.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class ReportService {
 
     private static final Logger logger = LoggerFactory.getLogger(ReportService.class);
 
     private final OrderService orderService;
     private final RequestService requestService;
-    private final ConsumerService consumerService;
     private final BookInventoryService bookInventoryService;
 
-    @ConfigProperty(propertyName = "unsoldBookMonth", type = int.class)
+    @Value("${unsoldBookMonth}")
     private int thresholdMonth;
 
-    @Inject
-    public ReportService(OrderService orderService, RequestService requestService, BookInventoryService bookInventoryService, ConsumerService consumerService) {
+    @Autowired
+    public ReportService(OrderService orderService, RequestService requestService, BookInventoryService bookInventoryService) {
         this.orderService = orderService;
         this.requestService = requestService;
         this.bookInventoryService = bookInventoryService;
-        this.consumerService = consumerService;
     }
 
     private LocalDateTime parseToDateTime(String dateStr) {

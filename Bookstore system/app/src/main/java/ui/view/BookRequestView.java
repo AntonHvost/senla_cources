@@ -1,9 +1,8 @@
 package ui.view;
 
-import di.annotation.Component;
-import di.annotation.Inject;
 import dto.BookRequestSummary;
 import enums.SortByRequestBook;
+import org.springframework.stereotype.Component;
 import ui.controller.BookRequestController;
 
 import org.slf4j.Logger;
@@ -18,7 +17,7 @@ public class BookRequestView {
     private final BookRequestController bookRequestController;
 
     private final Scanner scanner = new Scanner(System.in);
-    @Inject
+
     public BookRequestView(BookRequestController bookRequestController) {
         this.bookRequestController = bookRequestController;
     }

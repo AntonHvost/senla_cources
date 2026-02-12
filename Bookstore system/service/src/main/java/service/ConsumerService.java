@@ -1,7 +1,8 @@
 package service;
 
-import di.annotation.Component;
 import domain.model.impl.Consumer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import repository.impl.ConsumerRepository;
 
 import org.slf4j.Logger;
@@ -9,12 +10,13 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 public class ConsumerService {
     private static final Logger logger = LoggerFactory.getLogger(ConsumerService.class);
 
     private final ConsumerRepository consumerRepository;
 
+    @Autowired
     public ConsumerService(ConsumerRepository consumerRepository) {
         this.consumerRepository = consumerRepository;
     }

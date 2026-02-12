@@ -1,7 +1,5 @@
 package ui.controller;
 
-import di.annotation.Component;
-import di.annotation.Inject;
 import domain.model.impl.Consumer;
 import domain.model.impl.Order;
 import dto.OrderSummary;
@@ -9,17 +7,17 @@ import enums.OrderStatus;
 import enums.SortByOrder;
 import facade.OrderFacade;
 import facade.ReportFacade;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Controller
 public class OrderController {
 
     private final OrderFacade orderFacade;
     private final ReportFacade reportFacade;
 
-    @Inject
     public OrderController(OrderFacade orderFacade, ReportFacade reportFacade) {
         this.orderFacade = orderFacade;
         this.reportFacade = reportFacade;

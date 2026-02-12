@@ -45,7 +45,7 @@ public class MainMenuFactory extends MenuFactory {
         Menu menu = new Menu("Меню каталога книг");
 
         menu.addItem(createMenuItem("Показать книги", bookView::showBooksMenu));
-        menu.addItem(createMenuItem("Показать книги, непроданные за срок не более шести месяцев", bookView::showUnsoldBooks));
+        menu.addItem(createMenuItem("Показать книги, непроданные за срок не более N месяцев", bookView::showUnsoldBooks));
         menu.addItem(createMenuItem("Показать описание конкретной книги", bookView::showBookDescription));
         menu.addItem(createMenuItem("Импортировать книги из CSV", bookView::showBookImportMenu));
         menu.addItem(createMenuItem("Экспортировать книги в CSV", bookView::showBookExportMenu));

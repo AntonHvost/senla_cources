@@ -1,10 +1,8 @@
 package ui.view;
 
-import di.annotation.Component;
-import di.annotation.Inject;
-
 import dto.OrderSummary;
 import enums.SortByOrder;
+import org.springframework.stereotype.Component;
 import ui.controller.ReportController;
 
 import org.slf4j.Logger;
@@ -24,7 +22,6 @@ public class ReportView {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    @Inject
     public ReportView(ReportController reportController) {
         this.reportController = reportController;
     }

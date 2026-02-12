@@ -1,7 +1,5 @@
 package facade;
 
-import di.annotation.Component;
-import di.annotation.Inject;
 import dto.BookRequestSummary;
 import dto.BookSummary;
 import dto.OrderSummary;
@@ -9,6 +7,7 @@ import enums.SortByBook;
 import enums.SortByOrder;
 import enums.SortByRequestBook;
 import enums.SortByUnsoldBook;
+import org.springframework.stereotype.Component;
 import service.ReportService;
 
 import java.math.BigDecimal;
@@ -19,7 +18,6 @@ import java.util.Optional;
 public class ReportFacade {
     private final ReportService reportService;
 
-    @Inject
     public ReportFacade(ReportService reportService) {
         this.reportService = reportService;
     }

@@ -1,6 +1,7 @@
 package repository;
 
 import domain.model.Identifiable;
+import org.springframework.stereotype.Component;
 import util.HibernateUtil;
 
 import java.io.Serializable;

@@ -1,9 +1,8 @@
 package facade;
 
-import di.annotation.Component;
-import di.annotation.Inject;
 import domain.model.impl.Consumer;
 import domain.model.impl.Order;
+import org.springframework.stereotype.Component;
 import service.IOService;
 import enums.OrderStatus;
 import service.OrderService;
@@ -17,7 +16,6 @@ public class OrderFacade {
     private final OrderCsvConverter orderCsvConverter = new OrderCsvConverter();
     private final OrderItemCsvConverter orderItemCsvConverter = new OrderItemCsvConverter();
 
-    @Inject
     public OrderFacade(OrderService orderService,  IOService ioService) {
         this.orderService = orderService;
         this.ioService = ioService;

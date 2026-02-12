@@ -9,20 +9,20 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import di.annotation.Component;
-import di.annotation.Inject;
 import domain.model.impl.BookRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import repository.impl.BookRequestRepository;
 import enums.RequestStatus;
 
 
-@Component
+@Service
 public class RequestService {
     private static final Logger logger = LoggerFactory.getLogger(RequestService.class);
 
     private final BookRequestRepository bookRequestRepository;
 
-    @Inject
+    @Autowired
     public RequestService(BookRequestRepository bookRequestRepository) {
         this.bookRequestRepository = bookRequestRepository;
     }

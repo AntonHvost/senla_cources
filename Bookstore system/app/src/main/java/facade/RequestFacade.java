@@ -1,11 +1,10 @@
 package facade;
 
-import di.annotation.Component;
-import di.annotation.Inject;
 import domain.model.impl.Book;
 import domain.model.impl.BookRequest;
 import io.csv.converter.BookRequestCSVConverter;
 
+import org.springframework.stereotype.Component;
 import service.BookInventoryService;
 import service.BookRequestFullfilmentService;
 import service.IOService;
@@ -22,7 +21,6 @@ public class RequestFacade {
     private final IOService ioService;
     private final BookRequestCSVConverter bookRequestCSVConverter = new BookRequestCSVConverter();
 
-    @Inject
     public RequestFacade(RequestService requestService, BookInventoryService bookInventoryService, BookRequestFullfilmentService bookRequestFullfilmentService, IOService ioService) {
         this.requestService = requestService;
         this.bookInventoryService = bookInventoryService;

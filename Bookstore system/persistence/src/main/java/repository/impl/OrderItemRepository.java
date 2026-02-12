@@ -1,10 +1,10 @@
 package repository.impl;
 
-import di.annotation.Component;
 import domain.model.impl.OrderItem;
+import org.springframework.stereotype.Repository;
 import repository.BaseRepository;
 
-@Component
+@Repository
 public class OrderItemRepository extends BaseRepository<OrderItem, Long> {
 
    public OrderItemRepository() {

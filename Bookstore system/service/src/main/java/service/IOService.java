@@ -1,6 +1,5 @@
 package service;
 
-import di.annotation.Component;
 import domain.model.Identifiable;
 import domain.model.impl.Order;
 import domain.model.impl.OrderItem;
@@ -9,13 +8,15 @@ import io.csv.GenericCSVService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-@Component
+@Service
 public class IOService {
 
     private static final Logger logger = LoggerFactory.getLogger(IOService.class);

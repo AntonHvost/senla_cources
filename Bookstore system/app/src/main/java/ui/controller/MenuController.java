@@ -1,5 +1,6 @@
 package ui.controller;
 
+import org.springframework.stereotype.Controller;
 import ui.domain.Menu;
 import ui.domain.MenuItem;
 import ui.navigator.Navigator;

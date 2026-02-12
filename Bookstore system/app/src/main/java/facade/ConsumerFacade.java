@@ -1,8 +1,7 @@
 package facade;
 
-import di.annotation.Component;
-import di.annotation.Inject;
 import domain.model.impl.Consumer;
+import org.springframework.stereotype.Component;
 import service.ConsumerService;
 import service.IOService;
 import io.csv.converter.ConsumerCSVConverter;
@@ -15,7 +14,6 @@ public class ConsumerFacade {
     private final IOService ioService;
     private final ConsumerCSVConverter consumerCSVConverter = new ConsumerCSVConverter();
 
-    @Inject
     public ConsumerFacade(ConsumerService consumerService, IOService ioService) {
         this.consumerService = consumerService;
         this.ioService = ioService;

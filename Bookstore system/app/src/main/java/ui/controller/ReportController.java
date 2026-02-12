@@ -1,21 +1,19 @@
 package ui.controller;
 
-import di.annotation.Component;
-import di.annotation.Inject;
 import dto.OrderSummary;
 import enums.SortByOrder;
 
 import facade.ReportFacade;
+import org.springframework.stereotype.Controller;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Component
+@Controller
 public class ReportController {
 
     private final ReportFacade reportFacade;
 
-    @Inject
     public ReportController(ReportFacade reportFacade) {
         this.reportFacade = reportFacade;
     }

@@ -1,20 +1,19 @@
 package ui.controller;
 
-import di.annotation.Component;
-import di.annotation.Inject;
 import dto.BookSummary;
 import enums.SortByBook;
 import enums.SortByUnsoldBook;
 import facade.BookFacade;
 import facade.ReportFacade;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-@Component
+@Controller
 public class BookController {
     private final ReportFacade reportFacade;
     private final BookFacade bookFacade;
-    @Inject
+
     public BookController(ReportFacade reportFacade, BookFacade bookFacade) {
         this.reportFacade = reportFacade;
         this.bookFacade = bookFacade;

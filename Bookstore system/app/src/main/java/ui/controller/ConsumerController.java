@@ -1,16 +1,15 @@
 package ui.controller;
 
-import di.annotation.Component;
-import di.annotation.Inject;
 import domain.model.impl.Consumer;
 import facade.ConsumerFacade;
+import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-@Component
+@Controller
 public class ConsumerController {
     private final ConsumerFacade consumerFacade;
-    @Inject
+
     public ConsumerController(ConsumerFacade consumerFacade) {
         this.consumerFacade = consumerFacade;
     }
