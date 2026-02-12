@@ -28,7 +28,6 @@ public class ReportService {
     @Value("${unsoldBookMonth}")
     private int thresholdMonth;
 
-    @Autowired
     public ReportService(OrderService orderService, RequestService requestService, BookInventoryService bookInventoryService) {
         this.orderService = orderService;
         this.requestService = requestService;
@@ -60,14 +59,7 @@ public class ReportService {
                 .filter(o -> o.getOrderStatus() == OrderStatus.COMPLETED)
                 .filter(o -> !o.getCompletedAtDate().isBefore(startDateTime))
                 .filter(o -> !o.getCompletedAtDate().isAfter(endDateTime))
-                .map(order -> {
-                            Consumer consumer = order.getConsumer();
-                            List<OrderItemSummary> items = order.getOrderItemsList().stream()
-                                    .map(orderItem -> new OrderItemSummary(orderItem))
-                                    .toList();
-                            return new OrderSummary(order, consumer, items);
-                        }
-                )
+                .map(order -> new OrderSummary(order, null, null))
                 .sorted(comparator)
                 .collect(Collectors.toList());
 
@@ -133,10 +125,7 @@ public class ReportService {
         logger.debug("Fetched orders");
 
         return orderService.getOrderList().stream()
-                .map(order -> {
-                    Consumer consumer = new Consumer();
-                    return new OrderSummary(order, consumer, null);
-                })
+                .map(order -> new OrderSummary(order, null, null))
                 .sorted(comparator)
                 .collect(Collectors.toList());
     }
@@ -161,7 +150,8 @@ public class ReportService {
 
     public Optional<OrderSummary> getOrderDetails(long orderId) {
         logger.debug("Fetching details for order ID: {}", orderId);
-        return orderService.findOrderById(orderId).map(order -> {
+        return orderService.findOrderDetailById(orderId)
+                .map(order -> {
                     Consumer consumer = order.getConsumer();
                     List<OrderItemSummary> items = order.getOrderItemsList().stream()
                             .map(orderItem -> new OrderItemSummary(orderItem))
@@ -175,7 +165,7 @@ public class ReportService {
     public List<BookRequestSummary> getBookRequestList(SortByRequestBook sortParam) {
         logger.info("Fetching book request list, sorted by: {}", sortParam);
 
-        Map<Book, List<BookRequest>> groupedByBook = requestService.getRequestsList().stream()
+        Map<Book, List<BookRequest>> groupedByBook = requestService.findAllRequestWithBook().stream()
                 .collect(Collectors.groupingBy(BookRequest::getReqBook));
 
         Comparator<BookRequestSummary> comparator = switch (sortParam) {

@@ -24,7 +24,6 @@ public class BookRequestFullfilmentService {
     @Value("${autoCompleteRequest}")
     private boolean isAutoCompleteRequest;
 
-    @Autowired
     public BookRequestFullfilmentService(RequestService requestService, OrderService orderService) {
         this.requestService = requestService;
         this.orderService = orderService;

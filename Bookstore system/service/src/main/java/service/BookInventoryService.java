@@ -18,7 +18,6 @@ public class BookInventoryService {
 
     private final BookRepository bookRepository;
 
-    @Autowired
     public BookInventoryService(BookRepository bookRepository) {
         this.bookRepository = bookRepository;
     }

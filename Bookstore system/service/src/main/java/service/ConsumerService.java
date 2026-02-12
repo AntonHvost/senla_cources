@@ -16,7 +16,6 @@ public class ConsumerService {
 
     private final ConsumerRepository consumerRepository;
 
-    @Autowired
     public ConsumerService(ConsumerRepository consumerRepository) {
         this.consumerRepository = consumerRepository;
     }

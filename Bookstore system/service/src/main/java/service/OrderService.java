@@ -32,7 +32,6 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
 
-    @Autowired
     public OrderService(RequestService requestService,
                         BookInventoryService bookInventoryService,
                         OrderRepository orderRepository
@@ -143,6 +142,10 @@ public class OrderService {
 
     public Optional<Order> findOrderById(Long orderId) {
         return orderRepository.findById(orderId);
+    }
+
+    public Optional<Order> findOrderDetailById(Long orderId) {
+        return orderRepository.findOrderWithConsumerAndOrderItems(orderId);
     }
 
     public List<Order> getOrderList() {
