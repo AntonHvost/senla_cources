@@ -10,15 +10,17 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class GenericCSVService {
     @Value("${ioPath}")
     private Path ioDir;
+
     public <T extends Identifiable> void writeToCsv(
             String filename,
             List<T> entities,
             CsvConverter<T> converter
             ) throws IOException {
-
+        System.out.println(ioDir.toString() + "/" + filename);
 
         if (!Files.exists(ioDir)) Files.createDirectories(ioDir);
 
@@ -28,7 +30,6 @@ public class GenericCSVService {
 
         try (BufferedWriter writer = Files.newBufferedWriter(filePath, StandardCharsets.UTF_8)) {
             writer.write(converter.getHeader());
-            writer.newLine();
             for (T entity : entities) {
                 writer.write(converter.toCsvRow(entity));
                 writer.newLine();

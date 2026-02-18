@@ -14,7 +14,7 @@ public class BookCsvConverter implements CsvConverter<Book> {
 
     @Override
     public String getHeader() {
-        return "id,title,author,description,publishDate,deliveryDate,price,status\n";
+        return "id,title,author,description,publishDate,price,status\n";
     }
 
     @Override

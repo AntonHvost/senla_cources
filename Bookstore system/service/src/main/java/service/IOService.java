@@ -6,9 +6,12 @@ import domain.model.impl.OrderItem;
 import io.csv.CsvConverter;
 import io.csv.GenericCSVService;
 
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import util.HibernateUtil;
 
 import java.io.IOException;
 import java.util.*;
@@ -20,7 +23,11 @@ import java.util.function.Supplier;
 public class IOService {
 
     private static final Logger logger = LoggerFactory.getLogger(IOService.class);
-    private final GenericCSVService csvService = new GenericCSVService();
+    private final GenericCSVService csvService;
+
+    public IOService(GenericCSVService csvService) {
+        this.csvService = csvService;
+    }
 
     public <T extends Identifiable> void exportEntities(
             String filename,
@@ -47,6 +54,8 @@ public class IOService {
             CsvConverter<T> converter
     ) {
         logger.info("Importing entities from file: {}", filename);
+        Session session = HibernateUtil.getSession();
+        Transaction trx = session.beginTransaction();
       try {
           List<T> entities = csvService.readToCsv(filename, converter);
           logger.debug("Read {} entities from file", entities.size());
@@ -58,9 +67,10 @@ public class IOService {
                   save.accept(entity);
               }
           }
-
+          trx.commit();
           logger.info("Import completed");
       } catch (IOException e) {
+          trx.rollback();
           logger.error("Failed to import entities from file '{}'", filename, e);
           throw new RuntimeException("Ошибка импорта из " + filename);
       }
@@ -73,7 +83,6 @@ public class IOService {
             CsvConverter<Order> orderCsvConverter,
             CsvConverter<OrderItem> itemCsvConverter
     ) {
-
         try {
             List<Order> orderList = orderSupplier.get();
             logger.info("Exporting orders and items to files: '{}' and '{}'", orderFilename, itemFilename);
@@ -104,7 +113,10 @@ public class IOService {
             CsvConverter<Order> orderConverter,
             CsvConverter<OrderItem> itemConverter
     ) {
+        Session session = HibernateUtil.getSession();
+        Transaction trx = session.beginTransaction();
         logger.info("Importing orders and items from files: '{}' and '{}'", orderFilename, itemFilename);
+
         try {
             List<Order> orderList = csvService.readToCsv(orderFilename, orderConverter);
             logger.debug("Read {} orders from file", orderList.size());
@@ -136,8 +148,10 @@ public class IOService {
                     saveOrder.accept(order);
                 }
             }
+            trx.commit();
             logger.info("Import completed");
         } catch(IOException e) {
+            trx.rollback();
             logger.error("Failed to import orders and items from files '{}' and '{}'", orderFilename, itemFilename, e);
             throw new RuntimeException("Ошибка импорта заказов и айтемов");
         }
