@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="3" author="bookstore-team">
+        <comment>Создание таблицы заказов</comment>
+
+        <createTable tableName="order" schemaName="public">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" primaryKeyName="pk_order"/>
+            </column>
+            <column name="consumer_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_order_consumer"
+                             references="consumer(id)"/>
+            </column>
+            <column name="created_at" type="timestamp without time zone"
+                    defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="completed_at" type="timestamp without time zone"/>
+            <column name="total_price" type="numeric(10,2)" defaultValueNumeric="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(20)" defaultValue="NEW">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="order" indexName="idx_order_consumer_id">
+            <column name="consumer_id"/>
+        </createIndex>
+
+        <createIndex tableName="order" indexName="idx_order_created_at">
+            <column name="created_at"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

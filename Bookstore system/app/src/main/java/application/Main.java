@@ -3,6 +3,7 @@ package application;
 import config.SpringConfig;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import util.DatabaseMigrator;
 import util.HibernateUtil;
 
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ public class Main {
     public static void main(String[] args) {
 
         logger.info("Starting Application");
+        DatabaseMigrator.migrate();
         ApplicationContext context = new AnnotationConfigApplicationContext(SpringConfig.class);
 
         try {
