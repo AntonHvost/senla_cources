@@ -1,4 +1,4 @@
-package ui.controller;
+package controller;
 
 import dto.BookSummary;
 import enums.SortByBook;
@@ -6,6 +6,7 @@ import enums.SortByUnsoldBook;
 import facade.BookFacade;
 import facade.ReportFacade;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<String> getBookDescription(@PathVariable Long bookId) {
+    public ResponseEntity<String> getBookDescription(@PathVariable("id") Long bookId) {
         String description = reportFacade.getBookDescription(bookId);
         if (description == null) {
             return ResponseEntity.notFound().build();

@@ -1,6 +1,7 @@
 package application;
 
 import config.SpringConfig;
+import ui.controller.MenuController;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import util.DatabaseMigrator;
@@ -8,7 +9,6 @@ import util.HibernateUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ui.controller.*;
 import ui.domain.Menu;
 import ui.factory.MainMenuFactory;
 import ui.navigator.Navigator;

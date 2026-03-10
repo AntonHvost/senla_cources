@@ -23,7 +23,7 @@ public class DatabaseMigrator {
             String user = config.getString("username");
             String password = config.getString("password");
 
-            System.out.println("Подключение к БД: " + url);
+            System.out.println("Connected to database: " + url);
             connection = DriverManager.getConnection(url, user, password);
 
             Database database = DatabaseFactory.getInstance()
@@ -35,17 +35,17 @@ public class DatabaseMigrator {
                     database
             );
 
-            System.out.println("Применение миграций...");
+            System.out.println("Applying migrations...");
             liquibase.update();
 
-            System.out.println("Миграции успешно применены!");
+            System.out.println("Migrations have been applied successfully!");
 
             liquibase.close();
 
         } catch (Exception e) {
-            System.err.println("Ошибка миграции: " + e.getMessage());
+            System.err.println("Migration error: " + e.getMessage());
             e.printStackTrace();
-            throw new RuntimeException("Не удалось применить миграции", e);
+            throw new RuntimeException("Don't applied migrations: ", e);
         } finally {
             if (connection != null) {
                 try {
