@@ -4,13 +4,10 @@ import domain.model.impl.BookRequest;
 import enums.OrderStatus;
 
 import jakarta.transaction.Transactional;
-import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import util.HibernateUtil;
 
 import java.time.LocalDateTime;
 import java.util.List;

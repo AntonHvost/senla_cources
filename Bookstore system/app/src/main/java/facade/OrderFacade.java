@@ -2,7 +2,10 @@ package facade;
 
 import domain.model.impl.Consumer;
 import domain.model.impl.Order;
+import dto.request.CreateOrderRequest;
+import dto.response.OrderResponseDto;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 import service.IOService;
 import enums.OrderStatus;
 import service.OrderService;
@@ -23,6 +26,10 @@ public class OrderFacade {
 
     public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
         return orderService.createOrder(bookIds, quantities, consumer);
+    }
+
+    public OrderResponseDto createOrderTest(CreateOrderRequest request) {
+        return orderService.createOrderTest(request);
     }
 
     public void cancelOrder(long orderId) {

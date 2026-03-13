@@ -3,10 +3,13 @@ package controller;
 import domain.model.impl.Consumer;
 import domain.model.impl.Order;
 import dto.OrderSummary;
+import dto.request.CreateOrderRequest;
+import dto.response.OrderResponseDto;
 import enums.OrderStatus;
 import enums.SortByOrder;
 import facade.OrderFacade;
 import facade.ReportFacade;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +29,13 @@ public class OrderController {
         this.reportFacade = reportFacade;
     }
 
+    @PostMapping("/new")
+    public ResponseEntity<OrderResponseDto> createOrderTest(@RequestBody CreateOrderRequest request) {
+        OrderResponseDto resp = orderFacade.createOrderTest(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(resp);
+    }
+
+    @PostMapping("/create")
     public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
         return  orderFacade.createOrder(bookIds, quantities, consumer);
     }
@@ -48,8 +58,8 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<OrderSummary>> getOrder(@PathVariable("id") Long orderId) {
-        return ResponseEntity.ok(reportFacade.getOrderDetails(orderId));
+    public ResponseEntity<OrderSummary> getOrder(@PathVariable("id") Long orderId) {
+        return ResponseEntity.ok(reportFacade.getOrderDetails(orderId).get());
     }
 
 

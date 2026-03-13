@@ -18,10 +18,6 @@
         </dependency>
         <dependency>
             <groupId>com.bookstore</groupId>
-            <artifactId>core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.bookstore</groupId>
             <artifactId>persistence</artifactId>
         </dependency>
         <dependency>

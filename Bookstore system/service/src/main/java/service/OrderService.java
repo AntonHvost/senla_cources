@@ -1,7 +1,10 @@
 package service;
 
 import domain.model.impl.Book;
+import dto.request.CreateOrderRequest;
+import dto.response.OrderResponseDto;
 import jakarta.transaction.Transactional;
+import mapper.ResponseDtoMapper;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,6 +56,37 @@ public class OrderService {
         return totalPrice;
     }
 
+
+    @Transactional
+    public OrderResponseDto createOrderTest(CreateOrderRequest request) {
+        Order order = new Order(ResponseDtoMapper.toConsumer(request.getConsumer()));
+
+        List<Book> books = bookInventoryService.getBooks();
+        Map<Long, Book> bookMap = books.stream()
+                .collect(Collectors.toMap(Book::getId, Function.identity()));
+
+        for (var itemReq : request.getItems()) {
+            Book book = bookMap.get(itemReq.getBookId());
+            int quantity = itemReq.getQuantity();
+
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setBook(book);
+            orderItem.setQuantity(quantity);
+            if(!book.isAvailable()){
+                logger.warn("Book ID {} is unavailable, creating request", book.getId());
+                requestService.createRequest(book, order);
+            }
+            order.addItem(orderItem);
+        }
+
+        order.setTotalPrice(calculateTotalPrice(order));
+        orderRepository.save(order);
+
+        return ResponseDtoMapper.toOrderResponseDto(order);
+
+    }
+
     @Transactional
     public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
         logger.info("Creating new order for consumer: {}", consumer.getName());
@@ -61,7 +95,6 @@ public class OrderService {
             logger.debug("Transaction started for order creation");
             Order order = new Order(consumer);
             orderRepository.save(order);
-            HibernateUtil.getSession().flush();
 
             logger.debug("Order ID {} created", order.getId());
 

@@ -30,7 +30,7 @@ public class BookRequestController {
        return ResponseEntity.ok(requestFacade.requestBook(requestId));
     }*/
 
-    @GetMapping("/restock/{id}")
+    @PostMapping("/{id}/restock")
     public ResponseEntity<String> restockBook(@PathVariable("id") Long bookId) {
         requestFacade.restockBook(bookId);
         return ResponseEntity.status(HttpStatus.CREATED).body("Book request has been created");
