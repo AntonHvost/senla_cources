@@ -30,14 +30,14 @@ public class BookRequestController {
        return ResponseEntity.ok(requestFacade.requestBook(requestId));
     }*/
 
-    @GetMapping("/{id}")
+    @GetMapping("/restock/{id}")
     public ResponseEntity<String> restockBook(@PathVariable("id") Long bookId) {
         requestFacade.restockBook(bookId);
         return ResponseEntity.status(HttpStatus.CREATED).body("Book request has been created");
     }
 
     @GetMapping
-    public ResponseEntity<List<BookRequestSummary>> getSortedRequests(@RequestParam(required = false) SortByRequestBook sortByRequestBook) {
+    public ResponseEntity<List<BookRequestSummary>> getSortedRequests(@RequestParam(value = "sortBy", required = false) SortByRequestBook sortByRequestBook) {
         return ResponseEntity.ok(reportFacade.getRequestList(sortByRequestBook));
     }
 

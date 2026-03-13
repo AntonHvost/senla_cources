@@ -2,7 +2,9 @@ package service;
 
 import domain.model.impl.Book;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import repository.Repository;
 import repository.impl.BookRepository;
 import enums.BookStatus;
 
@@ -16,9 +18,9 @@ public class BookInventoryService {
 
     private static final Logger logger = LoggerFactory.getLogger(BookInventoryService.class);
 
-    private final BookRepository bookRepository;
+    private final Repository<Book,Long> bookRepository;
 
-    public BookInventoryService(BookRepository bookRepository) {
+    public BookInventoryService(@Qualifier("bookRepository") Repository<Book,Long> bookRepository) {
         this.bookRepository = bookRepository;
     }
 

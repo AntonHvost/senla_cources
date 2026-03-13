@@ -2,11 +2,10 @@ package repository;
 
 import domain.model.Identifiable;
 import jakarta.persistence.PersistenceContext;
-import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
-import util.HibernateUtil;
 
 import jakarta.persistence.EntityManager;
+import jakarta.transaction.Transactional;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +20,7 @@ public abstract class BaseRepository<T extends Identifiable, PK extends Serializ
         this.type = type;
     }
 
+    @Transactional
     @Override
     public List<T> findAll() {
         return em.createQuery("from " + type.getSimpleName(), type).getResultList();
@@ -31,17 +31,20 @@ public abstract class BaseRepository<T extends Identifiable, PK extends Serializ
         return Optional.ofNullable(em.find(type, id));
     }
 
+    @Transactional
     @Override
     public PK save(T entity) {
         em.persist(entity);
         return (PK) entity.getId();
     }
 
+    @Transactional
     @Override
     public void update(T entity) {
         em.merge(entity);
     }
 
+    @Transactional
     @Override
     public void delete(PK id) {
         em.remove(id);

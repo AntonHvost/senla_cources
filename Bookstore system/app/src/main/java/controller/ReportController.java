@@ -24,17 +24,17 @@ public class ReportController {
         this.reportFacade = reportFacade;
     }
 
-    @GetMapping
-    public ResponseEntity<List<OrderSummary>> getCompletedOrderAtPeriod(@RequestParam String startDate, @RequestParam String endDate, @RequestParam(required = false) SortByOrder sortByOrder) {
+    @GetMapping("/complete-orders")
+    public ResponseEntity<List<OrderSummary>> getCompletedOrderAtPeriod(@RequestParam(value = "sDate") String startDate, @RequestParam(value = "eDate") String endDate, @RequestParam(required = false) SortByOrder sortByOrder) {
         return ResponseEntity.ok(reportFacade.getCompletedOrdersAtPeriod(startDate, endDate, sortByOrder));
     }
 
-    @GetMapping
+    @GetMapping("/count-complete-orders")
     public ResponseEntity<Integer> getCountCompletedOrdersAtPeriod(@RequestParam String startDate, @RequestParam String endDate) {
         return ResponseEntity.ok(reportFacade.getCountCompletedOrdersAtPeriod(startDate, endDate));
     }
 
-    @GetMapping("api/profit")
+    @GetMapping("/profit")
     public ResponseEntity<BigDecimal> getProfitAtPeriod(@RequestParam String startDate, @RequestParam String endDate) {
         return ResponseEntity.ok(reportFacade.getProfitAtPeriod(startDate, endDate));
     }

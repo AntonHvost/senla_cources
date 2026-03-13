@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import domain.model.impl.BookRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import repository.BookRequestRepositoryInterface;
 import repository.impl.BookRequestRepository;
 import enums.RequestStatus;
 
@@ -21,9 +22,9 @@ import enums.RequestStatus;
 public class RequestService {
     private static final Logger logger = LoggerFactory.getLogger(RequestService.class);
 
-    private final BookRequestRepository bookRequestRepository;
+    private final BookRequestRepositoryInterface bookRequestRepository;
 
-    public RequestService(BookRequestRepository bookRequestRepository) {
+    public RequestService(BookRequestRepositoryInterface bookRequestRepository) {
         this.bookRequestRepository = bookRequestRepository;
     }
 

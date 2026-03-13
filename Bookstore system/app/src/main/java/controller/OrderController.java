@@ -43,11 +43,11 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<OrderSummary>> getSortedOrders(@RequestParam(required = false) SortByOrder sortByOrder) {
+    public ResponseEntity<List<OrderSummary>> getSortedOrders(@RequestParam(value = "sortBy", required = false) SortByOrder sortByOrder) {
         return ResponseEntity.ok(reportFacade.getOrderList(sortByOrder));
     }
 
-    @GetMapping("api/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Optional<OrderSummary>> getOrder(@PathVariable("id") Long orderId) {
         return ResponseEntity.ok(reportFacade.getOrderDetails(orderId));
     }

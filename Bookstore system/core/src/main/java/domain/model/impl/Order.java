@@ -43,10 +43,10 @@ public class Order implements Identifiable {
 
     @Override
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
-    @SequenceGenerator(name = "order_seq",
+    @GeneratedValue(strategy = GenerationType.IDENTITY/*, generator = "order_seq"*/)
+    /*@SequenceGenerator(name = "order_seq",
     sequenceName = "order_id_seq",
-    allocationSize = 1)
+    allocationSize = 1)*/
     public Long getId() {
         return id;
     }

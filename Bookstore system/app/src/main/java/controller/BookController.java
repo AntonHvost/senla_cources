@@ -23,16 +23,16 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BookSummary>> getSortedBooks(@RequestParam(required = false) SortByBook sortByBook) {
+    public ResponseEntity<List<BookSummary>> getSortedBooks(@RequestParam(value = "sortByBook", required = false) SortByBook sortByBook) {
         return ResponseEntity.ok (reportFacade.getBookCatalog(sortByBook));
     }
 
     @GetMapping("/unsold")
-    public ResponseEntity<List<BookSummary>> getSortedUnsoldBooks(@RequestParam(required = false) SortByUnsoldBook sortByUnsoldBook) {
+    public ResponseEntity<List<BookSummary>> getSortedUnsoldBooks(@RequestParam(value = "sortByUnsoldBook", required = false) SortByUnsoldBook sortByUnsoldBook) {
         return ResponseEntity.ok(reportFacade.getUnsoldBooks(sortByUnsoldBook));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/get-description/{id}")
     public ResponseEntity<String> getBookDescription(@PathVariable("id") Long bookId) {
         String description = reportFacade.getBookDescription(bookId);
         if (description == null) {

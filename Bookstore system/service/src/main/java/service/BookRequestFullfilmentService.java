@@ -3,6 +3,7 @@ package service;
 import domain.model.impl.BookRequest;
 import enums.OrderStatus;
 
+import jakarta.transaction.Transactional;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +29,10 @@ public class BookRequestFullfilmentService {
         this.requestService = requestService;
         this.orderService = orderService;
     }
+
+    @Transactional
     public void fulfillRequests(long bookId){
         logger.info("Fulfilling pending requests for book ID: {}", bookId);
-        Transaction trx = HibernateUtil.getSession().beginTransaction();
         try {
             List<BookRequest> bookRequests = requestService.findPendingRequestsByBookId(bookId);
             logger.debug("Found {} pending requests to fulfill", bookRequests.size());
@@ -54,10 +56,8 @@ public class BookRequestFullfilmentService {
                     logger.warn("Order ID {} not found during request fulfillment", orderId);
                 }
             }
-            trx.commit();
             logger.info("Successfully fulfilled {} requests for book ID {}", bookRequests.size(), bookId);
         } catch(Exception e){
-            trx.rollback();
             logger.error("Error fulfilling requests for book ID {}", bookId, e);
             throw new RuntimeException("Request fulfillment failed", e);
         }

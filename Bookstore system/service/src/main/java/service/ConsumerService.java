@@ -2,7 +2,9 @@ package service;
 
 import domain.model.impl.Consumer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import repository.Repository;
 import repository.impl.ConsumerRepository;
 
 import org.slf4j.Logger;
@@ -14,9 +16,9 @@ import java.util.Optional;
 public class ConsumerService {
     private static final Logger logger = LoggerFactory.getLogger(ConsumerService.class);
 
-    private final ConsumerRepository consumerRepository;
+    private final Repository<Consumer, Long> consumerRepository;
 
-    public ConsumerService(ConsumerRepository consumerRepository) {
+    public ConsumerService(@Qualifier("consumerRepository") Repository<Consumer, Long> consumerRepository) {
         this.consumerRepository = consumerRepository;
     }
 

@@ -1,23 +1,21 @@
 package repository.impl;
 
 import domain.model.impl.Order;
-import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 import repository.BaseRepository;
-import util.HibernateUtil;
+import repository.OrderRepositoryInterface;
 
-import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import java.util.Optional;
 
 
 @Repository
-public class OrderRepository extends BaseRepository<Order, Long> {
+public class OrderRepository extends BaseRepository<Order, Long> implements OrderRepositoryInterface {
 
     OrderRepository() {
         super(Order.class);
     }
 
+    @Override
     public Optional<Order> findOrderWithConsumerAndOrderItems(Long orderId) {
         try {
 

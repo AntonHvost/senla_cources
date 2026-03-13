@@ -95,7 +95,11 @@ public class ReportService {
 
     public List<BookSummary> getBookCatalog(SortByBook sortParam) {
         logger.info("Fetching book catalog, sorted by: {}", sortParam);
-        Comparator<BookSummary> comparator = switch (sortParam) {
+
+        SortByBook checkParam = Optional.ofNullable(sortParam)
+                .orElse(SortByBook.ID);
+
+        Comparator<BookSummary> comparator = switch (checkParam) {
             case ALPHABET -> Comparator.comparing(BookSummary::getTitle);
             case PUBLICATION_DATE -> Comparator.comparing(BookSummary::getPublishDate);
             case PRICE -> Comparator.comparing(BookSummary::getPrice);
