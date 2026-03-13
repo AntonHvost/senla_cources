@@ -3,7 +3,7 @@ package domain.model.impl;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import domain.model.Identifiable;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @JsonAutoDetect
 @Entity

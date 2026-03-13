@@ -15,9 +15,8 @@ public class BookRequestRepository extends BaseRepository<BookRequest, Long> {
     }
 
     public List<BookRequest> findAllRequestWithBook() {
-        Session session = HibernateUtil.getSession();
         String qr = "select b from BookRequest b left join fetch b.reqBook";
 
-        return session.createQuery(qr, BookRequest.class).list();
+        return em.createQuery(qr, BookRequest.class).getResultList();
     }
 }

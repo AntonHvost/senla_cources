@@ -19,10 +19,9 @@ public class OrderRepository extends BaseRepository<Order, Long> {
     }
 
     public Optional<Order> findOrderWithConsumerAndOrderItems(Long orderId) {
-        Session session = HibernateUtil.getSession();
         try {
 
-            Order order = session
+            Order order = em
                     .createQuery("select o from Order o " +
                             "left join fetch o.consumer " +
                             "left join fetch o.orderItemsList oi " +

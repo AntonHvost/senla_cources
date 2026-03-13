@@ -10,5 +10,6 @@
     <include file="changes/003-create-order-table.xml" relativeToChangelogFile="true"/>
     <include file="changes/004-create-order-item-table.xml" relativeToChangelogFile="true"/>
     <include file="changes/005-create-book-request-table.xml" relativeToChangelogFile="true"/>
+    <include file="changes/006-insert-books.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
