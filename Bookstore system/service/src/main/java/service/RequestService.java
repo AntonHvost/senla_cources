@@ -2,6 +2,7 @@ package service;
 
 import domain.model.impl.Book;
 import domain.model.impl.Order;
+import jakarta.transaction.Transactional;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,9 +29,13 @@ public class RequestService {
         this.bookRequestRepository = bookRequestRepository;
     }
 
-    public BookRequest createRequest(Book bookId, Order orderId){
-        logger.debug("Creating request for book ID {} linked to order ID {}", bookId, orderId);
-        BookRequest req = new BookRequest(bookId, orderId);
+    @Transactional
+    public BookRequest createRequest(Book book, Order order){
+        logger.debug("Creating request for book ID {} linked to order ID {}", book, order);
+        BookRequest req = new BookRequest();
+        req.setRelatedOrder(order);
+        req.setReqBook(book);
+        logger.debug("Checking id order for request {}", req.getRelatedOrder().getId());
         bookRequestRepository.save(req);
         logger.info("Request ID {} created successfully", req.getId());
         return req;

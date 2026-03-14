@@ -2,15 +2,10 @@ package domain.model.impl;
 
 import domain.model.Identifiable;
 import enums.BookStatus;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
-@JsonAutoDetect
 
 @Entity
 @Table(name = "book", schema = "public")
@@ -19,7 +14,6 @@ public class Book implements Identifiable {
     private String title;
     private String author;
     private String description;
-    @JsonFormat (pattern = "yyyy-MM-dd", shape =  JsonFormat.Shape.STRING)
     private LocalDate publishDate;
     private BigDecimal price;
     private BookStatus status;
@@ -36,10 +30,7 @@ public class Book implements Identifiable {
 
     @Override
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY/*, generator = "book_seq"*/)
-    /*@SequenceGenerator(name = "book_seq",
-            sequenceName = "book_id_seq",
-            allocationSize = 1)*/
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public Long getId() {
         return id;
@@ -106,7 +97,6 @@ public class Book implements Identifiable {
     }
 
     @Transient
-    @JsonIgnore
     public boolean isAvailable(){
         return status == BookStatus.AVAILABLE;
     }

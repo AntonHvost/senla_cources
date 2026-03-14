@@ -17,7 +17,9 @@ public class BookRequestRepository extends BaseRepository<BookRequest, Long> imp
 
     @Override
     public List<BookRequest> findAllRequestWithBook() {
-        String qr = "select b from BookRequest b left join fetch b.reqBook";
+        String qr = "select b from BookRequest b " +
+                "left join fetch b.relatedOrder " +
+                "left join fetch b.reqBook";
 
         return em.createQuery(qr, BookRequest.class).getResultList();
     }

@@ -11,11 +11,9 @@ import facade.OrderFacade;
 import facade.ReportFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/order")
@@ -30,18 +28,15 @@ public class OrderController {
     }
 
     @PostMapping("/new")
-    public ResponseEntity<OrderResponseDto> createOrderTest(@RequestBody CreateOrderRequest request) {
-        OrderResponseDto resp = orderFacade.createOrderTest(request);
+    public ResponseEntity<OrderResponseDto> createOrder(@RequestBody CreateOrderRequest request) {
+        OrderResponseDto resp = orderFacade.createOrder(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
-    @PostMapping("/create")
-    public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
-        return  orderFacade.createOrder(bookIds, quantities, consumer);
-    }
-
-    public void cancelOrder(Long orderId) {
+    @PostMapping("/cancel/{id}")
+    public void cancelOrder(@PathVariable("id") Long orderId) {
         orderFacade.cancelOrder(orderId);
+        ResponseEntity.status(HttpStatus.ACCEPTED).body(orderId);
     }
 
     public void changeOrderStatus(OrderStatus orderStatus, Long orderId) {

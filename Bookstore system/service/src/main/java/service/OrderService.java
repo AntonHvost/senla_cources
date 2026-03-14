@@ -3,6 +3,8 @@ package service;
 import domain.model.impl.Book;
 import dto.request.CreateOrderRequest;
 import dto.response.OrderResponseDto;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import mapper.ResponseDtoMapper;
 import org.hibernate.Transaction;
@@ -58,8 +60,18 @@ public class OrderService {
 
 
     @Transactional
-    public OrderResponseDto createOrderTest(CreateOrderRequest request) {
+    public OrderResponseDto createOrder(CreateOrderRequest request) {
+        logger.debug("Creating new order for consumer: {}", request.getConsumer().getName());
+        logger.debug("Order items: {} books", request.getItems().size());
         Order order = new Order(ResponseDtoMapper.toConsumer(request.getConsumer()));
+        orderRepository.save(order);
+
+        logger.debug("DEBUG: Order ID before call = {}", order.getId());
+        if (order.getId() == null) {
+            throw new RuntimeException("CRITICAL: Order ID is null before creating request!");
+        }
+
+        logger.debug("Order ID {} created", order.getId());
 
         List<Book> books = bookInventoryService.getBooks();
         Map<Long, Book> bookMap = books.stream()
@@ -81,56 +93,11 @@ public class OrderService {
         }
 
         order.setTotalPrice(calculateTotalPrice(order));
-        orderRepository.save(order);
+        orderRepository.update(order);
+        logger.info("Order ID {} created successfully with total: {}", order.getId(), order.getTotalPrice());
 
         return ResponseDtoMapper.toOrderResponseDto(order);
 
-    }
-
-    @Transactional
-    public Order createOrder(long[] bookIds, int[] quantities, Consumer consumer) {
-        logger.info("Creating new order for consumer: {}", consumer.getName());
-        logger.debug("Order items: {} books", bookIds.length);
-        try {
-            logger.debug("Transaction started for order creation");
-            Order order = new Order(consumer);
-            orderRepository.save(order);
-
-            logger.debug("Order ID {} created", order.getId());
-
-            List<Book> books = bookInventoryService.getBooks();
-            Map<Long, Book> bookMap = books.stream()
-                    .collect(Collectors.toMap(Book::getId, Function.identity()));
-
-            for(int i = 0; i < bookIds.length; i++){
-
-                long bookId = bookIds[i];
-                int quantity = quantities[i];
-                Book book = bookMap.get(bookId);
-
-                OrderItem orderItem = new OrderItem();
-                orderItem.setOrder(order);
-                orderItem.setBook(book);
-                orderItem.setQuantity(quantity);
-
-                if(!book.isAvailable()){
-                    logger.warn("Book ID {} is unavailable, creating request", book.getId());
-                    requestService.createRequest(book, order);
-                }
-
-                order.addItem(orderItem);
-            }
-            order.setTotalPrice(calculateTotalPrice(order));
-            orderRepository.update(order);
-
-            logger.info("Order ID {} created successfully with total: {}", order.getId(), order.getTotalPrice());
-
-            return order;
-
-        } catch (Exception e) {
-            logger.error("Failed to create order for consumer: {}", consumer.getName(), e);
-            throw new RuntimeException(e.getMessage());
-        }
     }
 
     @Transactional

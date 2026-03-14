@@ -21,7 +21,11 @@ public class BookRequest implements Identifiable {
     private LocalDateTime deliveryDate;
     private RequestStatus status;
 
-    public  BookRequest() {}
+    public  BookRequest() {
+        this.requestDate = LocalDateTime.now();
+        this.deliveryDate = null;
+        this.status = RequestStatus.PENDING;
+    }
 
     public BookRequest(Book book, Order order) {
         this.reqBook = book;
@@ -46,14 +50,14 @@ public class BookRequest implements Identifiable {
         this.id = id;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH, CascadeType.PERSIST})
+    @JoinColumn(name = "book_id", nullable = false)
     public Book getReqBook () {
         return reqBook;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    @JoinColumn(name = "order_id")
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REFRESH,  CascadeType.PERSIST})
+    @JoinColumn(name = "order_id", nullable = false)
     public Order getRelatedOrder() {
         return relatedOrder;
     }

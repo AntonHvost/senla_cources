@@ -1,6 +1,9 @@
 package service;
 
 import domain.model.impl.*;
+import dto.response.BookRequestResponseDto;
+import jakarta.transaction.Transactional;
+import mapper.ResponseDtoMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
@@ -166,10 +169,13 @@ public class ReportService {
         );
     }
 
+    @Transactional
     public List<BookRequestSummary> getBookRequestList(SortByRequestBook sortParam) {
         logger.info("Fetching book request list, sorted by: {}", sortParam);
 
-        Map<Book, List<BookRequest>> groupedByBook = requestService.findAllRequestWithBook().stream()
+        List<BookRequest> requestList = requestService.findAllRequestWithBook();
+
+        Map<Book, List<BookRequest>> groupedByBook = requestList.stream()
                 .collect(Collectors.groupingBy(BookRequest::getReqBook));
 
         Comparator<BookRequestSummary> comparator = switch (sortParam) {
@@ -178,8 +184,11 @@ public class ReportService {
             default -> Comparator.comparing(summary -> summary.getBook().getId());
         };
 
+
+
         List<BookRequestSummary> result = groupedByBook.entrySet().stream()
-                .map(entry -> new BookRequestSummary(entry.getKey(), entry.getValue()))
+                .map(entry -> new BookRequestSummary(ResponseDtoMapper.toBookResponseDto(entry.getKey()),
+                        ResponseDtoMapper.toBookRequestResponseDtoList(entry.getValue())))
                 .sorted(comparator)
                 .collect(Collectors.toList());
 

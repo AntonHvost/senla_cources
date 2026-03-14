@@ -1,18 +1,14 @@
 package controller;
 
-import domain.model.impl.Book;
-import domain.model.impl.BookRequest;
 import dto.BookRequestSummary;
 import enums.SortByRequestBook;
 import facade.ReportFacade;
 import facade.RequestFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/book-request")

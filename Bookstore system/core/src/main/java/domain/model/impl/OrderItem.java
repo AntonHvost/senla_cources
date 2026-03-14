@@ -26,10 +26,7 @@ public class OrderItem implements Identifiable {
 
     @Override
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY/*, generator = "order_item_seq"*/)
-    /*@SequenceGenerator(name = "order_item_seq",
-            sequenceName = "order_item_id_seq",
-            allocationSize = 1)*/
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
