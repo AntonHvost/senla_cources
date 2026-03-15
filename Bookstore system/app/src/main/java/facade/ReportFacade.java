@@ -1,8 +1,6 @@
 package facade;
 
-import dto.BookRequestSummary;
-import dto.BookSummary;
-import dto.OrderSummary;
+import dto.response.*;
 import enums.SortByBook;
 import enums.SortByOrder;
 import enums.SortByRequestBook;
@@ -22,7 +20,7 @@ public class ReportFacade {
         this.reportService = reportService;
     }
 
-    public List<OrderSummary> getCompletedOrdersAtPeriod(String startDate, String endDate, SortByOrder sortParam) {
+    public List<OrderResponseDto> getCompletedOrdersAtPeriod(String startDate, String endDate, SortByOrder sortParam) {
         return reportService.getCompletedOrdersToPeriod(startDate, endDate, sortParam);
     }
 
@@ -30,19 +28,19 @@ public class ReportFacade {
         return reportService.getCompletedOrdersCount(startDate, endDate);
     }
 
-    public String getBookDescription(Long bookId) {
+    public BookDescriptionResponseDto getBookDescription(Long bookId) {
         return reportService.getDescriptionBook(bookId);
     }
 
-    public List<BookSummary> getBookCatalog(SortByBook sortParam){
+    public List<BookResponseDto> getBookCatalog(SortByBook sortParam){
         return reportService.getBookCatalog(sortParam);
     }
 
-    public Optional<OrderSummary> getOrderDetails(Long orderId) {
+    public Optional<OrderResponseDto> getOrderDetails(Long orderId) {
         return reportService.getOrderDetails(orderId);
     }
 
-    public List<OrderSummary> getOrderList(SortByOrder sortParam) {
+    public List<OrderResponseDto> getOrderList(SortByOrder sortParam) {
         return reportService.getOrderList(sortParam);
     }
 

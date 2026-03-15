@@ -1,7 +1,7 @@
 package service;
 
 import domain.model.impl.*;
-import dto.response.BookRequestResponseDto;
+import dto.response.*;
 import jakarta.transaction.Transactional;
 import mapper.ResponseDtoMapper;
 import org.slf4j.Logger;
@@ -13,9 +13,7 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import dto.*;
 import enums.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -46,23 +44,25 @@ public class ReportService {
         }
     }
 
-    public List<OrderSummary> getCompletedOrdersToPeriod(String startDate, String endDate, SortByOrder sortParam) {
+    public List<OrderResponseDto> getCompletedOrdersToPeriod(String startDate, String endDate, SortByOrder sortParam) {
         logger.info("Generating completed orders report from {} to {}, sorted by {}", startDate, endDate, sortParam);
 
         LocalDateTime startDateTime = parseToDateTime(startDate);
         LocalDateTime endDateTime = parseToDateTime(endDate);
 
-        Comparator<OrderSummary> comparator = switch (sortParam) {
-            case PRICE -> Comparator.comparing(OrderSummary::getPrice);
-            case COMPLETE_DATE -> Comparator.comparing(OrderSummary::getCompletedOrderDate);
+        Comparator<OrderResponseDto> comparator = switch (Optional.ofNullable(sortParam)
+                .orElse(SortByOrder.ID)) {
+            case ID -> Comparator.comparing(OrderResponseDto::getId);
+            case PRICE -> Comparator.comparing(OrderResponseDto::getTotalPrice);
+            case COMPLETE_DATE -> Comparator.comparing(OrderResponseDto::getCompletedOrderDate);
             default -> throw new IllegalArgumentException("Неверный параметр сортировки: " + sortParam);
         };
 
-        List<OrderSummary> result = orderService.getOrderList().stream()
+        List<OrderResponseDto> result = orderService.getOrderList().stream()
                 .filter(o -> o.getOrderStatus() == OrderStatus.COMPLETED)
                 .filter(o -> !o.getCompletedAtDate().isBefore(startDateTime))
                 .filter(o -> !o.getCompletedAtDate().isAfter(endDateTime))
-                .map(order -> new OrderSummary(order, null, null))
+                .map(ResponseDtoMapper::toOrderResponseDto)
                 .sorted(comparator)
                 .collect(Collectors.toList());
 
@@ -88,30 +88,28 @@ public class ReportService {
         return count;
     }
 
-    public String getDescriptionBook(long bookId) {
+    public BookDescriptionResponseDto getDescriptionBook(long bookId) {
         logger.debug("Fetching description for book ID: {}", bookId);
-        return bookInventoryService.findBookById(bookId).map(Book::getDescription).orElseGet(() -> {
+        return bookInventoryService.findBookById(bookId).map(book -> ResponseDtoMapper.toBookDescriptionResponse(book.getId(), book.getDescription())).orElseGet(() -> {
             logger.warn("No description for book ID: {}", bookId);
-            return "Книга с ID " + bookId + " не существует.";
+            return ResponseDtoMapper.toBookDescriptionResponse(null, "Книга с ID " + bookId + " не существует.");
         });
     }
 
-    public List<BookSummary> getBookCatalog(SortByBook sortParam) {
+    public List<BookResponseDto> getBookCatalog(SortByBook sortParam) {
         logger.info("Fetching book catalog, sorted by: {}", sortParam);
 
-        SortByBook checkParam = Optional.ofNullable(sortParam)
-                .orElse(SortByBook.ID);
-
-        Comparator<BookSummary> comparator = switch (checkParam) {
-            case ALPHABET -> Comparator.comparing(BookSummary::getTitle);
-            case PUBLICATION_DATE -> Comparator.comparing(BookSummary::getPublishDate);
-            case PRICE -> Comparator.comparing(BookSummary::getPrice);
-            case IN_STOCK -> Comparator.comparing(BookSummary::getStatus);
-            default -> Comparator.comparing(BookSummary::getId);
+        Comparator<BookResponseDto> comparator = switch (Optional.ofNullable(sortParam)
+                .orElse(SortByBook.ID)) {
+            case ALPHABET -> Comparator.comparing(BookResponseDto::getTitle);
+            case PUBLICATION_DATE -> Comparator.comparing(BookResponseDto::getPublishDate);
+            case PRICE -> Comparator.comparing(BookResponseDto::getPrice);
+            case IN_STOCK -> Comparator.comparing(BookResponseDto::getStatus);
+            default -> Comparator.comparing(BookResponseDto::getId);
         };
 
-        List<BookSummary> result = bookInventoryService.getBooks().stream()
-                .map(book -> new BookSummary(book, null))
+        List<BookResponseDto> result = bookInventoryService.getBooks().stream()
+                .map(ResponseDtoMapper::toBookResponseDto)
                 .sorted(comparator)
                 .collect(Collectors.toList());
 
@@ -120,19 +118,20 @@ public class ReportService {
         return result;
     }
 
-    public List<OrderSummary> getOrderList(SortByOrder sortParam) {
+    public List<OrderResponseDto> getOrderList(SortByOrder sortParam) {
         logger.info("Fetching order list, sorted by: {}", sortParam);
-        Comparator<OrderSummary> comparator = switch (sortParam) {
-            case COMPLETE_DATE -> Comparator.comparing(OrderSummary::getCompletedOrderDate, Comparator.naturalOrder());
-            case PRICE -> Comparator.comparing(OrderSummary::getPrice);
-            case STATUS -> Comparator.comparing(OrderSummary::getStatus);
-            default -> Comparator.comparing(OrderSummary::getId);
+        Comparator<OrderResponseDto> comparator = switch (Optional.ofNullable(sortParam)
+                .orElse(SortByOrder.ID)) {
+            case COMPLETE_DATE -> Comparator.comparing(OrderResponseDto::getCompletedOrderDate, Comparator.naturalOrder());
+            case PRICE -> Comparator.comparing(OrderResponseDto::getTotalPrice);
+            case STATUS -> Comparator.comparing(OrderResponseDto::getStatus);
+            default -> Comparator.comparing(OrderResponseDto::getId);
         };
 
         logger.debug("Fetched orders");
 
         return orderService.getOrderList().stream()
-                .map(order -> new OrderSummary(order, null, null))
+                .map(order -> ResponseDtoMapper.toOrderResponseDto(order, null, null))
                 .sorted(comparator)
                 .collect(Collectors.toList());
     }
@@ -155,18 +154,10 @@ public class ReportService {
         return profit;
     }
 
-    public Optional<OrderSummary> getOrderDetails(long orderId) {
+    public Optional<OrderResponseDto> getOrderDetails(long orderId) {
         logger.debug("Fetching details for order ID: {}", orderId);
         return orderService.findOrderDetailById(orderId)
-                .map(order -> {
-                    Consumer consumer = order.getConsumer();
-                    List<OrderItemSummary> items = order.getOrderItemsList().stream()
-                            .map(orderItem -> new OrderItemSummary(orderItem))
-                            .toList();
-                    logger.info("Order details retrieved for ID: {}", orderId);
-                    return new OrderSummary(order, consumer, items);
-                }
-        );
+                .map(order -> ResponseDtoMapper.toOrderResponseDto(order));
     }
 
     @Transactional
@@ -178,7 +169,8 @@ public class ReportService {
         Map<Book, List<BookRequest>> groupedByBook = requestList.stream()
                 .collect(Collectors.groupingBy(BookRequest::getReqBook));
 
-        Comparator<BookRequestSummary> comparator = switch (sortParam) {
+        Comparator<BookRequestSummary> comparator = switch (Optional.ofNullable(sortParam)
+                .orElse(SortByRequestBook.ID)) {
             case ALPHABET -> Comparator.comparing(summary -> summary.getBook().getTitle());
             case COUNT_REQUEST -> Comparator.comparingLong(BookRequestSummary::getRequestCount).reversed();
             default -> Comparator.comparing(summary -> summary.getBook().getId());
@@ -229,7 +221,8 @@ public class ReportService {
             }
         }
 
-        Comparator<BookSummary> comparator = switch (sortParam) {
+        Comparator<BookSummary> comparator = switch (Optional.ofNullable(sortParam)
+                .orElse(SortByUnsoldBook.ID)) {
             case DELIVERY_DATE -> Comparator.comparing(BookSummary::getDeliveryDate);
             case PRICE ->  Comparator.comparing(BookSummary::getPrice).reversed();
             default -> Comparator.comparing(BookSummary::getId);

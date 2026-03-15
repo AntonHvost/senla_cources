@@ -1,8 +1,5 @@
 package controller;
 
-import domain.model.impl.Consumer;
-import domain.model.impl.Order;
-import dto.OrderSummary;
 import dto.request.CreateOrderRequest;
 import dto.response.OrderResponseDto;
 import enums.OrderStatus;
@@ -16,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/order")
+@RequestMapping("api/orders")
 public class OrderController {
 
     private final OrderFacade orderFacade;
@@ -33,27 +30,34 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
-    @PostMapping("/cancel/{id}")
+    @PostMapping("/{id}/cancel")
     public void cancelOrder(@PathVariable("id") Long orderId) {
         orderFacade.cancelOrder(orderId);
         ResponseEntity.status(HttpStatus.ACCEPTED).body(orderId);
     }
 
-    public void changeOrderStatus(OrderStatus orderStatus, Long orderId) {
-        orderFacade.updStatusOrder(orderId, OrderStatus.NEW);
+    @PostMapping("/{id}/change-status")
+    public void changeOrderStatus(@RequestParam(value = "sortBy", required = false) OrderStatus orderStatus, @PathVariable("id") Long orderId) {
+        orderFacade.updStatusOrder(orderId, orderStatus);
+        ResponseEntity.status(HttpStatus.ACCEPTED).body(orderId);
     }
 
-    public boolean completeOrder(Long orderId) {
-        return orderFacade.completeOrder(orderId);
+    @PostMapping("/{id}/complete")
+    public ResponseEntity<Boolean> completeOrder(@PathVariable("id") Long orderId) {
+        Boolean result = orderFacade.completeOrder(orderId);
+        if(result) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(result);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(false);
     }
 
     @GetMapping
-    public ResponseEntity<List<OrderSummary>> getSortedOrders(@RequestParam(value = "sortBy", required = false) SortByOrder sortByOrder) {
+    public ResponseEntity<List<OrderResponseDto>> getSortedOrders(@RequestParam(value = "sortBy", required = false) SortByOrder sortByOrder) {
         return ResponseEntity.ok(reportFacade.getOrderList(sortByOrder));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderSummary> getOrder(@PathVariable("id") Long orderId) {
+    public ResponseEntity<OrderResponseDto> getOrder(@PathVariable("id") Long orderId) {
         return ResponseEntity.ok(reportFacade.getOrderDetails(orderId).get());
     }
 

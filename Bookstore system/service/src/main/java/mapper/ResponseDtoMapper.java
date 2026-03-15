@@ -1,10 +1,6 @@
 package mapper;
 
 import domain.model.impl.*;
-import dto.BookRequestSummary;
-import dto.BookSummary;
-import dto.OrderItemSummary;
-import dto.OrderSummary;
 import dto.request.ConsumerRequestDto;
 import dto.response.BookDescriptionResponseDto;
 import dto.response.BookRequestResponseDto;
@@ -19,9 +15,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-/**
- * Маппер для преобразования доменных объектов в DTO ответов API.
- */
 public final class ResponseDtoMapper {
 
     private ResponseDtoMapper() {
@@ -108,13 +101,6 @@ public final class ResponseDtoMapper {
         );
     }
 
-    public static List<OrderResponseDto> toOrderResponseDtoList(List<Order> list) {
-        if (list == null) return Collections.emptyList();
-        return list.stream()
-                .map(ResponseDtoMapper::toOrderResponseDto)
-                .collect(Collectors.toList());
-    }
-
     public static OrderResponseDto toOrderResponseDto(Order order, Consumer consumer, List<OrderItem> items) {
         if (order == null) return null;
         ConsumerResponseDto consumerDto = toConsumerResponseDto(consumer);
@@ -130,6 +116,13 @@ public final class ResponseDtoMapper {
                 order.getTotalPrice(),
                 order.getOrderStatus()
         );
+    }
+
+    public static List<OrderResponseDto> toOrderResponseDtoList(List<Order> list) {
+        if (list == null) return Collections.emptyList();
+        return list.stream()
+                .map(ResponseDtoMapper::toOrderResponseDto)
+                .collect(Collectors.toList());
     }
 
     public static BookRequestResponseDto toBookRequestResponseDto(BookRequest summary) {

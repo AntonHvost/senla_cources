@@ -1,4 +1,4 @@
-package dto;
+package dto.response;
 
 import enums.BookStatus;
 import domain.model.impl.Book;

@@ -1,9 +1,4 @@
-package dto;
-
-import domain.model.impl.Book;
-import domain.model.impl.BookRequest;
-import dto.response.BookRequestResponseDto;
-import dto.response.BookResponseDto;
+package dto.response;
 
 import java.util.List;
 

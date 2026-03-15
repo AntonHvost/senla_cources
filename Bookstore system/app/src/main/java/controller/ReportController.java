@@ -1,11 +1,10 @@
 package controller;
 
-import dto.OrderSummary;
+import dto.response.OrderResponseDto;
 import enums.SortByOrder;
 
 import facade.ReportFacade;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,17 +24,17 @@ public class ReportController {
     }
 
     @GetMapping("/complete-orders")
-    public ResponseEntity<List<OrderSummary>> getCompletedOrderAtPeriod(@RequestParam(value = "sDate") String startDate, @RequestParam(value = "eDate") String endDate, @RequestParam(required = false) SortByOrder sortByOrder) {
+    public ResponseEntity<List<OrderResponseDto>> getCompletedOrderAtPeriod(@RequestParam(value = "sDate") String startDate, @RequestParam(value = "eDate") String endDate, @RequestParam(required = false) SortByOrder sortByOrder) {
         return ResponseEntity.ok(reportFacade.getCompletedOrdersAtPeriod(startDate, endDate, sortByOrder));
     }
 
     @GetMapping("/count-complete-orders")
-    public ResponseEntity<Integer> getCountCompletedOrdersAtPeriod(@RequestParam String startDate, @RequestParam String endDate) {
+    public ResponseEntity<Integer> getCountCompletedOrdersAtPeriod(@RequestParam(value = "sDate") String startDate, @RequestParam(value = "eDate") String endDate) {
         return ResponseEntity.ok(reportFacade.getCountCompletedOrdersAtPeriod(startDate, endDate));
     }
 
     @GetMapping("/profit")
-    public ResponseEntity<BigDecimal> getProfitAtPeriod(@RequestParam String startDate, @RequestParam String endDate) {
+    public ResponseEntity<BigDecimal> getProfitAtPeriod(@RequestParam(value = "eDate") String startDate, @RequestParam(value = "eDate") String endDate) {
         return ResponseEntity.ok(reportFacade.getProfitAtPeriod(startDate, endDate));
     }
 }

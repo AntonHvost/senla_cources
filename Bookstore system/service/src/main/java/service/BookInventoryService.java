@@ -34,13 +34,14 @@ public class BookInventoryService {
         return bookRepository.findById(bookId);
     }
 
-    public void restockBook(long bookId){
+    public boolean restockBook(long bookId){
         logger.info("Restocking book ID: {}", bookId);
         bookRepository.findById(bookId).ifPresent(book -> {
             book.setStatus(BookStatus.AVAILABLE);
             bookRepository.update(book);
             logger.info("Book ID {} marked as AVAILABLE", bookId);
         });
+        return true;
     }
 
     public void saveBook(Book book){

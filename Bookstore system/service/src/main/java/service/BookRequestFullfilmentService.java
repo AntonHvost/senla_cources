@@ -28,7 +28,7 @@ public class BookRequestFullfilmentService {
     }
 
     @Transactional
-    public void fulfillRequests(long bookId){
+    public boolean fulfillRequests(long bookId){
         logger.info("Fulfilling pending requests for book ID: {}", bookId);
         try {
             List<BookRequest> bookRequests = requestService.findPendingRequestsByBookId(bookId);
@@ -51,6 +51,7 @@ public class BookRequestFullfilmentService {
                 } else {
                     System.out.println("Заказ №" + orderId + " был закрыт, либо отсутствует!");
                     logger.warn("Order ID {} not found during request fulfillment", orderId);
+                    return false;
                 }
             }
             logger.info("Successfully fulfilled {} requests for book ID {}", bookRequests.size(), bookId);
@@ -58,6 +59,6 @@ public class BookRequestFullfilmentService {
             logger.error("Error fulfilling requests for book ID {}", bookId, e);
             throw new RuntimeException("Request fulfillment failed", e);
         }
-
+        return true;
     }
 }

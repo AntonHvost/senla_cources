@@ -53,7 +53,7 @@ public class RequestService {
     public List<BookRequest> findPendingRequestsByBookId(Long bookId) {
         logger.debug("Fetching pending requests for book ID: {}", bookId);
         List<BookRequest> result = bookRequestRepository.findAll().stream()
-                .filter(r -> r.getReqBook().equals(bookId))
+                .filter(r -> r.getReqBook().getId().equals(bookId))
                 .filter(r -> r.getStatus() == RequestStatus.PENDING)
                 .collect(Collectors.toList());
         logger.debug("Found {} pending requests for book ID {}", result.size(), bookId);

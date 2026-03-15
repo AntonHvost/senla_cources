@@ -1,12 +1,13 @@
 package controller;
 
-import dto.BookSummary;
+import dto.response.BookResponseDto;
+import dto.response.BookSummary;
+import dto.response.BookDescriptionResponseDto;
 import enums.SortByBook;
 import enums.SortByUnsoldBook;
 import facade.BookFacade;
 import facade.ReportFacade;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class BookController {
     }
 
     @GetMapping
-    public ResponseEntity<List<BookSummary>> getSortedBooks(@RequestParam(value = "sortByBook", required = false) SortByBook sortByBook) {
+    public ResponseEntity<List<BookResponseDto>> getSortedBooks(@RequestParam(value = "sortByBook", required = false) SortByBook sortByBook) {
         return ResponseEntity.ok (reportFacade.getBookCatalog(sortByBook));
     }
 
@@ -33,8 +34,8 @@ public class BookController {
     }
 
     @GetMapping("/get-description/{id}")
-    public ResponseEntity<String> getBookDescription(@PathVariable("id") Long bookId) {
-        String description = reportFacade.getBookDescription(bookId);
+    public ResponseEntity<BookDescriptionResponseDto> getBookDescription(@PathVariable("id") Long bookId) {
+        BookDescriptionResponseDto description = reportFacade.getBookDescription(bookId);
         if (description == null) {
             return ResponseEntity.notFound().build();
         }

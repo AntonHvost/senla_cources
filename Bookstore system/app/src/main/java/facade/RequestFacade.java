@@ -32,9 +32,9 @@ public class RequestFacade {
        return Optional.of(requestService.createRequest(bookId, null));
     }
 
-    public void restockBook (Long bookId) {
+    public boolean restockBook (Long bookId) {
         bookInventoryService.restockBook(bookId);
-        bookRequestFullfilmentService.fulfillRequests(bookId);
+        return bookRequestFullfilmentService.fulfillRequests(bookId);
 
     }
 
