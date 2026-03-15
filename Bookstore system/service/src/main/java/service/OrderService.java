@@ -1,0 +1,183 @@
+package service;
+
+import domain.model.impl.Book;
+import dto.request.CreateOrderRequest;
+import dto.response.OrderResponseDto;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
+import mapper.ResponseDtoMapper;
+import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import repository.OrderRepositoryInterface;
+import repository.Repository;
+import util.HibernateUtil;
+import domain.model.impl.Consumer;
+import domain.model.impl.Order;
+import domain.model.impl.OrderItem;
+import repository.impl.OrderRepository;
+import enums.OrderStatus;
+import enums.RequestStatus;
+
+@Service
+public class OrderService {
+
+    private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
+
+    private final BookInventoryService bookInventoryService;
+    private final RequestService requestService;
+
+    private final OrderRepositoryInterface orderRepository;
+
+    public OrderService(RequestService requestService,
+                        BookInventoryService bookInventoryService,
+                        OrderRepositoryInterface orderRepository
+    ) {
+        this.requestService = requestService;
+        this.bookInventoryService = bookInventoryService;
+        this.orderRepository = orderRepository;
+    }
+
+    private BigDecimal calculateTotalPrice(Order order) {
+        BigDecimal totalPrice;
+        totalPrice = order.getOrderItemsList().stream()
+                .map(orderItem -> orderItem.getBook().getPrice().multiply(BigDecimal.valueOf(orderItem.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        logger.debug("Calculated total price: {}", totalPrice);
+        return totalPrice;
+    }
+
+
+    @Transactional
+    public OrderResponseDto createOrder(CreateOrderRequest request) {
+        logger.debug("Creating new order for consumer: {}", request.getConsumer().getName());
+        logger.debug("Order items: {} books", request.getItems().size());
+        Order order = new Order(ResponseDtoMapper.toConsumer(request.getConsumer()));
+        orderRepository.save(order);
+
+        logger.debug("DEBUG: Order ID before call = {}", order.getId());
+        if (order.getId() == null) {
+            throw new RuntimeException("CRITICAL: Order ID is null before creating request!");
+        }
+
+        logger.debug("Order ID {} created", order.getId());
+
+        List<Book> books = bookInventoryService.getBooks();
+        Map<Long, Book> bookMap = books.stream()
+                .collect(Collectors.toMap(Book::getId, Function.identity()));
+
+        for (var itemReq : request.getItems()) {
+            Book book = bookMap.get(itemReq.getBookId());
+            int quantity = itemReq.getQuantity();
+
+            OrderItem orderItem = new OrderItem();
+            orderItem.setOrder(order);
+            orderItem.setBook(book);
+            orderItem.setQuantity(quantity);
+            if(!book.isAvailable()){
+                logger.warn("Book ID {} is unavailable, creating request", book.getId());
+                requestService.createRequest(book, order);
+            }
+            order.addItem(orderItem);
+        }
+
+        order.setTotalPrice(calculateTotalPrice(order));
+        orderRepository.update(order);
+        logger.info("Order ID {} created successfully with total: {}", order.getId(), order.getTotalPrice());
+
+        return ResponseDtoMapper.toOrderResponseDto(order);
+
+    }
+
+    @Transactional
+    public boolean completeOrder(Long orderId) {
+        logger.info("Attempting to complete order ID: {}", orderId);
+        try {
+            boolean result = orderRepository.findById(orderId)
+                    .filter(order -> requestService.getRequestStatusByOrderId(orderId) == RequestStatus.FULFILLED || requestService.getRequestStatusByOrderId(orderId) == null)
+                    .filter(Order::canBeCompleted)
+                    .map(order ->
+                    {
+                        order.setOrderStatus(OrderStatus.COMPLETED);
+                        order.setCompletedAtDate(LocalDateTime.now());
+                        orderRepository.update(order);
+                        logger.info("Order ID {} completed successfully", orderId);
+                        return true;
+                    })
+                    .orElse(false);
+            return result;
+        } catch (Exception e) {
+            logger.error("Failed to complete order for order ID: {}", orderId, e);
+        }
+        return false;
+    }
+
+    @Transactional
+    public void cancelOrder(Long orderId) {
+        logger.info("Cancelling order ID: {}", orderId);
+        try {
+            orderRepository.findById(orderId).ifPresent(order -> {
+                order.setOrderStatus(OrderStatus.CANCELLED);
+                order.setCompletedAtDate(LocalDateTime.now());
+                orderRepository.update(order);
+                logger.info("Order ID {} cancelled", orderId);
+            });
+        } catch (Exception e) {
+            logger.error("Failed to cancel order for order ID: {}", orderId, e);
+        }
+    }
+
+    public Optional<Order> findOrderById(Long orderId) {
+        return orderRepository.findById(orderId);
+    }
+
+    public Optional<Order> findOrderDetailById(Long orderId) {
+        return orderRepository.findOrderWithConsumerAndOrderItems(orderId);
+    }
+
+    public List<Order> getOrderList() {
+        logger.debug("Fetching all orders");
+        return orderRepository.findAll();
+    }
+
+    @Transactional
+    public void updateOrderStatus(long id, OrderStatus status) {
+        logger.info("Updating order ID {} status to: {}", id, status);
+        try {
+            orderRepository.findById(id).ifPresent(order -> {
+                order.setOrderStatus(status);
+                if (order.getOrderStatus() == OrderStatus.COMPLETED || order.getOrderStatus() == OrderStatus.CANCELLED) {
+                    order.setCompletedAtDate(LocalDateTime.now());
+                }
+                orderRepository.update(order);
+                logger.debug("Order ID {} status updated", id);
+            });
+            logger.info("Order ID {} updated successfully", id);
+        } catch (Exception e) {
+            logger.error("Failed to update order status for order ID: {}", id, e);
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    public void saveOrder(Order order) {
+        logger.debug("Saving order: ID={}", order.getId());
+        orderRepository.save(order);
+    }
+
+    public void updateOrder(Order order){
+        logger.debug("Updating order: ID={}", order.getId());
+        orderRepository.update(order);
+    }
+
+}

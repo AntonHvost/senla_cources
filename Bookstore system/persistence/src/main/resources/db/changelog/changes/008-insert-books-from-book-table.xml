@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="8" author="bookstore-team">
+        <comment>Добавление книг в БД</comment>
+
+        <insert tableName="book">
+            <column name="id" valueNumeric="1"/>
+            <column name="title" value="Война и мир"/>
+            <column name="author" value="Лев Толстой"/>
+            <column name="description" value="Эпический роман о русском обществе и войне 1812 года"/>
+            <column name="publish_date" valueDate="1869-01-01"/>
+            <column name="price" valueNumeric="1200.5"/>
+            <column name="status" value="AVAILABLE"/>
+        </insert>
+        <insert tableName="book">
+            <column name="id" valueNumeric="2"/>
+            <column name="title" value="Преступление и наказание"/>
+            <column name="author" value="Фёдор Достоевский"/>
+            <column name="description" value="Роман о молодом студенте, совершившем убийство"/>
+            <column name="publish_date" valueDate="1866-01-01"/>
+            <column name="price" valueNumeric="950.0"/>
+            <column name="status" value="AVAILABLE"/>
+        </insert>
+        <insert tableName="book">
+            <column name="id" valueNumeric="3"/>
+            <column name="title" value="Мастер и Маргарита"/>
+            <column name="author" value="Михаил Булгаков"/>
+            <column name="description" value="Роман о дьяволе, пришедшем в советскую Москву"/>
+            <column name="publish_date" valueDate="1967-01-01"/>
+            <column name="price" valueNumeric="1100.75"/>
+            <column name="status" value="AVAILABLE"/>
+        </insert>
+        <insert tableName="book">
+            <column name="id" valueNumeric="4"/>
+            <column name="title" value="Евгений Онегин"/>
+            <column name="author" value="Александр Пушкин"/>
+            <column name="description" value="Роман в стихах"/>
+            <column name="publish_date" valueDate="1833-01-01"/>
+            <column name="price" valueNumeric="750.25"/>
+            <column name="status" value="AVAILABLE"/>
+        </insert>
+        <insert tableName="book">
+            <column name="id" valueNumeric="5"/>
+            <column name="title" value="Герой нашего времени"/>
+            <column name="author" value="Михаил Лермонтов"/>
+            <column name="description" value="Роман, состоящий из нескольких повестей"/>
+            <column name="publish_date" valueDate="1840-01-01"/>
+            <column name="price" valueNumeric="680.0"/>
+            <column name="status" value="OUT_OF_STOCK"/>
+        </insert>
+        <insert tableName="book">
+            <column name="id" valueNumeric="6"/>
+            <column name="title" value="Анна Каренина"/>
+            <column name="author" value="Лев Толстой"/>
+            <column name="description" value="Роман о жизни русского дворянства"/>
+            <column name="publish_date" valueDate="1878-01-01"/>
+            <column name="price" valueNumeric="1050.0"/>
+            <column name="status" value="AVAILABLE"/>
+        </insert>
+        <insert tableName="book">
+            <column name="id" valueNumeric="7"/>
+            <column name="title" value="Братья Карамазовы"/>
+            <column name="author" value="Фёдор Достоевский"/>
+            <column name="description" value="Философский роман о вере, морали и семье"/>
+            <column name="publish_date" valueDate="1880-01-01"/>
+            <column name="price" valueNumeric="1300.0"/>
+            <column name="status" value="AVAILABLE"/>
+        </insert>
+        <insert tableName="book">
+            <column name="id" valueNumeric="8"/>
+            <column name="title" value="1984"/>
+            <column name="author" value="Джордж Оруэлл"/>
+            <column name="description" value="Антиутопия о тоталитарном государстве"/>
+            <column name="publish_date" valueDate="1949-06-08"/>
+            <column name="price" valueNumeric="850.5"/>
+            <column name="status" value="AVAILABLE"/>
+        </insert>
+        <insert tableName="book">
+            <column name="id" valueNumeric="9"/>
+            <column name="title" value="Убить пересмешника"/>
+            <column name="author" value="Харпер Ли"/>
+            <column name="description" value="Роман о расизме и предрассудках в южном США"/>
+            <column name="publish_date" valueDate="1960-07-11"/>
+            <column name="price" valueNumeric="900.0"/>
+            <column name="status" value="AVAILABLE"/>
+        </insert>
+        <insert tableName="book">
+            <column name="id" valueNumeric="10"/>
+            <column name="title" value="Великий Гэтсби"/>
+            <column name="author" value="Фрэнсис Скотт Фицджеральд"/>
+            <column name="description" value="Роман о жизни и любви в эпоху джаза"/>
+            <column name="publish_date" valueDate="1925-04-10"/>
+            <column name="price" valueNumeric="800.25"/>
+            <column name="status" value="OUT_OF_STOCK"/>
+        </insert>
+        <sql dbms="postgresql">
+            SELECT setval('book_id_seq', 10);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
