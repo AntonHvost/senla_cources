@@ -1,0 +1,18 @@
+16:37:53.422 [main] INFO  application.Main - Starting Application
+16:37:56.351 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.9.Final
+16:37:56.701 [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+16:37:56.778 [main] WARN  o.hibernate.orm.connections.pooling - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+16:37:56.778 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: using driver [org.postgresql.Driver] at URL [jdbc:postgresql://localhost:5432/bookstore]
+16:37:56.778 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001001: Connection properties: {password=****, user=postgres}
+16:37:56.779 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001003: Autocommit mode: false
+16:37:56.781 [main] INFO  o.h.e.j.c.i.DriverManagerConnectionProviderImpl - HHH000115: Hibernate connection pool size: 5 (min=1)
+16:37:56.854 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+16:37:57.388 [main] INFO  o.hibernate.orm.connections.access - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@7c8df667] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+16:37:57.657 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+16:37:57.776 [main] DEBUG application.Main - DI Container initialized with beans
+16:37:57.777 [main] INFO  application.Main - Configured Services...
+16:37:57.777 [main] INFO  application.Main - Configuration loaded
+16:37:57.777 [main] INFO  application.Main - Launching main menu...
+16:37:57.780 [main] INFO  application.Main - Menu loaded
+16:38:43.574 [main] INFO  application.Main - Closing Application
+16:38:43.574 [main] INFO  application.Main - Application closed correctly

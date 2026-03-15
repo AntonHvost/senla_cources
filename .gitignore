@@ -10,3 +10,9 @@ Task 9/out/
 !**/src/main/**/target/
 !**/src/test/**/target/
 Bookstore system/.vscode/settings.json
+Bookstore system/*/target/
+
+HelloWorld/.gitignore
+HelloWorld/.idea
+Bookstore system/persistence/persistence.iml
+
