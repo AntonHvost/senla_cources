@@ -5,18 +5,20 @@ import liquibase.database.Database;
 import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.resource.ClassLoaderResourceAccessor;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.ResourceBundle;
 
+@Component
 public class DatabaseMigrator {
 
     private static final String CHANGELOG_PATH = "db/changelog/db.changelog-master.xml";
 
     private static final ResourceBundle config = ResourceBundle.getBundle("liquibase");
 
-    public static void migrate() {
+    public void migrate() {
         Connection connection = null;
         try {
             String url = config.getString("url");

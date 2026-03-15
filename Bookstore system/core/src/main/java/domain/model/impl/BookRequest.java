@@ -62,7 +62,7 @@ public class BookRequest implements Identifiable {
         return relatedOrder;
     }
 
-    @Column(name = "create_at")
+    @Column(name = "created_at")
     public LocalDateTime getRequestDate () {
         return requestDate;
     }
