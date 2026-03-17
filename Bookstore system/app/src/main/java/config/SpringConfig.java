@@ -16,7 +16,7 @@ import util.DatabaseMigrator;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-@ComponentScan(basePackages = {"repository.impl","service", "facade", "util"})
+@ComponentScan(basePackages = {"repository.impl","service", "controller", "facade"})
 @PropertySource("classpath:app.properties")
 @EnableTransactionManagement
 public class SpringConfig {

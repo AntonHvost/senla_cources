@@ -3,11 +3,7 @@ package service;
 import domain.model.impl.Book;
 import dto.request.CreateOrderRequest;
 import dto.response.OrderResponseDto;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import mapper.ResponseDtoMapper;
-import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.math.BigDecimal;
@@ -18,15 +14,11 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import repository.OrderRepositoryInterface;
-import repository.Repository;
-import util.HibernateUtil;
-import domain.model.impl.Consumer;
 import domain.model.impl.Order;
 import domain.model.impl.OrderItem;
-import repository.impl.OrderRepository;
 import enums.OrderStatus;
 import enums.RequestStatus;
 

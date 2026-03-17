@@ -2,8 +2,6 @@ package service;
 
 import domain.model.impl.Book;
 import domain.model.impl.Order;
-import jakarta.transaction.Transactional;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,10 +10,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import domain.model.impl.BookRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import repository.BookRequestRepositoryInterface;
-import repository.impl.BookRequestRepository;
 import enums.RequestStatus;
 
 
