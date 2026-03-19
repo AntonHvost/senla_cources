@@ -4,7 +4,7 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
-    <changeSet id="10" author="bookstore-team">
+    <changeSet id="9" author="bookstore-team">
         <comment>Создание таблицы пользователя</comment>
             <createTable tableName="user">
                 <column name="id" type="bigserial">

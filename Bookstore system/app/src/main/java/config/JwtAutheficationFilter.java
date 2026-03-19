@@ -9,14 +9,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import service.JwtService;
 import service.UserService;
+import service.UserServiceInterface;
 
 import java.io.IOException;
 
@@ -24,29 +22,36 @@ import java.io.IOException;
 public class JwtAutheficationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final UserService userService;
+    private final UserServiceInterface userService;
 
-    public JwtAutheficationFilter(JwtService jwtService, UserService userService) {
+    public JwtAutheficationFilter(JwtService jwtService, UserServiceInterface userService) {
         this.jwtService = jwtService;
         this.userService = userService;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request,
+                                    HttpServletResponse response,
+                                    FilterChain filterChain) throws ServletException, IOException {
+        System.out.println(">>> [FILTER] Request URI: " + request.getRequestURI());
         final String authHeader = request.getHeader("Authorization");
-        String jwt;
+        System.out.println(">>> [FILTER] Auth Header: " + authHeader);
+        String jwt = jwtService.getJwtFromCookie(request);
         final String email;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ") || request.getRequestURI().contains("/login")) {
-            filterChain.doFilter(request, response);
+            System.out.println(">>> [FILTER] No Bearer token found. Continuing chain as ANONYMOUS.");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"error\": \"No Token Provided\"}");
+            //filterChain.doFilter(request, response);
             return;
         }
 
-        if(jwt == null && authHeader.startsWith("Bearer ")) {
+        if (jwt == null && authHeader.startsWith("Bearer ")) {
             jwt = authHeader.substring(7);
         }
 
-        jwt = authHeader;
         try {
             email = jwtService.extractUsername(jwt);
 
@@ -55,6 +60,7 @@ public class JwtAutheficationFilter extends OncePerRequestFilter {
                 UserDetails userDetails = userService.loadUserByUsername(email);
 
                 if (jwtService.isValidToken(jwt, userDetails)) {
+                    System.out.println(">>> [FILTER] Token VALID. Setting Authentication for user: " + email);
                     SecurityContext context = SecurityContextHolder.createEmptyContext();
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                             userDetails,
@@ -64,10 +70,17 @@ public class JwtAutheficationFilter extends OncePerRequestFilter {
                     authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     context.setAuthentication(authentication);
                     SecurityContextHolder.setContext(context);
+                } else {
+                    System.out.println(">>> [FILTER] Token INVALID. NOT setting authentication.");
                 }
             }
-
-        } catch (Exception e) {}
+        } catch (Exception e) {
+            System.out.println(">>> [FILTER] EXCEPTION caught: " + e.getMessage());
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid or expired token");
+        }
+        System.out.println(">>> [FILTER] Before chain.doFilter. Context Auth: " + SecurityContextHolder.getContext().getAuthentication());
         filterChain.doFilter(request, response);
+        System.out.println(">>> [FILTER] After chain.doFilter finished.");
+
     }
 }

@@ -13,6 +13,5 @@
     <include file="changes/006-insert-books.xml" relativeToChangelogFile="true"/>
     <include file="changes/007-remove-data-book-table.xml" relativeToChangelogFile="true"/>
     <include file="changes/008-insert-books-from-book-table.xml" relativeToChangelogFile="true"/>
-    <!--<include file="changes/009-alter-table-change-nextval-id.xml" relativeToChangelogFile="true"/>!-->
-
+    <include file="changes/009-create-user-table.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

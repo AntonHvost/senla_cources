@@ -8,6 +8,7 @@ import facade.OrderFacade;
 import facade.ReportFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,24 +26,28 @@ public class OrderController {
     }
 
     @PostMapping("/new")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ResponseEntity<OrderResponseDto> createOrder(@RequestBody CreateOrderRequest request) {
         OrderResponseDto resp = orderFacade.createOrder(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(resp);
     }
 
     @PostMapping("/{id}/cancel")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public void cancelOrder(@PathVariable("id") Long orderId) {
         orderFacade.cancelOrder(orderId);
         ResponseEntity.status(HttpStatus.ACCEPTED).body(orderId);
     }
 
     @PostMapping("/{id}/change-status")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void changeOrderStatus(@RequestParam(value = "sortBy", required = false) OrderStatus orderStatus, @PathVariable("id") Long orderId) {
         orderFacade.updStatusOrder(orderId, orderStatus);
         ResponseEntity.status(HttpStatus.ACCEPTED).body(orderId);
     }
 
     @PostMapping("/{id}/complete")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Boolean> completeOrder(@PathVariable("id") Long orderId) {
         Boolean result = orderFacade.completeOrder(orderId);
         if(result) {
@@ -52,11 +57,13 @@ public class OrderController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ResponseEntity<List<OrderResponseDto>> getSortedOrders(@RequestParam(value = "sortBy", required = false) SortByOrder sortByOrder) {
         return ResponseEntity.ok(reportFacade.getOrderList(sortByOrder));
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<OrderResponseDto> getOrder(@PathVariable("id") Long orderId) {
         return ResponseEntity.ok(reportFacade.getOrderDetails(orderId).get());
     }

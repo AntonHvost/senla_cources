@@ -6,6 +6,7 @@ import facade.ReportFacade;
 import facade.RequestFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class BookRequestController {
     }*/
 
     @PostMapping("/{id}/restock")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<String> restockBook(@PathVariable("id") Long bookId) {
         boolean result = requestFacade.restockBook(bookId);
         if (result) {
@@ -36,6 +38,7 @@ public class BookRequestController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     public ResponseEntity<List<BookRequestSummary>> getSortedRequests(@RequestParam(value = "sortBy", required = false) SortByRequestBook sortByRequestBook) {
         return ResponseEntity.ok(reportFacade.getRequestList(sortByRequestBook));
     }

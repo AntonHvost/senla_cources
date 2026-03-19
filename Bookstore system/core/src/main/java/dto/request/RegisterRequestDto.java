@@ -1,14 +1,18 @@
 package dto.request;
 
-public class LoginRequestDto {
+import enums.Role;
+
+public class RegisterRequestDto {
     private String email;
     private String password;
+    private Role role;
 
-    public LoginRequestDto() {}
+    public RegisterRequestDto() {}
 
-    public LoginRequestDto(String email, String password) {
+    public RegisterRequestDto(String email, String password, Role role) {
         this.email = email;
         this.password = password;
+        this.role = role;
     }
 
     public String getEmail() {
@@ -24,5 +28,13 @@ public class LoginRequestDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

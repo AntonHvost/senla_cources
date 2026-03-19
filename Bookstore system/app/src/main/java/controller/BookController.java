@@ -8,6 +8,7 @@ import enums.SortByUnsoldBook;
 import facade.BookFacade;
 import facade.ReportFacade;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class BookController {
     }
 
     @GetMapping("/unsold")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<BookSummary>> getSortedUnsoldBooks(@RequestParam(value = "sortByUnsoldBook", required = false) SortByUnsoldBook sortByUnsoldBook) {
         return ResponseEntity.ok(reportFacade.getUnsoldBooks(sortByUnsoldBook));
     }
