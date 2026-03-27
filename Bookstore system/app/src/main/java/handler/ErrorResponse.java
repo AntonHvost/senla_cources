@@ -1,4 +1,4 @@
-package exception;
+package handler;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 

@@ -1,7 +1,6 @@
 package config;
 
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -28,12 +27,13 @@ import service.UserServiceInterface;
 public class AppSecurityConfig {
 
     private final UserServiceInterface userService;
+    private final LogoutFilter logoutFilter;
     private final JwtAutheficationFilter jwtAutheficationFilter;
 
-    @Autowired
-    public AppSecurityConfig(UserServiceInterface userService, JwtAutheficationFilter jwtAutheficationFilter) {
+    public AppSecurityConfig(UserServiceInterface userService, JwtAutheficationFilter jwtAutheficationFilter, LogoutFilter logoutFilter) {
         this.userService = userService;
         this.jwtAutheficationFilter = jwtAutheficationFilter;
+        this.logoutFilter = logoutFilter;
     }
 
     @Bean
@@ -60,14 +60,14 @@ public class AppSecurityConfig {
                         .anyRequest().authenticated())
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint((request, response, authException) -> {
-                            System.out.println(">>> [ENTRY POINT] Triggered! User is not authenticated.");
                             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                             response.setContentType("application/json");
                             response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"Full authentication is required\"}");
                         }))
                 .sessionManagement(sesion -> sesion
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAutheficationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAutheficationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(logoutFilter, JwtAutheficationFilter.class);
         return http.build();
     }
 

@@ -54,8 +54,8 @@ public class RefreshTokenService {
         }
 
         if(token.getExpiryDate().compareTo(Instant.now()) < 0) {
-            refreshTokenRepository.delete(token.getId());
-            throw new RuntimeException("Invalid RefreshToken skibidi toilet");
+            refreshTokenRepository.delete(token);
+            throw new RuntimeException("Invalid RefreshToken");
         }
         return token;
     }
@@ -69,7 +69,7 @@ public class RefreshTokenService {
         User user = refreshTokenRepository.findByToken(request.getToken())
                 .map(this::verifyExpiration)
                 .map(RefreshToken::getUser)
-                .orElseThrow(() -> new RuntimeException("Invalid RefreshTokennnn"));
+                .orElseThrow(() -> new RuntimeException("Invalid RefreshToken"));
 
         System.out.println("User info:" + user.getUsername() + user.getAuthorities());
         String token = jwtService.generateToken(user);
@@ -96,7 +96,7 @@ public class RefreshTokenService {
     }
 
     public void deleteByToken(String refreshToken) {
-        refreshTokenRepository.findByToken(refreshToken).ifPresent(token -> refreshTokenRepository.delete(token.getId()));
+        refreshTokenRepository.findByToken(refreshToken).ifPresent(token -> refreshTokenRepository.delete(token));
     }
 
     public ResponseCookie getCleanRefreshTokenCookie() {

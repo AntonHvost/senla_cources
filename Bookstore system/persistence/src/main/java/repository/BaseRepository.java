@@ -46,7 +46,7 @@ public abstract class BaseRepository<T extends Identifiable, PK extends Serializ
 
     @Transactional
     @Override
-    public void delete(PK id) {
-        em.remove(id);
+    public void delete(T entity) {
+        em.remove(em.contains(entity) ? entity : em.merge(entity));
     }
 }

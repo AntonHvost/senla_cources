@@ -9,5 +9,5 @@ public interface Repository<T,PK extends Serializable> {
     Optional<T> findById(PK id);
     PK save(T entity);
     void update(T entity);
-    void delete(PK id);
+    void delete(T entity);
 }
