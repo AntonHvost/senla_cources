@@ -21,7 +21,7 @@ public class ConsumerController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<Consumer>> getConsumers() {
         return ResponseEntity.ok(consumerFacade.getConsumers());
     }

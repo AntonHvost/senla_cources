@@ -39,12 +39,13 @@ public class JwtAutheficationFilter extends OncePerRequestFilter {
         String jwt = jwtService.getJwtFromCookie(request);
         final String email;
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ") || request.getRequestURI().contains("/login")) {
-            System.out.println(">>> [FILTER] No Bearer token found. Continuing chain as ANONYMOUS.");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            response.setContentType("application/json");
-            response.getWriter().write("{\"error\": \"No Token Provided\"}");
-            //filterChain.doFilter(request, response);
+        if ((jwt == null && (authHeader == null || !authHeader.startsWith("Bearer ")))
+                || (request.getRequestURI().contains("/register")
+                || request.getRequestURI().contains("/login")
+                || request.getRequestURI().contains("/refresh-token")
+        )) {
+            System.out.println(">>> [FILTER] token exist! Skipping...");
+            filterChain.doFilter(request, response);
             return;
         }
 
@@ -55,8 +56,8 @@ public class JwtAutheficationFilter extends OncePerRequestFilter {
         try {
             email = jwtService.extractUsername(jwt);
 
-            if(StringUtils.isNotEmpty(email) &&
-                    SecurityContextHolder.getContext().getAuthentication() == null) {
+            if(StringUtils.isNotEmpty(email)
+                    && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userService.loadUserByUsername(email);
 
                 if (jwtService.isValidToken(jwt, userDetails)) {

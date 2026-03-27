@@ -57,6 +57,14 @@ public class JwtService {
         return null;
     }
 
+    public ResponseCookie getCleanCookie() {
+        return ResponseCookie.from(cookieName,"")
+                .path("/")
+                .maxAge(0)
+                .httpOnly(true)
+                .build();
+    }
+
     public boolean isValidToken(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);

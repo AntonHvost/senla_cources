@@ -3,6 +3,7 @@ package config;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -23,6 +24,7 @@ import service.UserServiceInterface;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
+@ComponentScan(basePackages = {"controller"})
 public class AppSecurityConfig {
 
     private final UserServiceInterface userService;
@@ -51,16 +53,10 @@ public class AppSecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
-                /*.csrf(csrf -> csrf
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        .ignoringRequestMatchers(
-                                "/api/auth/login",
-                                "/api/auth/register"
-                        ))*/
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**").permitAll()
-                        //.requestMatchers("/api/public/**").permitAll()
-                        //.requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/public/**").permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint((request, response, authException) -> {
@@ -69,12 +65,9 @@ public class AppSecurityConfig {
                             response.setContentType("application/json");
                             response.getWriter().write("{\"error\": \"Unauthorized\", \"message\": \"Full authentication is required\"}");
                         }))
-                .sessionManagement(sesion -> sesion.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAutheficationFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/"));
-
+                .sessionManagement(sesion -> sesion
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtAutheficationFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

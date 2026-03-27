@@ -23,17 +23,21 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
+    RefreshTokenService refreshTokenService;
 
     public AuthService(UserRepository userRepository,
                        UserServiceInterface userService,
                        PasswordEncoder passwordEncoder,
                        AuthenticationManager authenticationManager,
-                       JwtService jwtService) {
+                       JwtService jwtService,
+                       RefreshTokenService refreshTokenService
+    ) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
+        this.refreshTokenService = refreshTokenService;
     }
 
     public AuthResponse login(LoginRequestDto req) {
@@ -44,9 +48,10 @@ public class AuthService {
         UserDetails userDetails = userService.loadUserByUsername(req.getEmail());
         User user = userRepository.findByEmail(userDetails.getUsername()).get();
 
-        String accessToken = jwtService.generateToken(userDetails);
+        var accessToken = jwtService.generateToken(userDetails);
+        var refreshToken = refreshTokenService.createRefreshToken(user.getId());
 
-        return new AuthResponse(accessToken, user.getId(), user.getUsername());
+        return new AuthResponse(accessToken, refreshToken.getToken(), user.getId(), user.getUsername());
     }
 
     public AuthResponse register(RegisterRequestDto req) {
@@ -61,8 +66,9 @@ public class AuthService {
 
         userService.save(user);
 
+        var accessToken = jwtService.generateToken(user);
+        var refreshToken = refreshTokenService.createRefreshToken(user.getId());
 
-
-        return new AuthResponse(null, user.getId(), user.getUsername());
+        return new AuthResponse(accessToken, refreshToken.getToken(), user.getId(), user.getUsername());
     }
 }

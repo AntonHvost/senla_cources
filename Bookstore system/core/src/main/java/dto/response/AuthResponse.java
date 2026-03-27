@@ -1,23 +1,33 @@
 package dto.response;
 
 public class AuthResponse {
-    private String token;
+    private String accessToken;
+    private String refreshToken;
     private Long userId;
     private String username;
 
-    public AuthResponse (String token, Long userId, String username) {
-        this.token = token;
+    public AuthResponse (String accessToken, String refreshToken, Long userId, String username) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
         this.userId = userId;
         this.username = username;
 
     }
 
-    public String getToken() {
-        return token;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setAccessToken(String token) {
+        this.accessToken = token;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String token) {
+        this.refreshToken = token;
     }
 
     public Long getUserId() {
