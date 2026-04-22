@@ -1,0 +1,10 @@
+datasource:
+  url: jdbc:postgresql://localhost:5433/bank_db
+  username: ${DB_USER:postgres}
+  password: ${DB_PASSWORD:postgres}
+  driver-class-name: org.postgresql.Driver
+jpa:
+  hibernate:
+    dll-auto: update
+    show-sql: true
+    dialect: "org.hibernate.dialect.PostgreSQLDialect"

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="2" author="admin">
+        <createTable tableName="transfer">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="source_account_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="destination_account_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="decimal(19, 2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint
+                baseTableName="transfer"
+                baseColumnNames="source_account_id"
+                constraintName="fk_transfer_source_account"
+                referencedTableName="account"
+                referencedColumnNames="id"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"
+        />
+        <addForeignKeyConstraint
+                baseTableName="transfer"
+                baseColumnNames="destination_account_id"
+                constraintName="fk_transfer_destination_account"
+                referencedTableName="account"
+                referencedColumnNames="id"
+                onDelete="RESTRICT"
+                onUpdate="RESTRICT"/>
+
+        <createIndex tableName="transfer" indexName="idx_transfer_source_account">
+            <column name="source_account_id"></column>
+        </createIndex>
+        <createIndex tableName="transfer" indexName="idx_transfer_destination_account">
+            <column name="destination_account_id"></column>
+        </createIndex>
+        <createIndex tableName="transfer" indexName="idx_transfer_status">
+            <column name="status"></column>
+        </createIndex>
+        <sql>
+            ALTER TABLE transfer
+            ADD CONSTRAINT chk_transfer_status_valid
+            CHECK (status IN ('DONE', 'ERROR'));
+        </sql>
+    </changeSet>
+</databaseChangeLog>
