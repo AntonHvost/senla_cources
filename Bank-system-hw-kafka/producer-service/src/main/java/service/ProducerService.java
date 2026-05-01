@@ -1,3 +1,5 @@
+package service;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import domain.dto.TransferMessage;
@@ -5,11 +7,11 @@ import domain.model.Account;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import repository.AccountRepositoryImpl;
 import repository.Repository;
 
 import java.math.BigDecimal;
@@ -22,12 +24,13 @@ import java.util.Random;
 public class ProducerService {
     private final Logger log = LoggerFactory.getLogger(ProducerService.class);
     private final KafkaTemplate<String, String> kafkaTemplate;
-    private final Repository accountRepository;
+    private final Repository<Account,Long> accountRepository;
     private final HashMap<Long, Account> accountHashMap = new HashMap<>();
     private final Random random = new Random();
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public ProducerService(KafkaTemplate<String, String> kafkaTemplate, AccountRepositoryImpl accountRepository) {
+    public ProducerService(KafkaTemplate<String, String> kafkaTemplate,
+                           @Qualifier("accountRepositoryImpl") Repository<Account,Long> accountRepository) {
         this.kafkaTemplate = kafkaTemplate;
         this.accountRepository = accountRepository;
     }
@@ -36,15 +39,14 @@ public class ProducerService {
     public void init() {
         List<Account> accounts = accountRepository.findAll();
         if (accounts.isEmpty()) {
-            List<Account> newAccounts = new ArrayList<>();
             for(int i = 0; i < 1000; i++) {
                 Account account = new Account();
-                account.setId((long) i++);
                 account.setBalance(new BigDecimal(random.nextDouble(10_00,1000000_000 + 1)));
-                newAccounts.add(account);
+
+                accountRepository.save(account);
             }
-            accountRepository.save(newAccounts);
-            newAccounts.forEach(account -> accountHashMap.put(account.getId(), account));
+            accounts = accountRepository.findAll();
+            accounts.forEach(account -> accountHashMap.put(account.getId(), account));
         } else {
             accounts.forEach(account -> accountHashMap.put(account.getId(), account));
         }
@@ -72,7 +74,7 @@ public class ProducerService {
 
         String json = objectMapper.writeValueAsString(msg);
         kafkaTemplate.executeInTransaction(operations -> {
-            operations.send("bank-transfer", String.valueOf(msg.getId()), json);
+            operations.send("bank-transfers", null, json);
             return null;
         });
         log.info("Send transfer message to kafka");

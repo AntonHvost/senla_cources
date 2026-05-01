@@ -19,9 +19,9 @@ import java.util.Properties;
 
 @Configuration
 @EnableScheduling
-@ComponentScan
+@ComponentScan(basePackages = {"config","domain","repository","service"})
 @EnableTransactionManagement
-@PropertySource("classpath:application.yml")
+@PropertySource("classpath:application.properties")
 public class AppConfig {
     @Value("${datasource.url}")
     private String url;
@@ -29,7 +29,7 @@ public class AppConfig {
     private String username;
     @Value("${datasource.password}")
     private String password;
-    @Value("${datasource.driver-class-name}")
+    @Value("${datasource.driver}")
     private String driverClassName;
 
     @Value("${jpa.hibernate.dll-auto}")

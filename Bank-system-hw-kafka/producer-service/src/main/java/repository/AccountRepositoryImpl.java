@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Transactional
+@org.springframework.stereotype.Repository
 public class AccountRepositoryImpl implements Repository<Account, Long> {
 
     @PersistenceContext
@@ -28,6 +29,12 @@ public class AccountRepositoryImpl implements Repository<Account, Long> {
     public Long save(Account entity) {
         em.persist(entity);
         return entity.getId();
+    }
+
+    @Override
+    public Long save(Iterable<Account> entities) {
+        em.persist(entities);
+        return entities.iterator().next().getId();
     }
 
     @Override

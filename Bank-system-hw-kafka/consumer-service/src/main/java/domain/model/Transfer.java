@@ -17,6 +17,18 @@ public class Transfer {
 
     public Transfer() {}
 
+    public Transfer(Long id,
+                    Account sourceAccountId,
+                    Account destinationAccountId,
+                    BigDecimal amount,
+                    TransferStatus status) {
+        this.id = id;
+        this.sourceAccountId = sourceAccountId;
+        this.destinationAccountId = destinationAccountId;
+        this.amount = amount;
+        this.status = status;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {

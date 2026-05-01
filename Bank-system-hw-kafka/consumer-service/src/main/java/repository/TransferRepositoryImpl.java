@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Transactional
+@org.springframework.stereotype.Repository
 public class TransferRepositoryImpl implements Repository<Transfer, Long> {
 
     @PersistenceContext
@@ -28,6 +29,12 @@ public class TransferRepositoryImpl implements Repository<Transfer, Long> {
     public Long save(Transfer entity) {
         em.persist(entity);
         return entity.getId();
+    }
+
+    @Override
+    public Long save(Iterable<Transfer> entities) {
+        em.persist(entities);
+        return entities.iterator().next().getId();
     }
 
     @Override

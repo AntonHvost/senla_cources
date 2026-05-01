@@ -12,6 +12,12 @@ public class Account {
 
     public Account() {}
 
+    public Account(Long id, BigDecimal balance) {
+        this.id = id;
+        this.balance = balance;
+    }
+
+    @Column(name = "balance")
     public BigDecimal getBalance() {
         return balance;
     }

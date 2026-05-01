@@ -8,6 +8,7 @@ public interface Repository<T,PK extends Serializable> {
     List<T> findAll();
     Optional<T> findById(PK id);
     PK save(T entity);
+    PK save(Iterable<T> entities);
     void update(T entity);
     void delete(T entity);
 }

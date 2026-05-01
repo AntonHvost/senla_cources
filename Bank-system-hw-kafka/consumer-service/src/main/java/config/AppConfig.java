@@ -19,9 +19,9 @@ import java.util.Properties;
 
 @Configuration
 @EnableScheduling
-@ComponentScan
+@ComponentScan(basePackages = {"domain", "repository", "config", "service"})
 @EnableTransactionManagement
-@PropertySource("classpath:application.yml")
+@PropertySource("classpath:application.properties")
 public class AppConfig {
     @Value("${datasource.url}")
     private String url;
@@ -29,7 +29,7 @@ public class AppConfig {
     private String username;
     @Value("${datasource.password}")
     private String password;
-    @Value("${datasource.driver-class-name}")
+    @Value("${datasource.driver}")
     private String driverClassName;
 
     @Value("${jpa.hibernate.dll-auto}")
@@ -53,7 +53,7 @@ public class AppConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactory = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactory.setDataSource(dataSource);
-        entityManagerFactory.setPackagesToScan("domain");
+        entityManagerFactory.setPackagesToScan("domain.model");
         entityManagerFactory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManagerFactory.setPersistenceUnitName("repository");
         entityManagerFactory.setJpaProperties(getHibernateProperties());
