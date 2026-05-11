@@ -5,11 +5,13 @@ import domain.model.impl.Order;
 import enums.OrderStatus;
 import enums.RequestStatus;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import java.util.Optional;
 
 import java.util.List;
 
@@ -43,7 +45,7 @@ class BookRequestFullfilmentServiceTest {
         br.setRelatedOrder(order);
         br.setStatus(RequestStatus.PENDING);
         when(requestService.findPendingRequestsByBookId(2L)).thenReturn(List.of(br));
-        when(orderService.findOrderById(50L)).thenReturn(java.util.Optional.empty());
+        when(orderService.findOrderById(50L)).thenReturn(Optional.empty());
 
         assertFalse(fulfillmentService.fulfillRequests(2L));
     }
@@ -57,7 +59,7 @@ class BookRequestFullfilmentServiceTest {
         br.setRelatedOrder(order);
         br.setStatus(RequestStatus.PENDING);
         when(requestService.findPendingRequestsByBookId(3L)).thenReturn(List.of(br));
-        when(orderService.findOrderById(60L)).thenReturn(java.util.Optional.of(order));
+        when(orderService.findOrderById(60L)).thenReturn(Optional.of(order));
 
         assertTrue(fulfillmentService.fulfillRequests(3L));
 
@@ -83,7 +85,7 @@ class BookRequestFullfilmentServiceTest {
         br.setRelatedOrder(order);
         br.setStatus(RequestStatus.PENDING);
         when(requestService.findPendingRequestsByBookId(5L)).thenReturn(List.of(br));
-        when(orderService.findOrderById(70L)).thenReturn(java.util.Optional.of(order));
+        when(orderService.findOrderById(70L)).thenReturn(Optional.of(order));
 
         assertTrue(fulfillmentService.fulfillRequests(5L));
 

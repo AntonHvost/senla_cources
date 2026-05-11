@@ -24,7 +24,8 @@ public class BookController {
         this.bookFacade = bookFacade;
     }
 
-    @GetMapping
+    @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ResponseEntity<List<BookResponseDto>> getSortedBooks(@RequestParam(value = "sortByBook", required = false) SortByBook sortByBook) {
         return ResponseEntity.ok (reportFacade.getBookCatalog(sortByBook));
     }
@@ -36,6 +37,7 @@ public class BookController {
     }
 
     @GetMapping("/get-description/{id}")
+    @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     public ResponseEntity<BookDescriptionResponseDto> getBookDescription(@PathVariable("id") Long bookId) {
         BookDescriptionResponseDto description = reportFacade.getBookDescription(bookId);
         if (description == null) {

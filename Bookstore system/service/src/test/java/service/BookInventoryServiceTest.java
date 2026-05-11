@@ -28,21 +28,21 @@ class BookInventoryServiceTest {
     private BookInventoryService bookInventoryService;
 
     @Test
-    void addBookToCatalogSavesBook() {
+    void addBookToCatalog_SavesBook() {
         Book b = sampleBook(1L);
         bookInventoryService.addBookToCatalog(b);
         verify(bookRepository).save(b);
     }
 
     @Test
-    void findBookByIdReturnsOptional() {
+    void findBookById_ReturnsOptional() {
         Book b = sampleBook(2L);
         when(bookRepository.findById(2L)).thenReturn(Optional.of(b));
         assertEquals(Optional.of(b), bookInventoryService.findBookById(2L));
     }
 
     @Test
-    void restockBook_marksAvailable_whenBookExists() {
+    void restockBook_MarksAvailable_WhenBookExists() {
         Book b = sampleBook(3L);
         b.setStatus(BookStatus.OUT_OF_STOCK);
         when(bookRepository.findById(3L)).thenReturn(Optional.of(b));
@@ -53,7 +53,7 @@ class BookInventoryServiceTest {
     }
 
     @Test
-    void saveBook_and_updateBook_delegate() {
+    void saveBook_АndUpdateBook_Delegate() {
         Book b = sampleBook(4L);
         bookInventoryService.saveBook(b);
         bookInventoryService.updateBook(b);
@@ -80,6 +80,7 @@ class BookInventoryServiceTest {
         when(bookRepository.findAll()).thenReturn(List.of(sampleBook(1L)));
         assertEquals(1, bookInventoryService.getBooks().size());
     }
+
 
     private static Book sampleBook(long id) {
         Book b = new Book("t", "a", "d", LocalDate.now(), BigDecimal.ONE, BookStatus.AVAILABLE);
